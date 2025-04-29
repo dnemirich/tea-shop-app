@@ -1,15 +1,13 @@
 {
-  "extends": [
-    "stylelint-config-standard",
-    "stylelint-config-css-modules"
-  ],
-  "plugins": [
-    "stylelint-scss"
-  ],
+  "extends": ["stylelint-config-standard", "stylelint-config-css-modules"],
+  "plugins": ["stylelint-scss"],
   "rules": {
-    "at-rule-no-unknown": [true, {
-      "ignoreAtRules": ["tailwind", "apply", "variants", "responsive", "screen"]
-    }],
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["tailwind", "apply", "variants", "responsive", "screen"]
+      }
+    ],
     "scss/at-rule-no-unknown": true
   }
 }

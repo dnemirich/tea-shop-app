@@ -7,13 +7,30 @@ import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  {
+    ignores: [
+      'dist',
+      '**/*.d.ts',
+      '**/__tests__/**',
+      '**/__mocks__/**',
+      'vite.config.ts',
+      'jest.config.ts',
+    ],
+  },
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        React: 'readonly',
+      },
       sourceType: 'module',
+      parser: tseslint.parser,
+      parserOptions: {
+        project: ['./tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     plugins: {
       react,
@@ -30,13 +47,34 @@ export default tseslint.config(
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
       ...jsxA11y.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'react/react-in-jsx-scope': 'off',
+      'react/jsx-uses-react': 'off',
+      'react/jsx-no-target-blank': 'off',
     },
   },
   {
-    rules: prettier.rules,
-  }
+    files: ['**/*.test.{ts,tsx}'],
+    ignores: ['src/**/*'],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        project: ['./tsconfig.node.json'],
+      },
+    },
+  },
+  {
+    files: ['vite.config.ts', 'jest.config.ts'],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        project: ['./tsconfig.node.json'],
+      },
+    },
+  },
+  {
+    rules: {
+      ...prettier.rules,
+    },
+  },
 );
