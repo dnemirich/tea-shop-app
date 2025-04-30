@@ -15,9 +15,9 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@commercetools/sdk-client": "^4.0.1",
-    "@commercetools/sdk-middleware-auth": "^8.0.1",
-    "@commercetools/sdk-middleware-http": "^8.0.1",
+    "@commercetools/platform-sdk": "^8.8.0",
+    "@commercetools/ts-client": "^3.3.0",
+    "node-fetch": "^3.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
