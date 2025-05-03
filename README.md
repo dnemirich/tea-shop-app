@@ -1,7 +1,7 @@
 
 # 🛒 E-Commerce App
 
-Приложение для интернет-магазина, созданное с использованием React, Vite и TypeScript.
+Приложение для интернет-магазина книг, созданное с использованием React, Vite и TypeScript.
 
 ## 📦 Используемые технологии
 
@@ -61,8 +61,3 @@ npm run test
 🪛 **Подготовка Git-хуков (Husky)**
 
 npm run prepare
-
-# bookstore-app
-
-Bookstore e-commerce application
->>>>>>> 7846c3145ff69bf3d60f0972144bbcbf46448e93
