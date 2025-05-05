@@ -1,2 +1,2 @@
-# bookstore-app
-Bookstore e-commerce application
+# Tea shop application
+Tea shop e-commerce application
