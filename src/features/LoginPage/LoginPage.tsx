@@ -3,6 +3,7 @@ import mailIcon from '../../assets/mail.svg';
 import passwordIcon from '../../assets/redeem.svg';
 import cl from './LoginPage.module.css';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 const loginSchema = z
   .object({
@@ -82,6 +83,11 @@ function LoginPage() {
     console.log('Submitted', data);
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className={cl.login_page_wrapper}>
       <form onSubmit={handleSubmit(onSubmit)} className={cl.form} noValidate>
@@ -107,9 +113,12 @@ function LoginPage() {
             <input
               {...register('password')}
               className={cl.form_input}
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="Enter your password"
             />
+            <button type="button" onClick={togglePasswordVisibility} className={cl.toggle_button}>
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
           </label>
           {errors.password && <p className={cl.input_error}>{`${errors.password.message}`}</p>}
         </div>
