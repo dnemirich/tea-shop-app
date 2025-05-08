@@ -1,20 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Prosto+One&display=swap');
+
 :root {
   --background-color: #f4f4f4;
   --link-color: #c3b212;
   --text-color: #282828;
   --button-text-color: #fff;
-
+  --error-text-color: #cb0404;
   --font-family: 'Montserrat', sans-serif;
   --second-family: 'Prosto One', sans-serif;
 
   --font-main-size: 16px;
   --font-lg-size: 22px;
-  --font-button-size: 14px;
+  --font-button-size: 12px;
+  --font-error-size: 14px;
 }
 
 * {
   margin: 0;
   padding: 0;
+  font-family: var(--font-family);
 }
 
 .login_page_wrapper {
@@ -33,7 +37,6 @@
   justify-content: center;
   padding: 0 48px;
   box-sizing: border-box;
-  font-family: var(--font-family);
 }
 
 .form_title {
@@ -91,4 +94,9 @@
 .form_link {
   text-decoration: none;
   color: var(--link-color);
+}
+
+.input_error {
+  color: var(--error-text-color);
+  font-size: var(--font-error-size);
 }
