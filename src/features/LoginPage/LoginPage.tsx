@@ -95,7 +95,7 @@ function LoginPage() {
           <h2>Already a customer?</h2>
           <p>Welcome back! Sign in for faster checkout.</p>
         </div>
-        <div>
+        <div className={cl.label_wrapper}>
           <label className={cl.form_label}>
             <img className={cl.img_icon} src={mailIcon} alt="mail-img" />
             <input
@@ -107,7 +107,7 @@ function LoginPage() {
           </label>
           {errors.email && <p className={cl.input_error}>{`${errors.email.message}`}</p>}
         </div>
-        <div>
+        <div className={cl.label_wrapper}>
           <label className={cl.form_label}>
             <img className={cl.img_icon} src={passwordIcon} alt="mail-img" />
             <input
@@ -123,9 +123,14 @@ function LoginPage() {
           {errors.password && <p className={cl.input_error}>{`${errors.password.message}`}</p>}
         </div>
         <div className={cl.form_options}>
-          <label className={cl.form_checkbox_label}>
-            <input type="checkbox" className={cl.form_checkbox_input} {...register('rememberMe')} />
-            Please remember me
+          <label className={cl.form_checkbox_label} htmlFor="checkbox-Input">
+            <input
+              type="checkbox"
+              id="checkbox_input"
+              className={cl.form_checkbox_input}
+              {...register('rememberMe')}
+            />
+            <span>Please remember me</span>
           </label>
           <a className={cl.form_link} href="/#">
             Forgot password?

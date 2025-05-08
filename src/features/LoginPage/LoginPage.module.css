@@ -19,6 +19,9 @@
   margin: 0;
   padding: 0;
   font-family: var(--font-family);
+  font-size: var(--font-main-size);
+  font-weight: 400;
+  letter-spacing: 0.03em;
 }
 
 .login_page_wrapper {
@@ -46,6 +49,10 @@
   align-items: flex-start;
 }
 
+.form_title h2 {
+  font-size: var(--font-lg-size);
+}
+
 .form_label {
   display: flex;
   justify-content: flex-start;
@@ -59,7 +66,7 @@
 .form_input {
   flex: 1;
   border: none;
-  padding: 16px 52px;
+  padding: 16px 52px 16px 16px;
   width: 100%;
   background: transparent;
 }
@@ -69,14 +76,15 @@
 }
 
 .img_icon {
-  width: 24px;
-  height: 24px;
+  width: 20px;
   padding-left: 12px;
 }
 
 .signIn_button {
+  border: none;
   background-color: var(--text-color);
   color: var(--button-text-color);
+  font-size: var(--font-error-size);
   padding: 18px 0;
   cursor: pointer;
   font-weight: 500;
@@ -87,9 +95,27 @@
   justify-content: space-between;
 }
 
+.label_wrapper {
+  height: 84px;
+  margin-bottom: 2px;
+}
+
 .form_checkbox_label {
   display: flex;
   gap: 8px;
+}
+
+.form_checkbox_input {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--text-color);
+  border-radius: none;
+  cursor: pointer;
+}
+
+.form_checkbox_input:checked {
+  background-color: var(--text-color);
 }
 
 .form_link {
