@@ -84,9 +84,13 @@ function LoginPage() {
   };
 
   const [showPassword, setShowPassword] = useState(false);
+  const [hasCyrillic, setHasCyrillic] = useState(false);
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  const containsCyrillic = (text: string) => /[а-яА-ЯёЁ]/.test(text);
 
   return (
     <div className={cl.login_page_wrapper}>
@@ -115,12 +119,19 @@ function LoginPage() {
               className={cl.form_input}
               type={showPassword ? 'text' : 'password'}
               placeholder="Enter your password"
+              onChange={(e) => {
+                const char = e.target.value;
+                setHasCyrillic(containsCyrillic(char));
+              }}
             />
             <button type="button" onClick={togglePasswordVisibility} className={cl.toggle_button}>
               {showPassword ? 'Hide' : 'Show'}
             </button>
           </label>
           {errors.password && <p className={cl.input_error}>{`${errors.password.message}`}</p>}
+          {hasCyrillic && (
+            <p className={cl.input_warning}>Please make sure your keyboard is set to English</p>
+          )}
         </div>
         <div className={cl.form_options}>
           <label className={cl.form_checkbox_label} htmlFor="checkbox-Input">

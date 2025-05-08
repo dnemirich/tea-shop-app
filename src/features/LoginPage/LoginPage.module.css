@@ -123,7 +123,8 @@
   color: var(--link-color);
 }
 
-.input_error {
+.input_error,
+.input_warning {
   color: var(--error-text-color);
   font-size: var(--font-error-size);
 }
