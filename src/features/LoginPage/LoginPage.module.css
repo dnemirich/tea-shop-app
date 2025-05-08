@@ -134,4 +134,5 @@
   border: none;
   border-left: 1px var(--text-color) solid;
   height: 100%;
+  cursor: pointer;
 }
