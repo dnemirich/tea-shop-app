@@ -1,0 +1,127 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formFields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  flex-grow: 1;
+  margin-bottom: 3.6rem;
+}
+
+.formColumn {
+  display: flex;
+  flex-direction: column;
+  max-width: 45.6rem;
+  gap: 1rem;
+}
+
+.btn {
+  cursor: pointer;
+  text-transform: uppercase;
+  color: var(--primary-light-color);
+  background-color: var(--primary-dark-color);
+  font-size: 1.4rem;
+  font-family: var(--primary-font-family), sans-serif;
+  max-width: 45.6rem;
+  width: 100%;
+  border: none;
+  padding: 1.8rem 0;
+  margin-bottom: 4.2rem;
+  transition: all 0.4ms ease-in-out;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.supplementaryText {
+  font-size: 1.6rem;
+}
+
+.link {
+  color: var(--accent-color);
+}
+
+.input,
+.select {
+  height: 5.6rem;
+  width: 100%;
+  padding: 1.6rem 1.2rem;
+  border: 0.1rem solid var(--outline-color);
+  font-family: var(--primary-font-family), sans-serif;
+  font-size: 1.6rem;
+  color: var(--primary-dark-color);
+  outline-color: var(--accent-color);
+}
+
+.input[type='number']::-webkit-outer-spin-button,
+.input[type='number']::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.inputWithIcon {
+  padding-left: 5.2rem;
+}
+
+.selectWrapper {
+  position: relative;
+  display: inline-block;
+
+  &::after {
+    position: absolute;
+    content: url('@/assets/arrow-down.svg');
+    top: 30%;
+    right: 0.75rem;
+    pointer-events: none;
+  }
+}
+
+.select {
+  appearance: none;
+
+  --webkit-appearance: none;
+  --moz-appearance: none;
+
+  padding-right: 2.5rem;
+}
+
+.info {
+  font-size: 1.2rem;
+  margin-top: 0.6rem;
+}
+
+.fieldsWrapper {
+  display: flex;
+  gap: 1rem;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+.sectionSupplementaryText {
+  color: var(--outline-color);
+  font-size: 1.4rem;
+}
+
+.label {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  top: 1.6rem;
+  left: 1.2rem;
+}
+
+.checkboxText {
+  font-size: 1.6rem;
+  margin-left: 0.8rem;
+}
