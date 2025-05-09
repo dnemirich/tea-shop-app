@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Prosto+One&display=swap');
+
+:root {
+    --primary-light-color: #FEFEFE;
+    --primary-dark-color: #282828;
+    --secondary-light-color: #F4F4F4;
+    --outline-color: #A0A0A0;
+    --error-color: #C44141;
+    --accent-color: #C3B212;
+    --primary-font-family: 'Montserrat';
+    --secondary-font-family: 'Prosto One';
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: Montserrat, sans-serif;
+    font-size: 10px;
+    color: var(--primary-dark-color);
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    color: unset;
+    text-decoration: none;
+}
+
+body {
+    background-color: var(--primary-light-color);
+}
