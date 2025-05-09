@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Prosto+One&display=swap');
+
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 30px;
+}
+
+.logo {
+  width: 36px;
+  cursor: pointer;
+}
+
+.websiteTitle {
+  font-family: 'Prosto One', sans-serif;
+  margin: 20px;
+  line-height: 20px;
+  font-size: 20px;
+}
+
+ul {
+  flex: 1;
+  list-style: none;
+  text-align: center;
+}
+
+ul li {
+  display: inline-block;
+  margin: 10px 30px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Montserrat';
+  line-height: 20px;
+}
+ul li:hover {
+  color: #c3b212;
+}
+.iconsBox {
+  display: flex;
+  align-items: center;
+  gap: 38px;
+}
+
+.iconsBox svg {
+  stroke: #111;
+  cursor: pointer;
+}
+
+.iconsBox svg:hover {
+  stroke: #c3b212;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  stroke: #111;
+  transition: stroke 0.2s;
+}
+
+.iconButton:hover {
+  stroke: #16a34a;
+}
+
+.searchWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.searchInput {
+  position: absolute;
+  top: 50%;
+  right: 120%;
+  transform: translateY(-50%) scale(0.95);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #c3b212;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: 'Montserrat';
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+  pointer-events: auto;
+}
