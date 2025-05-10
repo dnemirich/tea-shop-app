@@ -1,6 +1,6 @@
 {
   "extends": ["stylelint-config-standard", "stylelint-config-css-modules"],
-  "plugins": ["stylelint-scss"],
+  "plugins": ["stylelint-scss", "stylelint-order"],
   "rules": {
     "at-rule-no-unknown": [
       true,
@@ -8,6 +8,90 @@
         "ignoreAtRules": ["tailwind", "apply", "variants", "responsive", "screen"]
       }
     ],
-    "scss/at-rule-no-unknown": true
+    "scss/at-rule-no-unknown": true,
+
+    "selector-class-pattern": "^[a-z][a-zA-Z0-9]+$",
+
+    "order/properties-order": [
+      [
+        {
+          "groupName": "Positioning",
+          "properties": ["position", "top", "right", "bottom", "left", "z-index"]
+        },
+        {
+          "groupName": "Box Model",
+          "properties": [
+            "display",
+            "flex",
+            "flex-direction",
+            "flex-wrap",
+            "justify-content",
+            "align-items",
+            "grid-template-columns",
+            "grid-template-rows",
+            "gap",
+            "width",
+            "min-width",
+            "max-width",
+            "height",
+            "min-height",
+            "max-height",
+            "margin",
+            "padding",
+            "box-sizing",
+            "overflow"
+          ]
+        },
+        {
+          "groupName": "Typography",
+          "properties": [
+            "font",
+            "font-family",
+            "font-size",
+            "font-weight",
+            "line-height",
+            "letter-spacing",
+            "color",
+            "text-align",
+            "text-transform",
+            "white-space"
+          ]
+        },
+        {
+          "groupName": "Visual",
+          "properties": [
+            "background",
+            "background-color",
+            "border",
+            "border-radius",
+            "box-shadow",
+            "opacity"
+          ]
+        },
+        {
+          "groupName": "Animation",
+          "properties": [
+            "transition",
+            "transition-delay",
+            "transition-duration",
+            "transition-property",
+            "transition-timing-function",
+            "animation"
+          ]
+        },
+        {
+          "groupName": "Misc",
+          "properties": ["cursor", "pointer-events", "visibility"]
+        }
+      ],
+      {
+        "emptyLineBeforeUnspecified": "always",
+        "emptyLineMinimumPropertyThreshold": 1,
+        "noEmptyLineBetween": true,
+        "emptyLineBetweenGroups": true
+      }
+    ],
+
+    "order/properties-alphabetical-order": null
   }
 }
