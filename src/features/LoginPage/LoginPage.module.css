@@ -1,28 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Prosto+One&display=swap');
-
-:root {
-  --background-color: #f4f4f4;
-  --link-color: #c3b212;
-  --text-color: #282828;
-  --button-text-color: #fff;
-  --error-text-color: #cb0404;
-  --font-family: 'Montserrat', sans-serif;
-  --second-family: 'Prosto One', sans-serif;
-  --font-main-size: 16px;
-  --font-lg-size: 22px;
-  --font-button-size: 12px;
-  --font-error-size: 14px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  font-family: var(--font-family);
-  font-size: var(--font-main-size);
-  font-weight: 400;
-  letter-spacing: 0.03em;
-}
-
 .login-page-wrapper {
   display: flex;
   padding: 0 76px;
@@ -30,8 +5,9 @@
 }
 
 .form {
-  width: 552px;
-  height: 455px;
+  width: 100%;
+  max-width: 552px;
+  height: auto;
   background-color: var(--background-color);
   display: flex;
   flex-direction: column;
@@ -46,6 +22,7 @@
   flex-direction: column;
   gap: 12px;
   align-items: flex-start;
+  margin-top: 35px;
 }
 
 .form-title h2 {
@@ -87,15 +64,18 @@
   padding: 18px 0;
   cursor: pointer;
   font-weight: 500;
+  margin-bottom: 35px;
 }
 
 .form-options {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  margin-top: 12px;
 }
 
 .label-wrapper {
-  height: 84px;
+  min-height: 84px;
   margin-bottom: 2px;
 }
 
@@ -125,6 +105,8 @@
 .input-warning {
   color: var(--error-text-color);
   font-size: var(--font-error-size);
+  text-align: start;
+  margin: 4px 0;
 }
 
 .toggle-button {
