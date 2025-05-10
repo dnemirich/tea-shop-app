@@ -11,6 +11,8 @@ export type RegistrationFormData = z.infer<typeof registrationSchema>;
 
 export const RegistrationForm = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [isDefaultShipping, setIsDefaultShipping] = useState<boolean>(false);
+  const [isDefaultBilling, setIsDefaultBilling] = useState<boolean>(false);
 
   const {
     register,
@@ -22,6 +24,8 @@ export const RegistrationForm = () => {
     const finalData = {
       ...data,
       billingAddress: isChecked ? data.billingAddress : data.shippingAddress,
+      defaultShippingAddress: isDefaultShipping ? data.shippingAddress : undefined,
+      defaultBillingAddress: isDefaultBilling ? data.billingAddress : undefined,
     };
     console.log(finalData);
   };
@@ -124,6 +128,10 @@ export const RegistrationForm = () => {
               <span className={s.error}>{errors.shippingAddress?.country?.message}</span>
             )}
           </div>
+          <label>
+            <input type={'checkbox'} onChange={() => setIsDefaultShipping(!isDefaultShipping)} />
+            <span className={s.checkboxText}>Set as default shipping address</span>
+          </label>
           <div>
             <h3 className={s.sectionTitle}>Billing address</h3>
             <span className={s.sectionSupplementaryText}>(Same as shipping address)</span>
@@ -180,6 +188,10 @@ export const RegistrationForm = () => {
                   <span className={s.error}>{errors.billingAddress?.country?.message}</span>
                 )}
               </div>
+              <label>
+                <input type={'checkbox'} onChange={() => setIsDefaultBilling(!isDefaultBilling)} />
+                <span className={s.checkboxText}>Set as default billing address</span>
+              </label>
             </>
           )}
         </div>
