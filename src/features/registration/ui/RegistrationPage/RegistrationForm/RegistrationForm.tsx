@@ -102,7 +102,8 @@ export const RegistrationForm = () => {
                 {...register('shippingAddress.postalCode')}
                 className={s.input}
                 placeholder="Postal code"
-                type="text"
+                type="number"
+                maxLength={7}
               />
               {errors.shippingAddress?.postalCode && (
                 <span className={s.error}>{errors.shippingAddress.postalCode?.message}</span>
@@ -158,7 +159,7 @@ export const RegistrationForm = () => {
                     {...register('billingAddress.postalCode')}
                     className={s.input}
                     placeholder="Postal code"
-                    type="text"
+                    type="number"
                   />
                   {errors.billingAddress?.postalCode && (
                     <span className={s.error}>{errors.billingAddress.postalCode?.message}</span>

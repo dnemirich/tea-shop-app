@@ -58,6 +58,10 @@
   outline-color: var(--accent-color);
 }
 
+.input {
+  min-width: 22.3rem;
+}
+
 .input[type='number']::-webkit-outer-spin-button,
 .input[type='number']::-webkit-inner-spin-button {
   margin: 0;
@@ -92,13 +96,13 @@
 
 .info,
 .error {
+  display: block;
+  margin-top: 0.2rem;
   font-size: 1.2rem;
 }
 
 .error {
-  display: block;
   color: var(--error-color);
-  margin-top: 0.8rem;
 }
 
 .fieldsWrapper {
