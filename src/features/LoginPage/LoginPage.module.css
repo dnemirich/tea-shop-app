@@ -8,7 +8,6 @@
   --error-text-color: #cb0404;
   --font-family: 'Montserrat', sans-serif;
   --second-family: 'Prosto One', sans-serif;
-
   --font-main-size: 16px;
   --font-lg-size: 22px;
   --font-button-size: 12px;
@@ -24,7 +23,7 @@
   letter-spacing: 0.03em;
 }
 
-.login_page_wrapper {
+.login-page-wrapper {
   display: flex;
   padding: 0 76px;
   box-sizing: border-box;
@@ -42,18 +41,18 @@
   box-sizing: border-box;
 }
 
-.form_title {
+.form-title {
   display: flex;
   flex-direction: column;
   gap: 12px;
   align-items: flex-start;
 }
 
-.form_title h2 {
+.form-title h2 {
   font-size: var(--font-lg-size);
 }
 
-.form_label {
+.form-label {
   display: flex;
   justify-content: flex-start;
   position: relative;
@@ -63,7 +62,7 @@
   height: 56px;
 }
 
-.form_input {
+.form-input {
   flex: 1;
   border: none;
   padding: 16px 52px 16px 16px;
@@ -71,16 +70,16 @@
   background: transparent;
 }
 
-.form_input:focus {
+.form-input:focus {
   outline: none;
 }
 
-.img_icon {
+.img-icon {
   width: 20px;
   padding-left: 12px;
 }
 
-.signIn_button {
+.sign-in-button {
   border: none;
   background-color: var(--text-color);
   color: var(--button-text-color);
@@ -90,46 +89,45 @@
   font-weight: 500;
 }
 
-.form_options {
+.form-options {
   display: flex;
   justify-content: space-between;
 }
 
-.label_wrapper {
+.label-wrapper {
   height: 84px;
   margin-bottom: 2px;
 }
 
-.form_checkbox_label {
+.form-checkbox-label {
   display: flex;
   gap: 8px;
 }
 
-.form_checkbox_input {
+.form-checkbox-input {
   appearance: none;
   width: 15px;
   height: 15px;
   border: 2px solid var(--text-color);
-  border-radius: none;
   cursor: pointer;
 }
 
-.form_checkbox_input:checked {
+.form-checkbox-input:checked {
   background-color: var(--text-color);
 }
 
-.form_link {
+.form-link {
   text-decoration: none;
   color: var(--link-color);
 }
 
-.input_error,
-.input_warning {
+.input-error,
+.input-warning {
   color: var(--error-text-color);
   font-size: var(--font-error-size);
 }
 
-.toggle_button {
+.toggle-button {
   width: 50px;
   background-color: var(--background-color);
   border: none;
