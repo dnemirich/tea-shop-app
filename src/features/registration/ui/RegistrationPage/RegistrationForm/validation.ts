@@ -40,7 +40,7 @@ export const registrationSchema = z
   .object({
     firstName: z.string().min(1, 'Required'),
     lastName: z.string().min(1, 'Required'),
-    birthDate: z
+    dateOfBirth: z
       .string()
       .min(1, 'Required')
       .refine(
@@ -63,7 +63,7 @@ export const registrationSchema = z
       .regex(/[0-9]/, 'Must contain a number'),
     confirmPassword: z.string().min(1, 'Required'),
     shippingAddress: addressSchema,
-    billingAddress: addressSchema,
+    billingAddress: addressSchema.optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
