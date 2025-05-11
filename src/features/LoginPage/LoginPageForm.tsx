@@ -4,6 +4,7 @@ import cl from './loginPageForm.module.css';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { FormValueType, loginSchema } from './validation';
+import { login } from '../../common/config/authService';
 
 export const LoginPageForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -38,8 +39,22 @@ export const LoginPageForm = () => {
       return;
     }
 
-    reset();
-    console.log('Submitted', data);
+    try {
+      const response = await login(data.email, data.password);
+      const { access_token } = response;
+
+      console.log('Access token:', access_token);
+      console.log('Submitted', data);
+
+      reset();
+    } catch (err: unknown) {
+      console.log('Login error:', err);
+
+      setError('password', {
+        type: 'manual',
+        message: 'Incorrect email or password',
+      });
+    }
   };
 
   const togglePasswordVisibility = () => {
