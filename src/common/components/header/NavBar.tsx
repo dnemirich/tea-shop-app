@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router
 import styles from './Navbar.module.css';
 import { Search, User, LogOut, ShoppingBag } from 'lucide-react';
 import LeafLogo from '../../../assets/img/leafLogo.svg';
 
 export const NavBar = () => {
   const [showSearch, setShowSearch] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // This would typically come from auth context
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -18,21 +19,16 @@ export const NavBar = () => {
     setShowSearch((prev) => !prev);
   };
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    // authentification logig will be there
-  };
-
-  // Функция для выхода
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    // clear tokens will be there
-  };
+  // These would be replaced with actual auth logic
+  //   const handleLogin = () => setIsLoggedIn(true);
+  const handleLogout = () => setIsLoggedIn(false);
 
   return (
     <div className={styles.navbar}>
-      <img src={LeafLogo} alt="" className={styles.logo} />
-      <span className={styles.websiteTitle}>Leaf & Lore</span>
+      <Link to="/" className={styles.logoLink}>
+        <img src={LeafLogo} alt="Leaf & Lore Logo" className={styles.logo} />
+        <span className={styles.websiteTitle}>Leaf & Lore</span>
+      </Link>
 
       <ul>
         <li>SHOP</li>
@@ -58,13 +54,22 @@ export const NavBar = () => {
         </div>
 
         {isLoggedIn ? (
-          <button onClick={handleLogout} className={styles.iconButton} aria-label="Log out">
-            <LogOut size={18} />
-          </button>
+          <>
+            <button onClick={handleLogout} className={styles.authButton} aria-label="Log out">
+              <LogOut size={18} />
+              <span>Logout</span>
+            </button>
+          </>
         ) : (
-          <button onClick={handleLogin} className={styles.iconButton} aria-label="User account">
-            <User size={18} />
-          </button>
+          <>
+            <Link to="/login" className={styles.authButton}>
+              <User size={18} />
+              <span>Login</span>
+            </Link>
+            <Link to="/register" className={styles.registerButton}>
+              <span>Register</span>
+            </Link>
+          </>
         )}
 
         <button className={styles.iconButton} aria-label="Shopping bag">
