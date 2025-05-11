@@ -6,7 +6,8 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   return {
-    plugins: [react(),
+    plugins: [
+      react(),
       nodePolyfills({
         // exclude: [
         //   'fs', // Excludes the polyfill for fs and node:fs.
@@ -18,7 +19,8 @@ export default defineConfig(({ mode }) => {
         },
         // Whether to polyfill node: protocol imports.
         protocolImports: true,
-      }),],
+      }),
+    ],
     define: {
       global: 'window',
     },

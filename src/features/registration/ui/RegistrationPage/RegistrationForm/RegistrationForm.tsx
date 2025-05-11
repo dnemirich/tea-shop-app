@@ -1,11 +1,14 @@
 import s from './RegistrationForm.module.scss';
-import cardIcon from '@/assets/card.svg';
-import mailIcon from '@/assets/mail.svg';
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import type { z } from 'zod';
 import { registrationSchema } from './validation.ts';
 import { zodResolver } from '@hookform/resolvers/zod';
+
+import { createCustomer } from '@/features/registration/api';
+import { type Address, Countries, type Customer } from '@/common/types/user-types.ts';
+import { useAppStore } from '@/common/store/app-store.ts';
+import { KeyRound, Mail } from 'lucide-react';
 
 export type RegistrationFormData = z.infer<typeof registrationSchema>;
 
@@ -14,20 +17,57 @@ export const RegistrationForm = () => {
   const [isDefaultShipping, setIsDefaultShipping] = useState<boolean>(false);
   const [isDefaultBilling, setIsDefaultBilling] = useState<boolean>(false);
 
+  const { setError } = useAppStore();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<RegistrationFormData>({ resolver: zodResolver(registrationSchema) });
 
   const onSubmit: SubmitHandler<RegistrationFormData> = (data) => {
-    const finalData = {
-      ...data,
-      billingAddress: isChecked ? data.billingAddress : data.shippingAddress,
-      defaultShippingAddress: isDefaultShipping ? data.shippingAddress : undefined,
-      defaultBillingAddress: isDefaultBilling ? data.billingAddress : undefined,
+    const addresses: Address[] = [
+      {
+        country: Countries[data.shippingAddress.country],
+        city: data.shippingAddress.city,
+        postalCode: data.shippingAddress.postalCode,
+        streetName: data.shippingAddress.street.split(' ')[0],
+        streetNumber: data.shippingAddress.street.split(' ')[1],
+      },
+      ...(isChecked && data.billingAddress
+        ? [
+            {
+              country: Countries[data.billingAddress.country],
+              city: data.billingAddress.city,
+              postalCode: data.billingAddress.postalCode,
+              streetName: data.billingAddress.street.split(' ')[0],
+              streetNumber: data.billingAddress.street.split(' ')[1],
+            },
+          ]
+        : []),
+    ];
+
+    const shippingIndex = 0;
+    const billingIndex = isChecked ? 1 : shippingIndex;
+
+    const finalData: Customer = {
+      email: data.email,
+      password: data.password,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      dateOfBirth: new Date(data.dateOfBirth).toISOString().split('T')[0],
+      addresses,
+      defaultShippingAddress: isDefaultShipping ? shippingIndex : undefined,
+      defaultBillingAddress: isDefaultBilling ? billingIndex : undefined,
     };
     console.log(finalData);
+    createCustomer(finalData)
+      .then((res) => {
+        console.log(res);
+        reset();
+      })
+      .catch((err) => setError(err.message));
   };
 
   return (
@@ -45,12 +85,12 @@ export const RegistrationForm = () => {
             </div>
           </div>
           <label>
-            <input {...register('birthDate')} className={s.input} type={'date'} />
+            <input {...register('dateOfBirth')} className={s.input} type={'date'} />
             <span className={s.info}>Date of birth</span>
-            {errors.birthDate && <span className={s.error}>{errors.birthDate.message}</span>}
+            {errors.dateOfBirth && <span className={s.error}>{errors.dateOfBirth.message}</span>}
           </label>
           <label className={s.label}>
-            <img src={mailIcon} alt="calendar" className={s.icon} />
+            <Mail className={s.icon} size={24} />
             <input
               {...register('email')}
               className={`${s.input} ${s.inputWithIcon}`}
@@ -59,7 +99,7 @@ export const RegistrationForm = () => {
             {errors.email && <span className={s.error}>{errors.email.message}</span>}
           </label>
           <label className={s.label}>
-            <img src={cardIcon} alt="card icon" className={s.icon} />
+            <KeyRound className={s.icon} />
             <input
               {...register('password')}
               className={`${s.input} ${s.inputWithIcon}`}
@@ -72,7 +112,7 @@ export const RegistrationForm = () => {
             {errors.password && <span className={s.error}>{errors.password.message}</span>}
           </label>
           <label className={s.label}>
-            <img src={cardIcon} alt="card icon" className={s.icon} />
+            <KeyRound className={s.icon} />
             <input
               {...register('confirmPassword')}
               className={`${s.input} ${s.inputWithIcon}`}
