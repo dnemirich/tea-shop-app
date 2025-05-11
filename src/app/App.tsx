@@ -1,12 +1,11 @@
-
 import { NavBar } from '../common/components/header/NavBar';
 
-
 const App = () => {
-
-  return <div>
-    <NavBar/>
-  </div>;
+  return (
+    <div>
+      <NavBar />
+    </div>
+  );
 };
 
 export default App;

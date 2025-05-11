@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './Navbar.module.css';
-import { Search, User, ShoppingBag } from 'lucide-react';
+import { Search, User, LogOut, ShoppingBag } from 'lucide-react';
 import LeafLogo from '../../../assets/img/leafLogo.svg';
 
 export const NavBar = () => {
   const [showSearch, setShowSearch] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -15,6 +16,17 @@ export const NavBar = () => {
 
   const handleToggleSearch = () => {
     setShowSearch((prev) => !prev);
+  };
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    // authentification logig will be there
+  };
+
+  // Функция для выхода
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    // clear tokens will be there
   };
 
   return (
@@ -45,9 +57,16 @@ export const NavBar = () => {
           />
         </div>
 
-        <button className={styles.iconButton} aria-label="User account">
-          <User size={18} />
-        </button>
+        {isLoggedIn ? (
+          <button onClick={handleLogout} className={styles.iconButton} aria-label="Log out">
+            <LogOut size={18} />
+          </button>
+        ) : (
+          <button onClick={handleLogin} className={styles.iconButton} aria-label="User account">
+            <User size={18} />
+          </button>
+        )}
+
         <button className={styles.iconButton} aria-label="Shopping bag">
           <ShoppingBag size={18} />
         </button>
