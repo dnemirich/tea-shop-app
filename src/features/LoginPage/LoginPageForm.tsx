@@ -4,7 +4,8 @@ import cl from './loginPageForm.module.css';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { FormValueType, loginSchema } from './validation';
-import { login } from '../../common/config/authService';
+import { createCustomerApiRoot } from './password-flow-client';
+import { anonymousApiRoot } from './anonymous-client';
 
 export const LoginPageForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -40,11 +41,16 @@ export const LoginPageForm = () => {
     }
 
     try {
-      const response = await login(data.email, data.password);
-      const { access_token } = response;
+      let response;
 
-      console.log('Access token:', access_token);
-      console.log('Submitted', data);
+      if (!data.email || !data.password) {
+        response = await anonymousApiRoot.me().get().execute();
+        console.log('Anonymous session:', response.body);
+      } else {
+        const apiRoot = createCustomerApiRoot(data.email, data.password);
+        response = await apiRoot.me().get().execute();
+        console.log('Password flow user:', response.body);
+      }
 
       reset();
     } catch (err: unknown) {
