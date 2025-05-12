@@ -8,13 +8,15 @@
 .container {
   max-width: 72rem;
   margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
 }
 
 /* Desktop styles */
 .desktopView {
   display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
 }
 
 .title {
@@ -23,19 +25,20 @@
   padding-left: 1.5rem;
 }
 
-.list {
+.tea_list {
   list-style: none;
   padding: 0;
   margin: 0;
   padding-left: 1.5rem;
 }
 
-.list li {
+.tea_list li {
+  font-weight: 400;
   margin-bottom: 0.25rem;
   cursor: pointer;
 }
 
-.list li:hover {
+.tea_list li:hover {
   color: #d21414;
 }
 
@@ -61,6 +64,9 @@
   stroke: #d21414;
 }
 
+.contactBox {
+  background-color: #fff;
+}
 /* Mobile styles */
 .mobileMenu {
   display: none;

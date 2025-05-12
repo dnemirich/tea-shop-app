@@ -83,7 +83,7 @@ const Footer: React.FC = () => {
           {/* Collections */}
           <div>
             <h3 className={styles.title}>COLLECTIONS</h3>
-            <ul className={styles.list}>
+            <ul className={styles.tea_list}>
               <li>Black teas</li>
               <li>Green teas</li>
               <li>White teas</li>
@@ -106,7 +106,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Contact Us */}
-          <div>
+          <div className={styles.contactBox}>
             <h3 className={styles.title}>CONTACT US</h3>
             <ul className={styles.contactList}>
               <li className={styles.contactItem}>
