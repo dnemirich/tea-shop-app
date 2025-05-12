@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router
+import { Link } from 'react-router-dom';
 import styles from './Navbar.module.css';
-import { Search, User, LogOut, ShoppingBag } from 'lucide-react';
+import { Search, User, LogOut, ShoppingBag as ShoppingBasket } from 'lucide-react';
 import LeafLogo from '../../../assets/img/leafLogo.svg';
 
 export const NavBar = () => {
   const [showSearch, setShowSearch] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // This would typically come from auth context
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -19,9 +20,11 @@ export const NavBar = () => {
     setShowSearch((prev) => !prev);
   };
 
-  // These would be replaced with actual auth logic
-  //   const handleLogin = () => setIsLoggedIn(true);
   const handleLogout = () => setIsLoggedIn(false);
+
+  const handleToggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
 
   return (
     <div className={styles.navbar}>
@@ -30,7 +33,17 @@ export const NavBar = () => {
         <span className={styles.websiteTitle}>Leaf & Lore</span>
       </Link>
 
-      <ul>
+      <button
+        className={styles.burgerMenu}
+        onClick={handleToggleMenu}
+        aria-label="Toggle navigation menu"
+      >
+        <span className={styles.burgerLine}></span>
+        <span className={styles.burgerLine}></span>
+        <span className={styles.burgerLine}></span>
+      </button>
+
+      <ul className={`${styles.navList} ${isMenuOpen ? styles.menuOpen : ''}`}>
         <li>SHOP</li>
         <li>BLOG</li>
         <li>ABOUT US</li>
@@ -54,12 +67,10 @@ export const NavBar = () => {
         </div>
 
         {isLoggedIn ? (
-          <>
-            <button onClick={handleLogout} className={styles.authButton} aria-label="Log out">
-              <LogOut size={18} />
-              <span>Logout</span>
-            </button>
-          </>
+          <button onClick={handleLogout} className={styles.authButton}>
+            <LogOut size={18} />
+            <span>Logout</span>
+          </button>
         ) : (
           <>
             <Link to="/login" className={styles.authButton}>
@@ -72,8 +83,8 @@ export const NavBar = () => {
           </>
         )}
 
-        <button className={styles.iconButton} aria-label="Shopping bag">
-          <ShoppingBag size={18} />
+        <button className={styles.iconButton} aria-label="Shopping basket">
+          <ShoppingBasket size={18} />
         </button>
       </div>
     </div>
