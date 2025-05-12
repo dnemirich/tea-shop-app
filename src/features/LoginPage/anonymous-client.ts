@@ -6,7 +6,7 @@ import {
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
 const projectKey: string = import.meta.env.VITE_CTP_PROJECT_KEY;
-const scopes = import.meta.env.VITE_CTP_SCOPES;
+const scopes = import.meta.env.VITE_CTP_SCOPES?.split(' ') ?? [];
 
 const anonymousId = localStorage.getItem('anonymousId') || crypto.randomUUID();
 localStorage.setItem('anonymousId', anonymousId);

@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { FormValueType, loginSchema } from './validation';
 import { createCustomerApiRoot } from './password-flow-client';
-import { anonymousApiRoot } from './anonymous-client';
 
 export const LoginPageForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -41,16 +40,9 @@ export const LoginPageForm = () => {
     }
 
     try {
-      let response;
-
-      if (!data.email || !data.password) {
-        response = await anonymousApiRoot.me().get().execute();
-        console.log('Anonymous session:', response.body);
-      } else {
-        const apiRoot = createCustomerApiRoot(data.email, data.password);
-        response = await apiRoot.me().get().execute();
-        console.log('Password flow user:', response.body);
-      }
+      const apiRoot = createCustomerApiRoot(data.email, data.password);
+      const response = await apiRoot.me().get().execute();
+      console.log('Password flow user:', response.body);
 
       reset();
     } catch (err: unknown) {
