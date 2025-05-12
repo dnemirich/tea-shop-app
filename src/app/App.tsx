@@ -1,13 +1,15 @@
-import { BrowserRouter as Router } from 'react-router-dom';
-import { NavBar } from '../common/components/header/NavBar';
+import { Routes, Route } from 'react-router-dom';
+import Layout from '../../src/common/components/Layout/Layout';
 
 const App = () => {
   return (
-    <Router>
-      <div>
-        <NavBar />
-      </div>
-    </Router>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {/* <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="*" element={<NotFound />} /> */}
+      </Route>
+    </Routes>
   );
 };
 
