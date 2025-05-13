@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { FormValueType, loginSchema } from './validation';
 import { createCustomerApiRoot } from './password-flow-client';
+import { anonymousApiRoot } from './anonymous-client';
 
 export const LoginPageForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -40,6 +41,16 @@ export const LoginPageForm = () => {
     }
 
     try {
+      await anonymousApiRoot
+        .me()
+        .login()
+        .post({
+          body: {
+            email: data.email,
+            password: data.password,
+          },
+        });
+
       const apiRoot = createCustomerApiRoot(data.email, data.password);
       const response = await apiRoot.me().get().execute();
       console.log('Password flow user:', response.body);
