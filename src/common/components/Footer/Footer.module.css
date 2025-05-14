@@ -1,136 +1,15 @@
 .footer {
   background-color: #f4f4f4;
   color: #1f2937;
-  padding: 3rem 1.5rem;
+  padding: 2rem;
   font-family: 'Montserrat', sans-serif;
 }
 
 .container {
-  max-width: 72rem;
+  max-width: 1200px;
   margin: 0 auto;
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: 1fr;
-}
-
-/* Desktop styles */
-.desktopView {
-  display: grid;
-  gap: 1rem;
-}
-
-.title {
-  font-weight: 400;
-  margin-bottom: 1rem;
-  padding-left: 1.5rem;
-}
-
-.tea_list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  padding-left: 1.5rem;
-}
-
-.tea_list li {
-  font-weight: 400;
-  margin-bottom: 0.25rem;
-  cursor: pointer;
-}
-
-.tea_list li:hover {
-  color: #d21414;
-}
-
-.contactList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  padding-left: 1.5rem;
-}
-
-.contactItem {
   display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.icon {
-  width: 1rem;
-  height: 1rem;
-  margin-top: 0.25rem;
-  flex-shrink: 0;
-  stroke: #d21414;
-}
-
-.contactBox {
-  background-color: #fff;
-}
-/* Mobile styles */
-.mobileMenu {
-  display: none;
-}
-
-.mobileSection {
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.mobileTitle {
-  display: flex;
+  gap: 25px;
   justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 1rem 0;
-  background: none;
-  border: none;
-  color: inherit;
-  font-size: 1rem;
-  font-weight: 400;
-  cursor: pointer;
-}
-
-.mobileList {
-  list-style: none;
-  padding: 0 0 1rem 0;
-  margin: 0;
-}
-
-.mobileList li {
-  padding: 0.5rem 0;
-  cursor: pointer;
-}
-
-.mobileList li:hover {
-  color: #d21414;
-}
-
-.mobileContactList {
-  list-style: none;
-  padding: 0 0 1rem 0;
-  margin: 0;
-}
-
-/* Responsive */
-@media (max-width: 767px) {
-  .desktopView {
-    display: none;
-  }
-
-  .mobileMenu {
-    display: block;
-  }
-}
-
-@media (min-width: 640px) and (max-width: 767px) {
-  .desktopView {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 768px) {
-  .desktopView {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  align-items: flex-start;
 }
