@@ -17,7 +17,7 @@ const anonymousAuthMiddlewareOptions: AuthMiddlewareOptions = {
   credentials: {
     clientId: import.meta.env.VITE_CTP_CLIENT_ID,
     clientSecret: import.meta.env.VITE_CTP_CLIENT_SECRET,
-    anonymousId: crypto.randomUUID(),
+    anonymousId: anonymousId,
   },
   scopes: scopes,
   httpClient: fetch,

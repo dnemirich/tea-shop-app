@@ -5,10 +5,12 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { FormValueType, loginSchema } from './validation';
 import { createCustomerApiRoot } from './password-flow-client';
+import { Modal } from './Modal/Modal';
 
 export const LoginPageForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [hasCyrillic, setHasCyrillic] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const {
     register,
@@ -45,6 +47,8 @@ export const LoginPageForm = () => {
       const response = await apiRoot.me().get().execute();
       console.log('Password flow user:', response.body);
 
+      setIsLoggedIn(true);
+
       reset();
     } catch (err: unknown) {
       console.log('Login error:', err);
@@ -67,6 +71,9 @@ export const LoginPageForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cl.form} noValidate>
+      {isLoggedIn && (
+        <Modal message="You have successfully signed in!" onClose={() => setIsLoggedIn(false)} />
+      )}
       <div className={cl['form-title']}>
         <h2>Already a customer?</h2>
         <p>Welcome back! Sign in for faster checkout.</p>

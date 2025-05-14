@@ -38,5 +38,8 @@ export const createCustomerApiRoot = (email: string, password: string) => {
     .withHttpMiddleware(httpMiddlewareOptions)
     .build();
 
-  return createApiBuilderFromCtpClient(customerClient).withProjectKey({ projectKey });
+  const apiRoot = createApiBuilderFromCtpClient(customerClient).withProjectKey({ projectKey });
+  apiRoot.get;
+
+  return apiRoot;
 };
