@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { FormValueType, loginSchema } from './validation';
 import { createCustomerApiRoot } from './password-flow-client';
-import { anonymousApiRoot } from './anonymous-client';
 
 export const LoginPageForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +15,7 @@ export const LoginPageForm = () => {
     handleSubmit,
     setError,
     reset,
+    clearErrors,
     formState: { errors, isSubmitting },
   } = useForm<FormValueType>({
     defaultValues: {
@@ -41,16 +41,6 @@ export const LoginPageForm = () => {
     }
 
     try {
-      await anonymousApiRoot
-        .me()
-        .login()
-        .post({
-          body: {
-            email: data.email,
-            password: data.password,
-          },
-        });
-
       const apiRoot = createCustomerApiRoot(data.email, data.password);
       const response = await apiRoot.me().get().execute();
       console.log('Password flow user:', response.body);
@@ -58,6 +48,9 @@ export const LoginPageForm = () => {
       reset();
     } catch (err: unknown) {
       console.log('Login error:', err);
+
+      clearErrors('email');
+      clearErrors('password');
 
       setError('password', {
         type: 'manual',
@@ -86,6 +79,10 @@ export const LoginPageForm = () => {
             className={cl['form-input']}
             type="email"
             placeholder="Email Address"
+            onChange={(e) => {
+              setHasCyrillic(containsCyrillic(e.target.value));
+              clearErrors('email');
+            }}
           />
         </label>
         {errors.email && <p className={cl['input-error']}>{`${errors.email.message}`}</p>}
@@ -101,6 +98,7 @@ export const LoginPageForm = () => {
             onChange={(e) => {
               const value = e.target.value;
               setHasCyrillic(containsCyrillic(value));
+              clearErrors('password');
             }}
           />
           <button type="button" onClick={togglePasswordVisibility} className={cl['toggle-button']}>
