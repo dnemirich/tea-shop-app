@@ -17,15 +17,15 @@ const Footer: React.FC = () => {
 
   const contactInfo = [
     {
-      icon: <MapPin size={16} color='#ae1919' />,
+      icon: <MapPin size={16} color="#ae1919" />,
       text: '12 Tea street, Saint Petersburg, Russia',
     },
     {
-      icon: <Mail size={16} color='#ae1919'/>,
+      icon: <Mail size={16} color="#ae1919" />,
       text: 'Email: leaf-n-lore@gmail.com',
     },
     {
-      icon: <Phone size={16} color='#ae1919'/>,
+      icon: <Phone size={16} color="#ae1919" />,
       text: 'Tel: +7 812 123-45-67',
     },
   ];
