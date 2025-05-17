@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Navbar.module.css';
-import { Search, User, LogOut, ShoppingBag as ShoppingBasket } from 'lucide-react';
+import { Search, User, LogOut } from 'lucide-react';
 import LeafLogo from '../../../assets/img/leafLogo.svg';
+import ShoppingCart from '../ShoppingBasket/ShoppingBasket';
 
 export const NavBar = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -82,10 +83,7 @@ export const NavBar = () => {
             </Link>
           </>
         )}
-
-        <button className={styles.iconButton} aria-label="Shopping basket">
-          <ShoppingBasket size={18} />
-        </button>
+        <ShoppingCart />
       </div>
     </div>
   );
