@@ -2,10 +2,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  background-color: #f4f4f4;
-  padding: 2rem 3rem;
   gap: 2rem;
+  padding: 2rem 3rem;
   font-family: var(--font-family), sans-serif;
+  background-color: #f4f4f4;
 }
 
 .section {
@@ -26,11 +26,11 @@
 }
 
 .section ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .section li {
@@ -44,8 +44,8 @@
 }
 
 .contact {
-  background-color: #fff;
   padding: 1rem;
+  background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgb(0 0 0 / 10%);
 }
@@ -67,8 +67,8 @@
 @media (width <= 768px) {
   .footer {
     align-items: flex-start;
-    padding: 1.5rem;
     gap: 1.5rem;
+    padding: 1.5rem;
   }
 
   .section,
@@ -83,8 +83,8 @@
 
 @media (width <= 480px) {
   .footer {
-    padding: 1rem;
     gap: 1rem;
+    padding: 1rem;
   }
 
   .section ul,
@@ -93,9 +93,9 @@
   }
 
   .contact {
+    padding: 0;
     background-color: transparent;
     box-shadow: none;
-    padding: 0;
   }
 
   .section h4 {

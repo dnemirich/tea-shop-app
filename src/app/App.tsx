@@ -1,3 +1,7 @@
+import { RegistrationPage } from '../features/registration/ui/RegistrationPage/RegistrationPage.tsx';
+import { useAppStore } from '@/common/store/app-store.ts';
+import { toast, ToastContainer } from 'react-toastify';
+import s from './App.module.scss';
 import { LoginPage } from '../features/LoginPage/LoginPage';
 import { anonymousApiRoot } from '../features/LoginPage/anonymous-client';
 import { useEffect } from 'react';
@@ -7,6 +11,20 @@ import NotFound from './pages/NotFound';
 
 
 function App() {
+  const { error, clearError } = useAppStore();
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error, {
+        className: s.notification,
+        autoClose: false,
+        theme: 'colored',
+        closeOnClick: true,
+        position: 'top-center',
+      });
+      clearError();
+    }
+  }, [error, clearError]);
   useEffect(() => {
     const anonymousSession = async () => {
       try {
@@ -21,15 +39,20 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route path="login" element={<LoginPage />} />
-        {/* <Route index element={<Home />} />
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="registration" element={<RegistrationPage />} />
+          {/* <Route index element={<Home />} />
         <Route path="about" element={<About />} /> */}
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
-)
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+      <ToastContainer />
+    </>
+  );
+
 
 }
 

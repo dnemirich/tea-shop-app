@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Prosto+One&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap');
 
-html {
-  font-size: 10px;
-}
-
 :root {
   --background-color: #f4f4f4;
   --link-color: #c3b212;
@@ -16,15 +12,46 @@ html {
   --font-lg-size: 2.2rem;
   --font-button-size: 1.2rem;
   --font-error-size: 1.4rem;
+  --primary-light-color: #fefefe;
+  --primary-dark-color: #282828;
+  --secondary-light-color: #f4f4f4;
+  --outline-color: #a0a0a0;
+  --error-color: #c44141;
+  --accent-color: #c3b212;
+  --primary-font-family: 'Montserrat';
+  --secondary-font-family: 'Prosto One';
 }
 
-* {
+*,
+*::after,
+*::before {
   margin: 0;
   padding: 0;
-  font-size: var(--font-main-size);
-  font-weight: 400;
-  letter-spacing: 0.03em;
   box-sizing: border-box;
   list-style: none;
   outline: 0;
+}
+
+html {
+  font-family: Montserrat, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--primary-dark-color);
+  scroll-behavior: smooth;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: unset;
+  text-decoration: none;
+}
+
+body {
+  background-color: var(--primary-light-color);
 }

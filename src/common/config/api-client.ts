@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import {
   ClientBuilder,
 
@@ -6,6 +5,7 @@ import {
   type AuthMiddlewareOptions, // Required for auth
   type HttpMiddlewareOptions, // Required for sending HTTP requests
 } from '@commercetools/ts-client';
+import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
 const projectKey: string = import.meta.env.VITE_CTP_PROJECT_KEY;
 const scopes = [import.meta.env.VITE_CTP_SCOPES];
@@ -35,3 +35,7 @@ export const ctpClient = new ClientBuilder()
   .withHttpMiddleware(httpMiddlewareOptions)
   .withLoggerMiddleware() // Include middleware for logging
   .build();
+
+export const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
+  projectKey: import.meta.env.VITE_CTP_PROJECT_KEY,
+});
