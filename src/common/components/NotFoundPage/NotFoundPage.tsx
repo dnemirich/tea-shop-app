@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from '@/common/config/routes.ts';
 
 export const NotFoundPage: React.FC = () => {
-
   return (
     <div className={s.container}>
       <h1 className={s.heading}>404</h1>
