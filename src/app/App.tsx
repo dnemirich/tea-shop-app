@@ -1,13 +1,15 @@
-import { RegistrationPage } from '../features/registration/ui/RegistrationPage/RegistrationPage.tsx';
+import { RegistrationPage } from '@/features/registration/ui/RegistrationPage/RegistrationPage.tsx';
 import { useAppStore } from '@/common/store/app-store.ts';
 import { toast, ToastContainer } from 'react-toastify';
 import s from './App.module.scss';
-import { LoginPage } from '../features/LoginPage/LoginPage';
-import { anonymousApiRoot } from '../features/LoginPage/anonymous-client';
+import { anonymousApiRoot } from '@/features/login/api/anonymous-client.ts';
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Layout from '../../src/common/components/Layout/Layout';
-import NotFound from './pages/NotFound';
+import Layout from '@/common/components/Layout/Layout';
+
+import { LoginPage } from '@/features/login/ui/LoginPage/LoginPage.tsx';
+import { ROUTES } from '@/common/config/routes.ts';
+import { NotFound } from '@/common/components/NotFoundPage/NotFound.tsx';
 
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
       clearError();
     }
   }, [error, clearError]);
+
   useEffect(() => {
     const anonymousSession = async () => {
       try {
@@ -41,12 +44,12 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="registration" element={<RegistrationPage />} />
+        <Route path={ROUTES.HOME} element={<Layout />}>
+          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          <Route path={ROUTES.REGISTER} element={<RegistrationPage />} />
           {/* <Route index element={<Home />} />
         <Route path="about" element={<About />} /> */}
-          <Route path="*" element={<NotFound />} />
+          <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
         </Route>
       </Routes>
       <ToastContainer />

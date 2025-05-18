@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './Footer.module.css';
+import styles from './Footer.module.scss';
 import { MapPin, Mail, Phone } from 'lucide-react';
 
-const Footer: React.FC = () => {
+export const Footer: React.FC = () => {
   const teaArray = [
     'Black tea',
     'Green tea',
@@ -34,33 +34,38 @@ const Footer: React.FC = () => {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.section}>
-        <h4>COLLECTIONS</h4>
-        <ul>
-          {teaArray.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </div>
+      <div className="container">
+        <div className={styles.footerWrapper}>
+        <div className={styles.section}>
+          <h4 className={styles.sectionTitle}>COLLECTIONS</h4>
+          <ul className={styles.sectionList}>
+            {teaArray.map((item, index) => (
+              <li className={styles.sectionItem} key={index}>{item}</li>
+            ))}
+          </ul>
+        </div>
 
-      <div className={styles.section}>
-        <h4>LEARN</h4>
-        <ul>
-          <li>About us</li>
-          <li>Blog</li>
-        </ul>
-      </div>
+        <div className={styles.section}>
+          <h4 className={styles.sectionTitle}>LEARN</h4>
+          <ul className={styles.sectionList}>
+            <li className={styles.sectionItem}>About us</li>
+            <li className={styles.sectionItem}>Blog</li>
+          </ul>
+        </div>
 
-      <div className={`${styles.section} ${styles.contact}`}>
-        <h4>CONTACT US</h4>
-        {contactInfo.map((item, index) => (
-          <p key={index}>
-            {item.icon} {item.text}
-          </p>
-        ))}
+        <div className={`${styles.section} ${styles.contact}`}>
+          <h4 className={styles.sectionTitle}>CONTACT US</h4>
+          <ul className={styles.contactsList}>
+            {contactInfo.map((item, index) => (
+              <li className={styles.contactItem} key={index}>
+                {item.icon} {item.text}
+              </li>
+            ))}
+          </ul>
+        </div>
+        </div>
       </div>
     </footer>
   );
 };
 
-export default Footer;

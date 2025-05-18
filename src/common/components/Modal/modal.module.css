@@ -15,22 +15,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 2rem;
   width: 100%;
-  max-width: 300px;
-  padding: 20px;
+  max-width: 30.0rem;
+  padding: 2rem;
   text-align: center;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgb(0 0 0 / 20%);
+  background-color: var(--bg-color-light);
+  border-radius: 1.2rem;
+  box-shadow: 0 0.4rem 2rem rgb(0 0 0 / 20%);
+  font-size: 2rem;
 }
 
 .modal-button {
-  padding: 18px;
+  padding: 1.8rem;
   font-size: var(--font-error-size);
   font-weight: 500;
-  color: var(--button-text-color);
-  background-color: var(--text-color);
+  color: var(--bg-color-light);
+  background-color: var(--primary-dark-color);
   border: none;
   cursor: pointer;
 }

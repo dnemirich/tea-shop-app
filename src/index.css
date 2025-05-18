@@ -1,25 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Prosto+One&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap');
 
 :root {
-  --background-color: #f4f4f4;
-  --link-color: #c3b212;
-  --text-color: #282828;
-  --button-text-color: #fff;
-  --error-text-color: #cb0404;
-  --font-family: 'Montserrat', sans-serif;
-  --second-family: 'Prosto One', sans-serif;
+  --primary-light-color: #fefefe;
+  --secondary-light-color: #f4f4f4;
+  --bg-color-light: #ffffff;
+  --accent-color: #c3b212;
+  --accent-color-darkened: #b3a310;
+  --secondary-accent-color:#ae1919;
+  --primary-dark-color: #282828;
+  --secondary-dark-color: #000000;
+  --error-color: #c44141;
+  --outline-color: #a0a0a0;
+  --item-color: #555555;
+  --box-shadow-color: #0000000C;
+  --primary-font-family: 'Montserrat';
+  --secondary-font-family: 'Prosto One';
   --font-main-size: 1.6rem;
   --font-lg-size: 2.2rem;
   --font-button-size: 1.2rem;
   --font-error-size: 1.4rem;
-  --primary-light-color: #fefefe;
-  --primary-dark-color: #282828;
-  --secondary-light-color: #f4f4f4;
-  --outline-color: #a0a0a0;
-  --error-color: #c44141;
-  --accent-color: #c3b212;
-  --primary-font-family: 'Montserrat';
-  --secondary-font-family: 'Prosto One';
 }
 
 *,
@@ -52,6 +51,28 @@ a {
   text-decoration: none;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   background-color: var(--primary-light-color);
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex:1;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 100%;
 }

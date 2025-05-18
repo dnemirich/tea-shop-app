@@ -1,13 +1,15 @@
 import { Outlet } from 'react-router-dom';
-import NavBar from '../Header/NavBar';
-import Footer from '../Footer/Footer';
+import { Header } from '../Header/Header.tsx';
+import { Footer } from '../Footer/Footer';
 
 const Layout = () => {
   return (
     <>
-      <NavBar />
-      <main style={{ minHeight: '80vh', padding: '20px' }}>
-        <Outlet />
+      <Header />
+      <main>
+        <div className={'container'}>
+          <Outlet />
+        </div>
       </main>
       <Footer />
     </>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NotFound: React.FC = () => {
+export const NotFound: React.FC = () => {
   const containerStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -61,4 +61,3 @@ const NotFound: React.FC = () => {
   );
 };
 
-export default NotFound;

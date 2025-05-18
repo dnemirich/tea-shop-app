@@ -1,16 +1,19 @@
-import mailIcon from '@/assets/mail.svg';
-import passwordIcon from '@/assets/redeem.svg';
 import cl from './loginPageForm.module.css';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { FormValueType, loginSchema } from './validation';
-import { createCustomerApiRoot } from './password-flow-client';
-import { Modal } from './Modal/Modal';
+import { FormValueType, loginSchema } from '../validation.ts';
+import { createCustomerApiRoot } from '../../../api/password-flow-client.ts';
+import { Modal } from '@/common/components/Modal/Modal.tsx';
+import { KeyRound, Mail } from 'lucide-react';
+import { useUserStore } from '@/common/store/user-store.ts';
+// import { useAppStore } from '@/common/store/app-store.ts';
 
 export const LoginPageForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [hasCyrillic, setHasCyrillic] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { setIsLoggedIn } = useUserStore();
+  // const {setAppError} = useAppStore();
 
   const {
     register,
@@ -48,6 +51,7 @@ export const LoginPageForm = () => {
       console.log('Password flow user:', response.body);
 
       setIsLoggedIn(true);
+      setIsModalOpen(true);
 
       reset();
     } catch (err: unknown) {
@@ -71,8 +75,8 @@ export const LoginPageForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cl.form} noValidate>
-      {isLoggedIn && (
-        <Modal message="You have successfully signed in!" onClose={() => setIsLoggedIn(false)} />
+      {isModalOpen && (
+        <Modal message="You have successfully signed in!" onClose={() => setIsModalOpen(false)} />
       )}
       <div className={cl['form-title']}>
         <h2>Already a customer?</h2>
@@ -80,7 +84,7 @@ export const LoginPageForm = () => {
       </div>
       <div className={cl['label-wrapper']}>
         <label className={cl['form-label']}>
-          <img className={cl['img-icon']} src={mailIcon} alt="mail-img" />
+          <Mail className={cl['img-icon']}/>
           <input
             {...register('email')}
             className={cl['form-input']}
@@ -96,7 +100,7 @@ export const LoginPageForm = () => {
       </div>
       <div className={cl['label-wrapper']}>
         <label className={cl['form-label']}>
-          <img className={cl['img-icon']} src={passwordIcon} alt="mail-img" />
+          <KeyRound className={cl['img-icon']} />
           <input
             {...register('password')}
             className={cl['form-input']}

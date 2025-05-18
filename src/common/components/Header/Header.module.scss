@@ -1,0 +1,255 @@
+.header {
+  position: relative;
+  padding: 2rem 3rem;
+  background: var(--bg-color-light);
+  box-shadow: 0 0.2rem 1rem var(--box-shadow-color);
+}
+
+.navbar {
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo {
+  width: 3.6rem;
+  height: 3.6rem;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.websiteTitle {
+  font-family: var(--secondary-font-family), sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.05rem;
+  color: var(--primary-dark-color);
+  margin-left: 15px;
+}
+
+.navList {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.menuItem {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 0;
+  font-family: var(--primary-font-family), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--primary-dark-color);
+  transition: color 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--accent-color);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0.2rem;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+.iconsBox {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  color: var(--primary-dark-color);
+  background: none;
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--accent-color);
+  }
+
+  & > svg {
+    stroke: currentcolor;
+  }
+}
+
+.authButton {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.6rem;
+  font-family: var(--primary-font-family), sans-serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--primary-dark-color);
+  background: none;
+  border: 0.1rem solid var(--outline-color);
+  border-radius: 3rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--accent-color);
+    background-color: var(--secondary-light-color);
+    border-color: var(--accent-color);
+  }
+}
+
+.registerButton {
+  padding: 0.8rem 2rem;
+  font-family: var(--primary-font-family), sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--primary-light-color);
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 3rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    background-color: var(--accent-color-darkened);
+    transform: translateY(-0.1rem);
+    box-shadow: 0 0.2rem 0.8rem rgb(195 178 18 / 30%);
+  }
+}
+
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  position: absolute;
+  right: 2rem;
+  z-index: 10;
+  width: 15rem;
+  padding: 0.8rem 1.5rem;
+  font-family: var(--primary-font-family), sans-serif;
+  font-size: 1.4rem;
+  background-color: var(--primary-light-color);
+  border: 0.1rem solid var(--outline-color);
+  border-radius: 3rem;
+  box-shadow: 0 0.2rem 1rem rgb(0 0 0 / 10%);
+  opacity: 0;
+  transition: all 0.3s ease;
+  transform: scaleX(0);
+  transform-origin: right;
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent-color);
+  }
+}
+
+.visible {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.burgerMenu {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 2.4rem;
+  height: 1.8rem;
+  border: none;
+  cursor: pointer;
+}
+
+.burgerLine {
+  width: 100%;
+  height: 0.2rem;
+  background-color: var(--primary-dark-color);
+  transition: all 0.3s ease;
+}
+
+
+@media (width <= 900px) {
+  .burgerMenu {
+    display: flex;
+  }
+
+  .navList {
+    position: absolute;
+    top: 7rem;
+    left: 0;
+    z-index: 99;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100vw;
+    padding: 2rem 0;
+    background-color: var(--bg-color-light);
+    box-shadow: 0 0.8rem 2rem rgb(0 0 0 / 5%);
+  }
+
+  .menuOpen {
+    display: flex;
+  }
+
+  .iconsBox {
+    gap: 1rem;
+  }
+
+  .authButton,
+  .registerButton {
+    padding: 0.6rem 1.2rem;
+    font-size: 1.3rem;
+  }
+}
+
+@media (width <= 480px) {
+  .websiteTitle {
+    font-size: 1.6rem;
+  }
+
+  .authButton,
+  .registerButton {
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+  }
+
+  .iconsBox {
+    gap: 0.8rem;
+  }
+
+  .searchInput {
+    width: 11rem;
+    font-size: 1.3rem;
+  }
+}

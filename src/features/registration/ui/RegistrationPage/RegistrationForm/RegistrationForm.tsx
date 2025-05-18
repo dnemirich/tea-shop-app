@@ -9,6 +9,8 @@ import { createCustomer } from '@/features/registration/api';
 import { type Address, Countries, type Customer } from '@/common/types/user-types.ts';
 import { useAppStore } from '@/common/store/app-store.ts';
 import { KeyRound, Mail } from 'lucide-react';
+import { ROUTES } from '@/common/config/routes.ts';
+import { Link } from 'react-router-dom';
 
 export type RegistrationFormData = z.infer<typeof registrationSchema>;
 
@@ -17,7 +19,7 @@ export const RegistrationForm = () => {
   const [isDefaultShipping, setIsDefaultShipping] = useState<boolean>(false);
   const [isDefaultBilling, setIsDefaultBilling] = useState<boolean>(false);
 
-  const { setError } = useAppStore();
+  const { setAppError } = useAppStore();
 
   const {
     register,
@@ -67,7 +69,7 @@ export const RegistrationForm = () => {
         console.log(res);
         reset();
       })
-      .catch((err) => setError(err.message));
+      .catch((err) => setAppError(err.message));
   };
 
   return (
@@ -243,7 +245,7 @@ export const RegistrationForm = () => {
       <p className={s.supplementaryText}>
         Already have an account?{' '}
         <span className={s.link}>
-          <a href={'/'}>Log in</a>
+          <Link to={ROUTES.LOGIN}>Log in</Link>
         </span>
       </p>
     </form>
