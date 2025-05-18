@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Prosto+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Prosto+One&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap');
 
 html {
   font-size: 10px;
@@ -21,8 +21,10 @@ html {
 * {
   margin: 0;
   padding: 0;
-  font-family: var(--font-family);
   font-size: var(--font-main-size);
   font-weight: 400;
   letter-spacing: 0.03em;
+  box-sizing: border-box;
+  list-style: none;
+  outline: 0;
 }

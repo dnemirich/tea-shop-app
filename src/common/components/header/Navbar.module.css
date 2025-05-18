@@ -1,0 +1,271 @@
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 20px 30px;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 5%);
+  position: relative;
+  z-index: 100;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
+.websiteTitle {
+  font-family: 'Prosto One', sans-serif;
+  margin-left: 15px;
+  font-size: 20px;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+}
+
+ul {
+  flex: 1;
+  list-style: none;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  display: inline-block;
+  margin: 0 25px;
+  font-size: 15px;
+  cursor: pointer;
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+  color: #333;
+  position: relative;
+  padding: 5px 0;
+  transition: color 0.3s ease;
+}
+
+ul li:hover {
+  color: #c3b212;
+}
+
+ul li::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #c3b212;
+  transition: width 0.3s ease;
+}
+
+ul li:hover::after {
+  width: 100%;
+}
+
+.iconsBox {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: #1a1a1a;
+  transition: all 0.3s ease;
+}
+
+.iconButton:hover {
+  color: #c3b212;
+}
+
+.iconButton svg {
+  stroke: currentcolor;
+}
+
+.authButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 30px;
+  color: #1a1a1a;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.authButton:hover {
+  background-color: #f5f5f5;
+  border-color: #c3b212;
+  color: #c3b212;
+}
+
+.registerButton {
+  padding: 8px 20px;
+  background-color: #c3b212;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.registerButton:hover {
+  background-color: #b3a310;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgb(195 178 18 / 30%);
+}
+
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  position: absolute;
+  right: 20px;
+  width: 150px;
+  padding: 8px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 30px;
+  font-size: 14px;
+  font-family: Montserrat, sans-serif;
+  background-color: white;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
+  transform: scaleX(0);
+  transform-origin: right;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #c3b212;
+}
+
+.visible {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.burgerMenu {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  width: 24px;
+  height: 18px;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.burgerLine {
+  height: 2px;
+  background-color: #1a1a1a;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.navList {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  justify-content: center;
+}
+
+@media (width <= 768px) {
+  .burgerMenu {
+    display: flex;
+  }
+
+  .navList {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0 8px 20px rgb(0 0 0 / 5%);
+    z-index: 99;
+    padding: 20px 0;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .menuOpen {
+    display: flex;
+  }
+
+  .iconsBox {
+    gap: 10px;
+  }
+
+  .authButton,
+  .registerButton {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+}
+
+@media (width <= 480px) {
+  .websiteTitle {
+    font-size: 16px;
+  }
+
+  .authButton,
+  .registerButton {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .iconsBox {
+    gap: 8px;
+  }
+
+  .searchInput {
+    width: 110px;
+    font-size: 13px;
+  }
+}
+
+@media (width <= 1024px) {
+  ul li {
+    margin: 0 15px;
+  }
+
+  .iconsBox {
+    gap: 15px;
+  }
+}
