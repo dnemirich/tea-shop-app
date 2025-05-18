@@ -7,8 +7,8 @@ import {
   type HttpMiddlewareOptions, // Required for sending HTTP requests
 } from '@commercetools/ts-client';
 
-const projectKey : string = import.meta.env.VITE_CTP_PROJECT_KEY;
-const scopes = [import.meta.env.VITE_CTP_SCOPES]
+const projectKey: string = import.meta.env.VITE_CTP_PROJECT_KEY;
+const scopes = [import.meta.env.VITE_CTP_SCOPES];
 
 // Configure authMiddlewareOptions
 const authMiddlewareOptions: AuthMiddlewareOptions = {

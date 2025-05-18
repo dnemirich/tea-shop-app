@@ -1,0 +1,104 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #f4f4f4;
+  padding: 2rem 3rem;
+  gap: 2rem;
+  font-family: 'Montserrat';
+}
+
+.section {
+  flex: 1 1 250px;
+  min-width: 200px;
+}
+
+.section h4 {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  color: #333;
+  margin-left: 20px;
+}
+
+.section ul,
+.contact p {
+  display: block;
+}
+
+.section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.section li {
+  margin-bottom: 0.4rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.section li:hover {
+  color: #000;
+}
+
+.contact {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+.icon {
+  stroke: #ae1919;
+}
+
+.contact p {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #333;
+  margin-left: 20px;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    align-items: flex-start;
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .section,
+  .contact {
+    width: 100%;
+  }
+
+  .contact {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .section ul,
+  .contact p {
+    display: none;
+  }
+
+  .contact {
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .section h4 {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+}

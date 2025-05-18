@@ -1,0 +1,18 @@
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: #1a1a1a;
+  transition: all 0.3s ease;
+}
+
+.iconButton:hover {
+  color: #c3b212;
+}
+
+.iconButton svg {
+  stroke: currentColor;
+}
