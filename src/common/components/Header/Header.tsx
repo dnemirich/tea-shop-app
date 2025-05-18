@@ -6,9 +6,8 @@ import LeafLogo from '@/assets/img/leafLogo.svg';
 import { useUserStore } from '@/common/store/user-store.ts';
 import { ROUTES } from '@/common/config/routes.ts';
 
-
 export const Header = () => {
-  const { isLoggedIn, setIsLoggedIn } = useUserStore()
+  const { isLoggedIn, setIsLoggedIn } = useUserStore();
   const [showSearch, setShowSearch] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -101,4 +100,3 @@ export const Header = () => {
     </header>
   );
 };
-

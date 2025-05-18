@@ -3,16 +3,16 @@
 :root {
   --primary-light-color: #fefefe;
   --secondary-light-color: #f4f4f4;
-  --bg-color-light: #ffffff;
+  --bg-color-light: #fff;
   --accent-color: #c3b212;
   --accent-color-darkened: #b3a310;
-  --secondary-accent-color:#ae1919;
+  --secondary-accent-color: #ae1919;
   --primary-dark-color: #282828;
-  --secondary-dark-color: #000000;
+  --secondary-dark-color: #000;
   --error-color: #c44141;
   --outline-color: #a0a0a0;
-  --item-color: #555555;
-  --box-shadow-color: #0000000C;
+  --item-color: #555;
+  --box-shadow-color: #0000000c;
   --primary-font-family: 'Montserrat';
   --secondary-font-family: 'Prosto One';
   --font-main-size: 1.6rem;
@@ -51,7 +51,8 @@ a {
   text-decoration: none;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -60,19 +61,19 @@ body {
 }
 
 #root {
-  height: 100%;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 main {
-  flex:1;
+  flex: 1;
   padding: 2rem;
 }
 
 .container {
   max-width: 120rem;
+  height: 100%;
   margin: 0 auto;
   padding: 0 2rem;
-  height: 100%;
 }

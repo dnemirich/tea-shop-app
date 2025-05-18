@@ -84,7 +84,7 @@ export const LoginPageForm = () => {
       </div>
       <div className={cl['label-wrapper']}>
         <label className={cl['form-label']}>
-          <Mail className={cl['img-icon']}/>
+          <Mail className={cl['img-icon']} />
           <input
             {...register('email')}
             className={cl['form-input']}

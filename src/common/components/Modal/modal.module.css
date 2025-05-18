@@ -17,13 +17,13 @@
   align-items: center;
   gap: 2rem;
   width: 100%;
-  max-width: 30.0rem;
+  max-width: 30rem;
   padding: 2rem;
+  font-size: 2rem;
   text-align: center;
   background-color: var(--bg-color-light);
   border-radius: 1.2rem;
   box-shadow: 0 0.4rem 2rem rgb(0 0 0 / 20%);
-  font-size: 2rem;
 }
 
 .modal-button {

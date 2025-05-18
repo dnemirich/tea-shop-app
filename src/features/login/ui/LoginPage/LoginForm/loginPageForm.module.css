@@ -47,10 +47,10 @@
   flex: 1;
   width: 100%;
   padding: 1.6rem 5.2rem 1.6rem 4.5rem;
-  background: transparent;
-  border: none;
   font-family: var(--primary-font-family), sans-serif;
   font-size: 1.6rem;
+  background: transparent;
+  border: none;
 }
 
 .form-input:focus {
@@ -105,9 +105,9 @@
 }
 
 .form-link {
-  text-decoration: none;
-  color: var(--accent-color);
   font-size: 1.6rem;
+  color: var(--accent-color);
+  text-decoration: none;
 }
 
 .input-error,
@@ -119,11 +119,11 @@
 }
 
 .toggle-button {
-  width: 5.0rem;
+  width: 5rem;
   height: 100%;
+  font-family: var(--primary-font-family), sans-serif;
   background-color: var(--secondary-light-color);
   border: none;
   cursor: pointer;
   border-left: 0.1rem var(--primary-dark-color) solid;
-  font-family: var(--primary-font-family), sans-serif;
 }

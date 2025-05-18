@@ -11,7 +11,6 @@ import { LoginPage } from '@/features/login/ui/LoginPage/LoginPage.tsx';
 import { ROUTES } from '@/common/config/routes.ts';
 import { NotFound } from '@/common/components/NotFoundPage/NotFound.tsx';
 
-
 function App() {
   const { error, clearError } = useAppStore();
 
@@ -55,8 +54,6 @@ function App() {
       <ToastContainer />
     </>
   );
-
-
 }
 
 export default App;

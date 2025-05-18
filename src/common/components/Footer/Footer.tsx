@@ -36,36 +36,37 @@ export const Footer: React.FC = () => {
     <footer className={styles.footer}>
       <div className="container">
         <div className={styles.footerWrapper}>
-        <div className={styles.section}>
-          <h4 className={styles.sectionTitle}>COLLECTIONS</h4>
-          <ul className={styles.sectionList}>
-            {teaArray.map((item, index) => (
-              <li className={styles.sectionItem} key={index}>{item}</li>
-            ))}
-          </ul>
-        </div>
+          <div className={styles.section}>
+            <h4 className={styles.sectionTitle}>COLLECTIONS</h4>
+            <ul className={styles.sectionList}>
+              {teaArray.map((item, index) => (
+                <li className={styles.sectionItem} key={index}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <div className={styles.section}>
-          <h4 className={styles.sectionTitle}>LEARN</h4>
-          <ul className={styles.sectionList}>
-            <li className={styles.sectionItem}>About us</li>
-            <li className={styles.sectionItem}>Blog</li>
-          </ul>
-        </div>
+          <div className={styles.section}>
+            <h4 className={styles.sectionTitle}>LEARN</h4>
+            <ul className={styles.sectionList}>
+              <li className={styles.sectionItem}>About us</li>
+              <li className={styles.sectionItem}>Blog</li>
+            </ul>
+          </div>
 
-        <div className={`${styles.section} ${styles.contact}`}>
-          <h4 className={styles.sectionTitle}>CONTACT US</h4>
-          <ul className={styles.contactsList}>
-            {contactInfo.map((item, index) => (
-              <li className={styles.contactItem} key={index}>
-                {item.icon} {item.text}
-              </li>
-            ))}
-          </ul>
-        </div>
+          <div className={`${styles.section} ${styles.contact}`}>
+            <h4 className={styles.sectionTitle}>CONTACT US</h4>
+            <ul className={styles.contactsList}>
+              {contactInfo.map((item, index) => (
+                <li className={styles.contactItem} key={index}>
+                  {item.icon} {item.text}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </footer>
   );
 };
-
