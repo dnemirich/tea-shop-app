@@ -4,16 +4,20 @@ import cl from './loginPageForm.module.css';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { FormValueType, loginSchema } from './validation';
+import { createCustomerApiRoot } from './password-flow-client';
+import { Modal } from './Modal/Modal';
 
 export const LoginPageForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [hasCyrillic, setHasCyrillic] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const {
     register,
     handleSubmit,
     setError,
     reset,
+    clearErrors,
     formState: { errors, isSubmitting },
   } = useForm<FormValueType>({
     defaultValues: {
@@ -38,8 +42,25 @@ export const LoginPageForm = () => {
       return;
     }
 
-    reset();
-    console.log('Submitted', data);
+    try {
+      const apiRoot = createCustomerApiRoot(data.email, data.password);
+      const response = await apiRoot.me().get().execute();
+      console.log('Password flow user:', response.body);
+
+      setIsLoggedIn(true);
+
+      reset();
+    } catch (err: unknown) {
+      console.log('Login error:', err);
+
+      clearErrors('email');
+      clearErrors('password');
+
+      setError('password', {
+        type: 'manual',
+        message: 'Incorrect email or password',
+      });
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -50,6 +71,9 @@ export const LoginPageForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cl.form} noValidate>
+      {isLoggedIn && (
+        <Modal message="You have successfully signed in!" onClose={() => setIsLoggedIn(false)} />
+      )}
       <div className={cl['form-title']}>
         <h2>Already a customer?</h2>
         <p>Welcome back! Sign in for faster checkout.</p>
@@ -62,6 +86,10 @@ export const LoginPageForm = () => {
             className={cl['form-input']}
             type="email"
             placeholder="Email Address"
+            onChange={(e) => {
+              setHasCyrillic(containsCyrillic(e.target.value));
+              clearErrors('email');
+            }}
           />
         </label>
         {errors.email && <p className={cl['input-error']}>{`${errors.email.message}`}</p>}
@@ -77,6 +105,7 @@ export const LoginPageForm = () => {
             onChange={(e) => {
               const value = e.target.value;
               setHasCyrillic(containsCyrillic(value));
+              clearErrors('password');
             }}
           />
           <button type="button" onClick={togglePasswordVisibility} className={cl['toggle-button']}>

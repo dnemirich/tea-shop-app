@@ -24,7 +24,9 @@
     ]
   },
   "dependencies": {
-    "@commercetools/platform-sdk": "^8.8.0",
+    "@commercetools/platform-sdk": "^8.9.0",
+    "@commercetools/sdk-auth": "^5.0.1",
+    "@commercetools/sdk-client": "^4.0.1",
     "@commercetools/ts-client": "^3.3.0",
     "node-fetch": "^3.3.2",
     "react": "^19.0.0",
