@@ -9,7 +9,7 @@ import Layout from '@/common/components/Layout/Layout';
 
 import { LoginPage } from '@/features/login/ui/LoginPage/LoginPage.tsx';
 import { ROUTES } from '@/common/config/routes.ts';
-import { NotFound } from '@/common/components/NotFoundPage/NotFound.tsx';
+import { NotFoundPage } from '@/common/components/NotFoundPage/NotFoundPage.tsx';
 
 function App() {
   const { error, clearError } = useAppStore();
@@ -48,7 +48,7 @@ function App() {
           <Route path={ROUTES.REGISTER} element={<RegistrationPage />} />
           {/* <Route index element={<Home />} />
         <Route path="about" element={<About />} /> */}
-          <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
+          <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
         </Route>
       </Routes>
       <ToastContainer />

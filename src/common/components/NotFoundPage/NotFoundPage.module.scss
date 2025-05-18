@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-family: sans-serif;
+  color: var(--primary-dark-color);
+  text-align: center;
+  background-color: var(--secondary-light-color);
+}
+
+
+.heading {
+  margin: 0;
+  font-size: 9.6rem;
+  font-weight: 800;
+  color: var(--item-color);
+}
+
+
+.message {
+  font-size: 2.4rem;
+  font-weight: 500;
+  margin-top: 1.6rem;
+}
+
+
+.subtext {
+  font-size: 1.6rem;
+  margin-top: 0.8rem;
+  color: var(--outline-color);
+}
+
+
+.linkAsBtn {
+  padding: 1.2rem 2.4rem;
+  font-size: 1.6rem;
+  color: var(--primary-light-color);
+  background-color: var(--primary-dark-color);
+  border: none;
+  border-radius: 0.6rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-top: 2.4rem;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
