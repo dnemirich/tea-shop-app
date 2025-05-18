@@ -14,8 +14,19 @@
     "lint:styles:fix": "stylelint \"src/**/*.{css,scss}\" --fix",
     "prepare": "husky"
   },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss}": [
+      "stylelint --fix"
+    ]
+  },
   "dependencies": {
-    "@commercetools/platform-sdk": "^8.8.0",
+    "@commercetools/platform-sdk": "^8.9.0",
+    "@commercetools/sdk-auth": "^5.0.1",
+    "@commercetools/sdk-client": "^4.0.1",
     "@commercetools/ts-client": "^3.3.0",
     "lucide-react": "^0.509.0",
     "node-fetch": "^3.3.2",
@@ -32,6 +43,7 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@types/react-router-dom": "^5.3.3",
+    "@types/testing-library__jest-dom": "^5.14.9",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
     "@vitejs/plugin-react": "^4.3.4",
@@ -46,7 +58,7 @@
     "husky": "^9.1.7",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "lint-staged": "^15.5.1",
+    "lint-staged": "^15.5.2",
     "prettier": "^3.5.3",
     "stylelint": "^16.19.1",
     "stylelint-config-css-modules": "^4.4.0",

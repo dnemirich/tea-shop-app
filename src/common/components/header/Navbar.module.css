@@ -5,7 +5,7 @@
   justify-content: space-between;
   background: #fff;
   padding: 20px 30px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 5%);
   position: relative;
   z-index: 100;
 }
@@ -49,7 +49,7 @@ ul li {
   margin: 0 25px;
   font-size: 15px;
   cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-weight: 500;
   color: #333;
   position: relative;
@@ -98,7 +98,7 @@ ul li:hover::after {
 }
 
 .iconButton svg {
-  stroke: currentColor;
+  stroke: currentcolor;
 }
 
 .authButton {
@@ -112,7 +112,7 @@ ul li:hover::after {
   color: #1a1a1a;
   cursor: pointer;
   text-decoration: none;
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-weight: 500;
   font-size: 14px;
   transition: all 0.3s ease;
@@ -132,7 +132,7 @@ ul li:hover::after {
   border-radius: 30px;
   cursor: pointer;
   text-decoration: none;
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   font-weight: 600;
   font-size: 14px;
   transition: all 0.3s ease;
@@ -141,7 +141,7 @@ ul li:hover::after {
 .registerButton:hover {
   background-color: #b3a310;
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(195, 178, 18, 0.3);
+  box-shadow: 0 2px 8px rgb(195 178 18 / 30%);
 }
 
 .searchWrapper {
@@ -158,9 +158,9 @@ ul li:hover::after {
   border: 1px solid #e0e0e0;
   border-radius: 30px;
   font-size: 14px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   background-color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
   transform: scaleX(0);
   transform-origin: right;
   opacity: 0;
@@ -204,7 +204,7 @@ ul li:hover::after {
   justify-content: center;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .burgerMenu {
     display: flex;
   }
@@ -217,7 +217,7 @@ ul li:hover::after {
     width: 100%;
     flex-direction: column;
     background-color: #fff;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 20px rgb(0 0 0 / 5%);
     z-index: 99;
     padding: 20px 0;
     align-items: center;
@@ -239,7 +239,7 @@ ul li:hover::after {
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .websiteTitle {
     font-size: 16px;
   }
@@ -260,7 +260,7 @@ ul li:hover::after {
   }
 }
 
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   ul li {
     margin: 0 15px;
   }
