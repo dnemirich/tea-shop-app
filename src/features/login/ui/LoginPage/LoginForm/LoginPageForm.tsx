@@ -2,18 +2,19 @@ import cl from './loginPageForm.module.css';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { FormValueType, loginSchema } from '../validation.ts';
-import { createCustomerApiRoot } from '../../../api/password-flow-client.ts';
 import { Modal } from '@/common/components/Modal/Modal.tsx';
 import { KeyRound, Mail } from 'lucide-react';
 import { useUserStore } from '@/common/store/user-store.ts';
-// import { useAppStore } from '@/common/store/app-store.ts';
+import { useNavigate } from 'react-router';
+import { authService } from '@/features/login/api/authService.ts';
+import { ROUTES } from '@/common/config/routes.ts';
 
 export const LoginPageForm = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [hasCyrillic, setHasCyrillic] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { setIsLoggedIn } = useUserStore();
-  // const {setAppError} = useAppStore();
 
   const {
     register,
@@ -46,17 +47,14 @@ export const LoginPageForm = () => {
     }
 
     try {
-      const apiRoot = createCustomerApiRoot(data.email, data.password);
-      const response = await apiRoot.me().get().execute();
-      console.log('Password flow user:', response.body);
-
+      await authService.login(data.email, data.password, data.rememberMe);
       setIsLoggedIn(true);
       setIsModalOpen(true);
-
       reset();
+      setTimeout(() => {
+        navigate(ROUTES.HOME);
+      }, 1500);
     } catch (err: unknown) {
-      console.log('Login error:', err);
-
       clearErrors('email');
       clearErrors('password');
 

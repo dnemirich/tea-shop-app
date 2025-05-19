@@ -39,7 +39,6 @@ export const createCustomerApiRoot = (email: string, password: string) => {
     .build();
 
   const apiRoot = createApiBuilderFromCtpClient(customerClient).withProjectKey({ projectKey });
-  apiRoot.get;
 
   return apiRoot;
 };

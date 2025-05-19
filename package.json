@@ -27,6 +27,7 @@
     "@commercetools/platform-sdk": "^8.9.0",
     "@commercetools/sdk-auth": "^5.0.1",
     "@commercetools/sdk-client": "^4.0.1",
+    "@commercetools/sdk-client-v2": "^3.0.0",
     "@commercetools/ts-client": "^3.3.0",
     "@hookform/resolvers": "^5.0.1",
     "lucide-react": "^0.509.0",
