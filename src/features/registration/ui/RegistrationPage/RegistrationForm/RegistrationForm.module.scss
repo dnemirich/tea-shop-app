@@ -16,7 +16,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 45.6rem;
+  max-width: 40rem;
 }
 
 .btn {
@@ -56,10 +56,6 @@
   color: var(--primary-dark-color);
   border: 0.1rem solid var(--outline-color);
   outline-color: var(--accent-color);
-}
-
-.input {
-  min-width: 22.3rem;
 }
 
 .input[type='number']::-webkit-outer-spin-button,
@@ -134,4 +130,21 @@
 .checkboxText {
   font-size: 1.6rem;
   margin-left: 0.8rem;
+}
+
+@media (width <= 768px) {
+  .formFields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (width <= 500px) {
+  .fieldsWrapper {
+    flex-direction: column;
+  }
+
+  .input,
+  .select {
+    font-size: 1.4rem;
+  }
 }

@@ -65,7 +65,7 @@ export const RegistrationForm = () => {
     };
     createCustomer(finalData)
       .then((res) => {
-        console.log(res)
+        console.log(res);
         reset();
       })
       .catch((err) => setAppError(err.message));

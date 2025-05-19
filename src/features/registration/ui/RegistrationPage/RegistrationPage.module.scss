@@ -19,3 +19,18 @@
   text-align: center;
   margin-bottom: 5.4rem;
 }
+
+@media (width <= 500px) {
+  .formContainer {
+    padding: 3rem 2rem;
+  }
+
+  .title {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .supplementText {
+    margin-bottom: 3rem;
+  }
+}

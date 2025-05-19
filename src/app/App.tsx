@@ -44,10 +44,7 @@ function App() {
     <>
       <Routes>
         <Route path={ROUTES.HOME} element={<Layout />}>
-          <Route
-            path={ROUTES.LOGIN}
-            element={<LoginPage />}
-          />
+          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<RegistrationPage />} />
           {/* <Route index element={<Home />} />
         <Route path="about" element={<About />} /> */}

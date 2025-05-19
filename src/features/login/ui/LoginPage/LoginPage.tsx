@@ -6,17 +6,16 @@ import { ROUTES } from '@/common/config/routes.ts';
 import { Navigate } from 'react-router';
 
 export const LoginPage = () => {
-  const isLoggedIn = useUserStore(s => s.isLoggedIn)
-  const navigate = useNavigate()
+  const isLoggedIn = useUserStore((s) => s.isLoggedIn);
+  const navigate = useNavigate();
 
   if (isLoggedIn) {
-    return <Navigate to={ROUTES.HOME} replace />
+    return <Navigate to={ROUTES.HOME} replace />;
   }
 
   return (
     <div className={cl['login-page-wrapper']}>
-      <LoginPageForm onSuccess={() => navigate(ROUTES.HOME)}
-      />
+      <LoginPageForm onSuccess={() => navigate(ROUTES.HOME)} />
     </div>
   );
 };

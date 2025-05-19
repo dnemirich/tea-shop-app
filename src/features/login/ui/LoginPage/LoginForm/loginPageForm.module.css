@@ -127,3 +127,23 @@
   cursor: pointer;
   border-left: 0.1rem var(--primary-dark-color) solid;
 }
+
+@media (width <= 500px) {
+  .form {
+    gap: 1.2rem;
+    padding: 2rem;
+  }
+
+  .form-title {
+    font-size: 1.2rem;
+  }
+
+  .img-icon {
+    display: none;
+  }
+
+  .form-input {
+    font-size: 1.4rem;
+    padding-left: 1.2rem;
+  }
+}

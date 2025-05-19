@@ -12,8 +12,7 @@
 }
 
 .section {
-  flex: 1 1 30rem;
-  max-width: 30rem;
+  flex: 1 1 25rem;
 }
 
 .sectionTitle {
@@ -79,5 +78,12 @@
   .sectionTitle {
     margin-left: 0;
     justify-self: center;
+  }
+
+  .contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }

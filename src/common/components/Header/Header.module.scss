@@ -232,9 +232,24 @@
   }
 }
 
+@media (width <= 768px) {
+  .searchWrapper {
+    display: none;
+  }
+
+  .logo {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .websiteTitle {
+    font-size: 1.4rem;
+  }
+}
+
 @media (width <= 480px) {
   .websiteTitle {
-    font-size: 1.6rem;
+    display: none;
   }
 
   .authButton,
@@ -245,10 +260,5 @@
 
   .iconsBox {
     gap: 0.8rem;
-  }
-
-  .searchInput {
-    width: 11rem;
-    font-size: 1.3rem;
   }
 }
