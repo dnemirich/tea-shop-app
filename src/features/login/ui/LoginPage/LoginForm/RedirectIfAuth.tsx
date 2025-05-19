@@ -1,36 +1,24 @@
-import { JSX, useEffect, useState } from 'react';
+import { useEffect, useState, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useUserStore } from '@/common/store/user-store';
 import { authService } from '@/features/login/api/authService';
 import { ROUTES } from '@/common/config/routes';
 
-type Props = { children: JSX.Element };
+type Props = {
+  children: ReactNode;
+};
 
 export const RedirectIfAuth = ({ children }: Props) => {
+  const isLoggedIn = useUserStore((s) => s.isLoggedIn);
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const current = authService.getCurrentUser();
-      if (current) {
-        setIsAuthenticated(true);
-        setLoading(false);
-        return;
-      }
-
-      const session = await authService.restoreSession();
-      setIsAuthenticated(!!session);
+    authService.restoreSession().finally(() => {
       setLoading(false);
-    };
-
-    checkAuth();
+    });
   }, []);
 
   if (loading) return null;
 
-  if (isAuthenticated) {
-    return <Navigate to={ROUTES.HOME} replace />;
-  }
-
-  return children;
+  return isLoggedIn ? <Navigate to={ROUTES.HOME} replace /> : <>{children}</>;
 };

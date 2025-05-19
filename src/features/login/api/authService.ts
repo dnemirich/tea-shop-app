@@ -1,47 +1,124 @@
+// import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
+// import { createCustomerApiRoot } from './password-flow-client';
+//
+//
+// type AuthService = {
+//   login: (
+//     email: string,
+//     password: string,
+//     rememberMe?: boolean,
+//   ) => Promise<ByProjectKeyRequestBuilder>;
+//   logout: () => void;
+//   getCurrentUser: () => { email: string; apiRoot: ByProjectKeyRequestBuilder } | null;
+//   restoreSession: () => Promise<ByProjectKeyRequestBuilder | null>;
+//   checkAuth: () => Promise<boolean>;
+// };
+//
+// export const createAuthService = (): AuthService => {
+//   let currentUser: { email: string; apiRoot: ByProjectKeyRequestBuilder } | null = null;
+//
+//   return {
+//     async login(email, password, rememberMe = false) {
+//       if (currentUser?.email === email) {
+//         return currentUser.apiRoot;
+//       }
+//
+//       const apiRoot = createCustomerApiRoot(email, password);
+//       await apiRoot.me().get().execute();
+//
+//       currentUser = { email, apiRoot };
+//       if (rememberMe) {
+//         sessionStorage.setItem('authEmail', email);
+//       } else {
+//         sessionStorage.removeItem('authEmail');
+//       }
+//
+//       return apiRoot;
+//     },
+//
+//     logout() {
+//       currentUser = null;
+//       sessionStorage.removeItem('authEmail');
+//     },
+//
+//     getCurrentUser() {
+//       return currentUser;
+//     },
+//
+//     async restoreSession() {
+//       const email = sessionStorage.getItem('authEmail');
+//       if (!email) return null;
+//
+//       try {
+//         const apiRoot = createCustomerApiRoot(email, '');
+//         await apiRoot.me().get().execute();
+//         currentUser = { email, apiRoot };
+//         return apiRoot;
+//       } catch {
+//         this.logout();
+//         return null;
+//       }
+//     },
+//
+//     async checkAuth() {
+//       if (this.getCurrentUser()) return true;
+//
+//       try {
+//         const apiRoot = await this.restoreSession();
+//         return !!apiRoot;
+//       } catch {
+//         return false;
+//       }
+//     },
+//   };
+// };
+//
+// export const authService = createAuthService();
+
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 import { createCustomerApiRoot } from './password-flow-client';
+import { useUserStore } from '@/common/store/user-store';
 
-type AuthService = {
+export type AuthService = {
   login: (
     email: string,
     password: string,
     rememberMe?: boolean,
   ) => Promise<ByProjectKeyRequestBuilder>;
   logout: () => void;
-  getCurrentUser: () => { email: string; apiRoot: ByProjectKeyRequestBuilder } | null;
+  getApiRoot: () => ByProjectKeyRequestBuilder | null;
   restoreSession: () => Promise<ByProjectKeyRequestBuilder | null>;
-  checkAuth: () => Promise<boolean>;
 };
 
 export const createAuthService = (): AuthService => {
-  let currentUser: { email: string; apiRoot: ByProjectKeyRequestBuilder } | null = null;
+  let apiRoot: ByProjectKeyRequestBuilder | null = null;
+  const { setLoggedIn, setLoggedOut } = useUserStore.getState();
 
   return {
     async login(email, password, rememberMe = false) {
-      if (currentUser?.email === email) {
-        return currentUser.apiRoot;
-      }
+      const root = createCustomerApiRoot(email, password);
+      await root.me().get().execute();
 
-      const apiRoot = createCustomerApiRoot(email, password);
-      await apiRoot.me().get().execute();
+      apiRoot = root;
+      setLoggedIn(email);
 
-      currentUser = { email, apiRoot };
       if (rememberMe) {
         sessionStorage.setItem('authEmail', email);
       } else {
         sessionStorage.removeItem('authEmail');
       }
 
-      return apiRoot;
+      return root;
     },
 
     logout() {
-      currentUser = null;
+      apiRoot = null;
+      setLoggedOut();
       sessionStorage.removeItem('authEmail');
     },
 
-    getCurrentUser() {
-      return currentUser;
+    getApiRoot() {
+      return apiRoot;
     },
 
     async restoreSession() {
@@ -49,24 +126,15 @@ export const createAuthService = (): AuthService => {
       if (!email) return null;
 
       try {
-        const apiRoot = createCustomerApiRoot(email, '');
-        await apiRoot.me().get().execute();
-        currentUser = { email, apiRoot };
-        return apiRoot;
+        const root = createCustomerApiRoot(email, '');
+        await root.me().get().execute();
+
+        apiRoot = root;
+        setLoggedIn(email);
+        return root;
       } catch {
         this.logout();
         return null;
-      }
-    },
-
-    async checkAuth() {
-      if (this.getCurrentUser()) return true;
-
-      try {
-        const apiRoot = await this.restoreSession();
-        return !!apiRoot;
-      } catch {
-        return false;
       }
     },
   };
