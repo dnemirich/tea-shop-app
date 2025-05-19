@@ -47,7 +47,7 @@ export const LoginPageForm = () => {
     }
 
     try {
-      await authService.login(data.email, data.password, data.rememberMe);
+      await authService.login(data.email, data.password, data.rememberMe || false);
       setIsLoggedIn(true);
       setIsModalOpen(true);
       reset();

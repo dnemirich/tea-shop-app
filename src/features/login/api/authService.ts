@@ -10,6 +10,7 @@ type AuthService = {
   logout: () => void;
   getCurrentUser: () => { email: string; apiRoot: ByProjectKeyRequestBuilder } | null;
   restoreSession: () => Promise<ByProjectKeyRequestBuilder | null>;
+  checkAuth: () => Promise<boolean>;
 };
 
 export const createAuthService = (): AuthService => {
@@ -55,6 +56,17 @@ export const createAuthService = (): AuthService => {
       } catch {
         this.logout();
         return null;
+      }
+    },
+
+    async checkAuth() {
+      if (this.getCurrentUser()) return true;
+
+      try {
+        const apiRoot = await this.restoreSession();
+        return !!apiRoot;
+      } catch {
+        return false;
       }
     },
   };
