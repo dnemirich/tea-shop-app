@@ -63,10 +63,9 @@ export const RegistrationForm = () => {
       defaultShippingAddress: isDefaultShipping ? shippingIndex : undefined,
       defaultBillingAddress: isDefaultBilling ? billingIndex : undefined,
     };
-    console.log(finalData);
     createCustomer(finalData)
       .then((res) => {
-        console.log(res);
+        console.log(res)
         reset();
       })
       .catch((err) => setAppError(err.message));

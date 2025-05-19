@@ -156,8 +156,12 @@ import { Modal } from '@/common/components/Modal/Modal.tsx';
 import { KeyRound, Mail } from 'lucide-react';
 
 export type LoginFormData = z.infer<typeof loginSchema>;
+type Props = {
+  onSuccess: () => void
+}
 
-export const LoginPageForm = () => {
+
+export const LoginPageForm = ({onSuccess}: Props) => {
   const navigate = useNavigate();
   const isLoggedIn = useUserStore((s) => s.isLoggedIn);
   const setAppError = useAppStore((s) => s.setAppError);
@@ -190,11 +194,11 @@ export const LoginPageForm = () => {
         clearErrors(field as any);
       }
     });
-  }, [isLoggedIn, navigate, allValues, clearErrors]);
+  }, [isLoggedIn, navigate, clearErrors]);
 
   const onSubmit = async (data: FormValueType) => {
     clearError();
-    authService.login(data.email, data.password, data.rememberMe).catch((e) => {
+    authService.login(data.email, data.password, data.rememberMe).then(() => onSuccess()).catch((e) => {
       setAppError(e.message);
     });
   };
