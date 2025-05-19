@@ -10,7 +10,8 @@ import { type Address, Countries, type Customer } from '@/common/types/user-type
 import { useAppStore } from '@/common/store/app-store.ts';
 import { KeyRound, Mail } from 'lucide-react';
 import { ROUTES } from '@/common/config/routes.ts';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { authService } from '@/features/login/api/authService.ts';
 
 export type RegistrationFormData = z.infer<typeof registrationSchema>;
 
@@ -19,7 +20,9 @@ export const RegistrationForm = () => {
   const [isDefaultShipping, setIsDefaultShipping] = useState<boolean>(false);
   const [isDefaultBilling, setIsDefaultBilling] = useState<boolean>(false);
 
-  const { setAppError } = useAppStore();
+  const navigate = useNavigate();
+
+  const { setAppError, clearError } = useAppStore();
 
   const {
     register,
@@ -28,7 +31,7 @@ export const RegistrationForm = () => {
     formState: { errors },
   } = useForm<RegistrationFormData>({ resolver: zodResolver(registrationSchema) });
 
-  const onSubmit: SubmitHandler<RegistrationFormData> = (data) => {
+  const onSubmit: SubmitHandler<RegistrationFormData> = async (data) => {
     const addresses: Address[] = [
       {
         country: Countries[data.shippingAddress.country],
@@ -63,9 +66,17 @@ export const RegistrationForm = () => {
       defaultShippingAddress: isDefaultShipping ? shippingIndex : undefined,
       defaultBillingAddress: isDefaultBilling ? billingIndex : undefined,
     };
+
     createCustomer(finalData)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        // console.log(res);
+        clearError();
+        authService
+          .login(finalData.email, finalData.password, false)
+          .then(() => navigate(ROUTES.HOME, { replace: true }))
+          .catch((e) => {
+            setAppError(e.message);
+          });
         reset();
       })
       .catch((err) => setAppError(err.message));

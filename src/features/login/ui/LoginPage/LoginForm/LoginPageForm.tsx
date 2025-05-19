@@ -173,7 +173,6 @@ export const LoginPageForm = ({ onSuccess }: Props) => {
     register,
     handleSubmit,
     clearErrors,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -181,18 +180,10 @@ export const LoginPageForm = ({ onSuccess }: Props) => {
     defaultValues: { rememberMe: false },
   });
 
-  const allValues = watch();
-
   useEffect(() => {
     if (isLoggedIn) {
       navigate(ROUTES.HOME, { replace: true });
     }
-
-    (Object.keys(allValues) as Array<keyof FormValueType>).forEach((field) => {
-      if (allValues[field] === '') {
-        clearErrors(field as any);
-      }
-    });
   }, [isLoggedIn, navigate, clearErrors]);
 
   const onSubmit = async (data: FormValueType) => {
