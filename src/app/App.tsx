@@ -10,6 +10,7 @@ import Layout from '@/common/components/Layout/Layout';
 import { LoginPage } from '@/features/login/ui/LoginPage/LoginPage.tsx';
 import { ROUTES } from '@/common/config/routes.ts';
 import { NotFoundPage } from '@/common/components/NotFoundPage/NotFoundPage.tsx';
+import { RedirectIfAuth } from '@/features/login/ui/LoginPage/LoginForm/RedirectIfAuth';
 
 function App() {
   const { error, clearError } = useAppStore();
@@ -44,7 +45,14 @@ function App() {
     <>
       <Routes>
         <Route path={ROUTES.HOME} element={<Layout />}>
-          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          <Route
+            path={ROUTES.LOGIN}
+            element={
+              <RedirectIfAuth>
+                <LoginPage />
+              </RedirectIfAuth>
+            }
+          />
           <Route path={ROUTES.REGISTER} element={<RegistrationPage />} />
           {/* <Route index element={<Home />} />
         <Route path="about" element={<About />} /> */}

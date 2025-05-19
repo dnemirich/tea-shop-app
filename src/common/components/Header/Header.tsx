@@ -5,9 +5,10 @@ import { Search, User, LogOut, ShoppingBasket } from 'lucide-react';
 import LeafLogo from '@/assets/img/leafLogo.svg';
 import { useUserStore } from '@/common/store/user-store.ts';
 import { ROUTES } from '@/common/config/routes.ts';
+import { authService } from '@/features/login/api/authService.ts';
 
 export const Header = () => {
-  const { isLoggedIn, setIsLoggedIn } = useUserStore();
+  const { isLoggedIn } = useUserStore();
   const [showSearch, setShowSearch] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,8 +24,7 @@ export const Header = () => {
   };
 
   const handleLogout = () => {
-    // TODO: сделать запрос на логаут прежде чем менять состояние
-    setIsLoggedIn(false);
+    authService.logout();
   };
 
   const handleToggleMenu = () => {
