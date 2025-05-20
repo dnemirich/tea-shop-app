@@ -1,4 +1,4 @@
-.login-page-wrapper {
+.loginPageWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,23 +18,23 @@
   background-color: var(--secondary-light-color);
 }
 
-.form-title {
+.formTitle {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 1.2rem;
   margin-top: 3.5rem;
+
+  h2 {
+    font-size: var(--font-lg-size);
+  }
+
+  p {
+    font-size: 1.6rem;
+  }
 }
 
-.form-title h2 {
-  font-size: var(--font-lg-size);
-}
-
-.form-title p {
-  font-size: 1.6rem;
-}
-
-.form-label {
+.formLabel {
   position: relative;
   display: flex;
   align-items: center;
@@ -43,7 +43,7 @@
   border: 0.1rem solid var(--primary-dark-color);
 }
 
-.form-input {
+.formInput {
   flex: 1;
   width: 100%;
   padding: 1.6rem 5.2rem 1.6rem 4.5rem;
@@ -51,19 +51,19 @@
   font-size: 1.6rem;
   background: transparent;
   border: none;
+
+  :focus {
+    outline: none;
+  }
 }
 
-.form-input:focus {
-  outline: none;
-}
-
-.img-icon {
+.imgIcon {
   position: absolute;
   top: 1.6rem;
   left: 1.2rem;
 }
 
-.sign-in-button {
+.signInButton {
   padding: 1.8rem 0;
   font-size: var(--font-error-size);
   font-weight: 500;
@@ -74,51 +74,51 @@
   margin-bottom: 3.5rem;
 }
 
-.form-options {
+.formOptions {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 1.2rem;
 }
 
-.label-wrapper {
+.labelWrapper {
   min-height: 8.4rem;
   margin-bottom: 0.2rem;
 }
 
-.form-checkbox-label {
+.formCheckboxLabel {
   display: flex;
   gap: 0.8rem;
   font-size: 1.6rem;
 }
 
-.form-checkbox-input {
+.formCheckboxInput {
   appearance: none;
   width: 1.5rem;
   height: 1.5rem;
   border: 0.2rem solid var(--primary-dark-color);
   cursor: pointer;
+
+  :checked {
+    background-color: var(--primary-dark-color);
+  }
 }
 
-.form-checkbox-input:checked {
-  background-color: var(--primary-dark-color);
-}
-
-.form-link {
+.formLink {
   font-size: 1.6rem;
   color: var(--accent-color);
   text-decoration: none;
 }
 
-.input-error,
-.input-warning {
+.inputError,
+.inputWarning {
   margin: 0.4rem 0;
   font-size: var(--font-error-size);
   color: var(--error-color);
   text-align: start;
 }
 
-.toggle-button {
+.toggleButton {
   width: 5rem;
   height: 100%;
   font-family: var(--primary-font-family), sans-serif;
@@ -134,15 +134,15 @@
     padding: 2rem;
   }
 
-  .form-title {
+  .formTitle {
     font-size: 1.2rem;
   }
 
-  .img-icon {
+  .imgIcon {
     display: none;
   }
 
-  .form-input {
+  .formInput {
     font-size: 1.4rem;
     padding-left: 1.2rem;
   }
