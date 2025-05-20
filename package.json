@@ -14,18 +14,40 @@
     "lint:styles:fix": "stylelint \"src/**/*.{css,scss}\" --fix",
     "prepare": "husky"
   },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss}": [
+      "stylelint --fix"
+    ]
+  },
   "dependencies": {
-    "@commercetools/platform-sdk": "^8.8.0",
+    "@commercetools/platform-sdk": "^8.9.0",
+    "@commercetools/sdk-auth": "^5.0.1",
+    "@commercetools/sdk-client": "^4.0.1",
+    "@commercetools/sdk-client-v2": "^3.0.0",
     "@commercetools/ts-client": "^3.3.0",
+    "@hookform/resolvers": "^5.0.1",
+    "lucide-react": "^0.509.0",
     "node-fetch": "^3.3.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.2",
+    "react-router": "^7.5.3",
+    "react-router-dom": "^7.6.0",
+    "react-toastify": "^11.0.5",
+    "zod": "^3.24.4",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@types/jest": "^29.5.14",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/testing-library__jest-dom": "^5.14.9",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
     "@vitejs/plugin-react": "^4.3.4",
@@ -40,16 +62,20 @@
     "husky": "^9.1.7",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "lint-staged": "^15.5.1",
+    "lint-staged": "^15.5.2",
     "prettier": "^3.5.3",
+    "sass-embedded": "^1.87.0",
     "stylelint": "^16.19.1",
     "stylelint-config-css-modules": "^4.4.0",
     "stylelint-config-standard": "^38.0.0",
-    "stylelint-scss": "^6.0.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
+    "stylelint-order": "^7.0.0",
+    "stylelint-scss": "^6.12.0",
     "ts-jest": "^29.3.2",
     "ts-node": "^10.9.2",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
-    "vite": "^6.3.1"
+    "vite": "^6.3.1",
+    "vite-plugin-node-polyfills": "^0.23.0"
   }
 }

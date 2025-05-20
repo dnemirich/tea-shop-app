@@ -51,6 +51,7 @@ export default tseslint.config(
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-react': 'off',
       'react/jsx-no-target-blank': 'off',
+      'react/prop-types': 'off',
     },
   },
   {

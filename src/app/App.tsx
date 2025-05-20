@@ -1,29 +1,57 @@
-import { useState } from 'react';
-import reactLogo from '../assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import { RegistrationPage } from '@/features/registration/ui/RegistrationPage/RegistrationPage.tsx';
+import { useAppStore } from '@/common/store/app-store.ts';
+import { toast, ToastContainer } from 'react-toastify';
+import s from './App.module.scss';
+// import { anonymousApiRoot } from '@/features/login/api/anonymous-client.ts';
+import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Layout from '@/common/components/Layout/Layout';
+
+import { LoginPage } from '@/features/login/ui/LoginPage/LoginPage.tsx';
+import { ROUTES } from '@/common/config/routes.ts';
+import { NotFoundPage } from '@/common/components/NotFoundPage/NotFoundPage.tsx';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { error, clearError } = useAppStore();
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error, {
+        className: s.notification,
+        autoClose: false,
+        theme: 'colored',
+        closeOnClick: true,
+        position: 'top-center',
+      });
+      clearError();
+    }
+  }, [error, clearError]);
+
+  // useEffect(() => {
+  //   const anonymousSession = async () => {
+  //     try {
+  //       const response = await anonymousApiRoot;
+  //       // console.log('anonymous session:', response);
+  //     } catch (err) {
+  //       // console.log('failed to create anon session:', err);
+  //     }
+  //   };
+  //
+  //   anonymousSession();
+  // }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+      <Routes>
+        <Route path={ROUTES.HOME} element={<Layout />}>
+          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          <Route path={ROUTES.REGISTER} element={<RegistrationPage />} />
+          {/* <Route index element={<Home />} />
+        <Route path="about" element={<About />} /> */}
+          <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+      <ToastContainer />
     </>
   );
 }

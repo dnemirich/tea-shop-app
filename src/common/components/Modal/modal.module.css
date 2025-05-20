@@ -1,0 +1,37 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0 0 0 / 40%);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 30rem;
+  padding: 2rem;
+  font-size: 2rem;
+  text-align: center;
+  background-color: var(--bg-color-light);
+  border-radius: 1.2rem;
+  box-shadow: 0 0.4rem 2rem rgb(0 0 0 / 20%);
+}
+
+.modal-button {
+  padding: 1.8rem;
+  font-size: var(--font-error-size);
+  font-weight: 500;
+  color: var(--bg-color-light);
+  background-color: var(--primary-dark-color);
+  border: none;
+  cursor: pointer;
+}
