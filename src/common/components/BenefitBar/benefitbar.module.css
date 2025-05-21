@@ -2,8 +2,8 @@
   display: flex;
   justify-content: space-around;
   padding: 2rem 1rem;
+  font-family: Montserrat, sans-serif;
   background-color: #f6f6f6;
-  font-family: 'Montserrat', sans-serif;
 }
 
 .list {

@@ -48,8 +48,8 @@ function App() {
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<RegistrationPage />} />
           <Route index element={<Home />} />
-          
-        {/* <Route path="about" element={<About />} /> */}
+
+          {/* <Route path="about" element={<About />} /> */}
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
         </Route>
       </Routes>
