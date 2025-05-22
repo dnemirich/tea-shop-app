@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './promo.module.css';
+import SectionHeading from '../SectionHeading/SectionHeading';
 
 const TeaPromo: React.FC = () => {
   return (
@@ -12,10 +13,8 @@ const TeaPromo: React.FC = () => {
         />
       </div>
 
-      <div className={styles.textWrapper}>
-        <h2 className={styles.title}>
-          Every day is unique, <br /> just like our tea
-        </h2>
+      <div className={styles.textWrapper}>\
+      <SectionHeading title='Every day is unique, just like our tea'/>
         <p className={styles.paragraph}>
           Discover hand-picked teas from around the world — from calming herbal blends to bold,
           energizing infusions. At Leaf & Lore, we believe every cup tells a story. Explore our

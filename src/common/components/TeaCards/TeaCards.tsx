@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './TeaCards.module.css';
+import SectionHeading from '../SectionHeading/SectionHeading';
 
 type TeaCardProps = {
   title: string;
@@ -85,7 +86,8 @@ const TeaCards: React.FC = () => {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.sectionTitle}>Our Collections</h2>
+      <SectionHeading title="Our Collections" />
+      
       <div className={styles.grid}>
         {teaTypes.map((tea, index) => (
           <TeaCard key={index} title={tea.title} image={tea.image} description={tea.description} />

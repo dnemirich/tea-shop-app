@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f4f4f4;
+}
+.title {
+  font-family: 'Prosto One', sans-serif;
+  font-size: 36px;
+  line-height: 44px;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  
+}
+
+.post {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.postHeader {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.postImage {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.postTitle {
+  color: #000000;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 22px;
+  line-height: 20px;
+}
+
+.postDescription {
+  color: #000000;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.readMoreButton {
+  background-color: #b3a30f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.readMoreButton:hover {
+  background-color: #1e462c;
+}
+
+.fullContent {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 4px;
+  border-left: 3px solid #2a5c3c;
+  color: #333;
+  line-height: 1.7;
+}
