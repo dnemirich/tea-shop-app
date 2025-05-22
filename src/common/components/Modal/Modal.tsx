@@ -1,4 +1,4 @@
-import cl from './modal.module.css';
+import s from './modal.module.css';
 
 export const Modal = ({ message, onClose }: { message: string; onClose: () => void }) => (
   <div className={cl['modal-backdrop']}>
