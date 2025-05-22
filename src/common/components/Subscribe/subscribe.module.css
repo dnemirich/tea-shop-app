@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  font-family: Montserrat, sans-serif;
+  padding-bottom: 50px;
+}
+
+.title {
+  text-align: left;
+}
+
+@media (width >= 1024px) {
+  .container {
+    flex-direction: row-reverse;
+    gap: 85px;
+  }
+}
+
+.imageWrapper {
+  flex: 1;
+  width: 100%;
+}
+
+.image {
+  width: 628px;
+  height: 628px;
+  object-fit: cover;
+}
+
+.textWrapper {
+  width: 456px;
+  height: 420px;
+  text-align: left;
+}
+
+.paragraph {
+  font-size: 16px;
+  line-height: 24px;
+  color: #282828;
+  margin-bottom: 1.5rem;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 0;
+  font-family: Montserrat, sans-serif;
+  letter-spacing: 2px;
+  background: transparent;
+  border: none;
+  transition: all 0.2s ease;
+  padding-right: 42px;
+  border-bottom: 1px solid #ccc;
+}
+
+input::placeholder {
+  font-size: 14px;
+  color: #7a7a7a;
+  text-align: left;
+}
+
+.sendButton {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  color: #454141;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.sendText {
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}

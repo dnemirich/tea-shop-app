@@ -13,8 +13,9 @@ const TeaPromo: React.FC = () => {
         />
       </div>
 
-      <div className={styles.textWrapper}>\
-      <SectionHeading title='Every day is unique, just like our tea'/>
+      <div className={styles.textWrapper}>
+        \
+        <SectionHeading title="Every day is unique, just like our tea" />
         <p className={styles.paragraph}>
           Discover hand-picked teas from around the world — from calming herbal blends to bold,
           energizing infusions. At Leaf & Lore, we believe every cup tells a story. Explore our

@@ -1,15 +1,16 @@
 .container {
   display: flex;
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
   background-color: #f4f4f4;
 }
+
 .title {
   font-family: 'Prosto One', sans-serif;
   font-size: 36px;
   line-height: 44px;
   color: #1a1a1a;
   margin-bottom: 1rem;
-  
+  text-align: center;
 }
 
 .post {
@@ -32,28 +33,28 @@
 }
 
 .postTitle {
-  color: #000000;
-  margin-top: 0;
-  margin-bottom: 15px;
   font-size: 22px;
   line-height: 20px;
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 15px;
 }
 
 .postDescription {
-  color: #000000;
   line-height: 1.6;
+  color: #000;
   margin-bottom: 15px;
 }
 
 .readMoreButton {
-  background-color: #b3a30f;
-  color: white;
-  border: none;
   padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
   font-weight: bold;
+  color: white;
+  background-color: #b3a30f;
+  border: none;
+  border-radius: 4px;
   transition: background-color 0.3s;
+  cursor: pointer;
 }
 
 .readMoreButton:hover {
@@ -61,11 +62,11 @@
 }
 
 .fullContent {
-  margin-top: 20px;
   padding: 15px;
+  line-height: 1.7;
+  color: #333;
   background-color: #fff;
   border-radius: 4px;
+  margin-top: 20px;
   border-left: 3px solid #2a5c3c;
-  color: #333;
-  line-height: 1.7;
 }

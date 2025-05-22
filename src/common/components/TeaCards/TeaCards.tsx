@@ -87,7 +87,7 @@ const TeaCards: React.FC = () => {
   return (
     <section className={styles.container}>
       <SectionHeading title="Our Collections" />
-      
+
       <div className={styles.grid}>
         {teaTypes.map((tea, index) => (
           <TeaCard key={index} title={tea.title} image={tea.image} description={tea.description} />
