@@ -7,7 +7,6 @@
   font-family: Montserrat, sans-serif;
 }
 
-
 @media (width >= 1024px) {
   .container {
     flex-direction: row;

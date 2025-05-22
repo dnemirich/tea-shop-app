@@ -5,17 +5,14 @@ import TeaCards from '../TeaCards/TeaCards';
 import Blog from '../BlogComponents/Blog';
 import Subscribe from '../Subscribe/Subscribe';
 
-
 const Home: React.FC = () => {
   return (
     <div>
-      <Promo/>
+      <Promo />
       <BenefitBar />
       <TeaCards />
       <Blog />
-      <Subscribe/>
-      
-      
+      <Subscribe />
     </div>
   );
 };
