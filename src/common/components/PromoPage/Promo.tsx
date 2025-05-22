@@ -14,7 +14,6 @@ const TeaPromo: React.FC = () => {
       </div>
 
       <div className={styles.textWrapper}>
-        \
         <SectionHeading title="Every day is unique, just like our tea" />
         <p className={styles.paragraph}>
           Discover hand-picked teas from around the world — from calming herbal blends to bold,

@@ -1,37 +1,55 @@
+:root {
+  --gap: clamp(0.5rem, 2vw, 1.5rem);
+  --font-size-text: clamp(0.7rem, 1vw, 1.25rem);
+}
+
 .wrapper {
   display: flex;
-  justify-content: space-around;
-  padding: 2rem 1rem;
+  justify-content: center;
+  padding: clamp(1rem, 3vw, 3rem);
   font-family: Montserrat, sans-serif;
   background-color: #f6f6f6;
+  width: 100%;
 }
 
 .list {
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: 28px;
-  margin: 1rem 0;
-  padding: 30px 76px;
+  gap: clamp(1rem, 3vw, 4rem);
+  padding: var(--gap);
+  margin: 0;
   list-style: none;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .item {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 0.5rem;
   color: #1a1a1a;
   white-space: nowrap;
+  padding: 0.5rem;
 }
 
 .icon {
   color: #b4a311;
+  font-size: 1.2rem;
 }
 
 .text {
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0.15px;
+  font-size: var(--font-size-text);
   text-transform: uppercase;
+  letter-spacing: 0.1px;
+  line-height: 1.2;
+}
+
+@media (max-width: 400px) {
+  .item {
+    flex-direction: column;
+    white-space: normal;
+    text-align: center;
+  }
 }

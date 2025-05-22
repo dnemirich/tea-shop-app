@@ -15,7 +15,8 @@ const Subscribe: React.FC = () => {
       </div>
 
       <div className={styles.textWrapper}>
-        <SectionHeading title="Subscribe to our newsletter" />
+        <SectionHeading title="Subscribe to our newsletter" className={styles.customСlass} />
+
         <p className={styles.paragraph}>
           Want to be the first to know about our newest tea arrivals, seasonal specials, and tea
           wisdom from our blog? Join our growing community of tea lovers and receive hand-picked
