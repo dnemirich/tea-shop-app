@@ -11,19 +11,18 @@
   flex-direction: column;
   align-items: center;
   gap: var(--gap-lg);
-  margin-bottom: 5rem;
-  font-family: Montserrat, sans-serif;
   padding: 0 1rem;
+  font-family: Montserrat, sans-serif;
+  margin-bottom: 5rem;
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .container {
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
     gap: var(--gap-lg);
   }
- 
 }
 
 .imageWrapper {
@@ -32,7 +31,7 @@
   margin-right: 0;
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .imageWrapper {
     margin-right: var(--image-margin);
     max-width: 600px;
@@ -51,14 +50,12 @@
   max-width: var(--text-width);
   height: auto;
   text-align: center;
-  
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .textWrapper {
     text-align: left;
   }
-  
 }
 
 .paragraph {

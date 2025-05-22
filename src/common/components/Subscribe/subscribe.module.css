@@ -9,29 +9,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: Montserrat, sans-serif;
   gap: 2rem;
   padding: 0 1rem 50px;
+  font-family: Montserrat, sans-serif;
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .container {
     flex-direction: row-reverse;
-    align-items: flex-start;
     justify-content: center;
+    align-items: flex-start;
     gap: var(--gap-lg);
   }
 }
 
-.customСlass {
+.customClass {
   text-align: left;
 }
 
 .imageWrapper {
-  flex: 1;
-  width: 100%;
   display: flex;
+  flex: 1;
   justify-content: center;
+  width: 100%;
 }
 
 .image {
@@ -47,10 +47,9 @@
   max-width: var(--text-width);
   height: auto;
   text-align: center;
-  
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .textWrapper {
     text-align: left;
   }
@@ -72,13 +71,13 @@
   width: 100%;
   padding: 12px 0;
   font-family: Montserrat, sans-serif;
+  font-size: 14px;
   letter-spacing: 2px;
   background: transparent;
   border: none;
+  transition: border-color 0.2s ease;
   padding-right: 42px;
   border-bottom: 1px solid #ccc;
-  font-size: 14px;
-  transition: border-color 0.2s ease;
 }
 
 .input:focus {
@@ -108,18 +107,18 @@
 }
 
 .sendText {
+  display: none;
   font-size: 16px;
   letter-spacing: 0.02em;
-  display: none;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .sendText {
     display: inline;
   }
 }
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .input {
     padding-right: 30px;
     font-size: 12px;

@@ -5,9 +5,9 @@
 }
 
 .container {
+  padding: 0 1rem 60px;
   font-family: Montserrat, sans-serif;
   text-align: center;
-  padding: 0 1rem 60px;
 }
 
 .grid {
@@ -16,19 +16,22 @@
   gap: var(--gap);
 }
 
-@media (min-width: 600px) {
+@media (width >= 600px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .grid {
     grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   }
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
   background-color: #fff;
   box-shadow: 0 4px 6px rgb(0 0 0 / 10%);
@@ -36,9 +39,6 @@
     transform 0.3s ease,
     box-shadow 0.3s ease;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
 }
 
 .card:hover {
@@ -96,8 +96,8 @@
 
 .description {
   margin: 0 0 1rem;
+  padding: 0 1rem;
   font-size: var(--card-font);
   line-height: 1.4;
   text-align: center;
-  padding: 0 1rem;
 }
