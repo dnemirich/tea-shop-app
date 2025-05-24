@@ -27,6 +27,13 @@
   outline-color: var(--accent-color);
 }
 
+.error {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 1.2rem;
+  color: var(--error-color);
+}
+
 @media (width <= 500px) {
   .select {
     font-size: 1.4rem;

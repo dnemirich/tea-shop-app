@@ -15,8 +15,17 @@ import { authService } from '@/features/login/api/authService.ts';
 import { InputField } from '@/common/components/InputField/InputField.tsx';
 import { Checkbox } from '@/common/components/Checkbox/Checkbox.tsx';
 import { SelectField } from '@/common/components/SelectField/SelectField.tsx';
+import { Button } from '@/common/components/Button/Button.tsx';
 
 export type RegistrationFormData = z.infer<typeof registrationSchema>;
+
+const countryOptions = [
+  { value: 'Russia', label: 'Russia' },
+  { value: 'Belarus', label: 'Belarus' },
+  { value: 'Kazakhstan', label: 'Kazakhstan' },
+  { value: 'Armenia', label: 'Armenia' },
+  { value: 'Uzbekistan', label: 'Uzbekistan' },
+];
 
 export const RegistrationForm = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -98,16 +107,16 @@ export const RegistrationForm = () => {
             <InputField
               {...register('lastName')}
               placeholder="Last name"
-              error={errors.firstName?.message}
+              error={errors.lastName?.message}
             />
           </div>
           <div>
             <InputField
               {...register('dateOfBirth')}
               type={'date'}
+              info="Date of birth"
               error={errors.dateOfBirth?.message}
             />
-            <span className={s.info}>Date of birth</span>
           </div>
           <div className={s.label}>
             <InputField
@@ -125,22 +134,22 @@ export const RegistrationForm = () => {
               style={{
                 padding: '1.6rem 5.2rem 1.6rem 4.5rem',
               }}
+              type="password"
               icon={<KeyRound className={s.imgIcon} />}
               {...register('password')}
               placeholder={'Create strong password'}
+              info="Password should contain at least one digit and lower- and upper-case letters"
               error={errors.password?.message}
             />
-            <span className={s.info}>
-              Password should contain at least one digit and lower- and upper-case letters
-            </span>
           </div>
           <div className={s.label}>
             <InputField
               style={{
                 padding: '1.6rem 5.2rem 1.6rem 4.5rem',
               }}
+              type="password"
               icon={<KeyRound className={s.imgIcon} />}
-              {...register('password')}
+              {...register('confirmPassword')}
               placeholder={'Repeat your password'}
               error={errors.confirmPassword?.message}
             />
@@ -170,13 +179,7 @@ export const RegistrationForm = () => {
           </div>
           <SelectField
             {...register('shippingAddress.country')}
-            options={[
-              { value: 'Russia', label: 'Russia' },
-              { value: 'Belarus', label: 'Belarus' },
-              { value: 'Kazakhstan', label: 'Kazakhstan' },
-              { value: 'Armenia', label: 'Armenia' },
-              { value: 'Uzbekistan', label: 'Uzbekistan' },
-            ]}
+            options={countryOptions}
             error={errors.shippingAddress?.country?.message}
           />
           <Checkbox
@@ -215,13 +218,7 @@ export const RegistrationForm = () => {
               </div>
               <SelectField
                 {...register('billingAddress.country')}
-                options={[
-                  { value: 'Russia', label: 'Russia' },
-                  { value: 'Belarus', label: 'Belarus' },
-                  { value: 'Kazakhstan', label: 'Kazakhstan' },
-                  { value: 'Armenia', label: 'Armenia' },
-                  { value: 'Uzbekistan', label: 'Uzbekistan' },
-                ]}
+                options={countryOptions}
                 error={errors.billingAddress?.country?.message}
               />
               <Checkbox
@@ -233,9 +230,7 @@ export const RegistrationForm = () => {
           )}
         </div>
       </div>
-      <button type={'submit'} className={s.btn}>
-        Sign up
-      </button>
+      <Button type="submit" text="Sign in" />
       <p className={s.supplementaryText}>
         Already have an account?{' '}
         <span className={s.link}>

@@ -16,6 +16,7 @@ import { KeyRound, Mail } from 'lucide-react';
 import { InputField } from '@/common/components/InputField/InputField.tsx';
 import { PasswordInput } from '@/common/components/PasswordInput/PasswordInput.tsx';
 import { Checkbox } from '@/common/components/Checkbox/Checkbox.tsx';
+import { Button } from '@/common/components/Button/Button.tsx';
 
 export type LoginFormData = z.infer<typeof loginSchema>;
 type Props = {
@@ -108,9 +109,7 @@ export const LoginPageForm = ({ onSuccess }: Props) => {
           Forgot password?
         </a>
       </div>
-      <button disabled={isSubmitting} type="submit" className={s.signInButton}>
-        SIGN IN
-      </button>
+      <Button type="submit" text="sign in" disabled={isSubmitting} />
     </form>
   );
 };

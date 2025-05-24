@@ -27,22 +27,6 @@
   }
 }
 
-.imgIcon {
-  top: 1.6rem;
-  left: 1.2rem;
-}
-
-.signInButton {
-  padding: 1.8rem 0;
-  font-size: var(--font-error-size);
-  font-weight: 500;
-  color: var(--bg-color-light);
-  background-color: var(--primary-dark-color);
-  border: none;
-  cursor: pointer;
-  margin-bottom: 3.5rem;
-}
-
 .formOptions {
   display: flex;
   flex-wrap: wrap;
@@ -69,14 +53,5 @@
 
   .formTitle {
     font-size: 1.2rem;
-  }
-
-  .imgIcon {
-    display: none;
-  }
-
-  .formInput {
-    font-size: 1.4rem;
-    padding-left: 1.2rem;
   }
 }
