@@ -11,7 +11,6 @@ import s from './LoginPageForm.module.scss';
 import cl from '@/common/components/InputField/InputField.module.scss';
 import { useState } from 'react';
 import { FormValueType, loginSchema } from '../validation.ts';
-import { Modal } from '@/common/components/Modal/Modal.tsx';
 import { KeyRound, Mail } from 'lucide-react';
 import { InputField } from '@/common/components/InputField/InputField.tsx';
 import { PasswordInput } from '@/common/components/PasswordInput/PasswordInput.tsx';
@@ -30,7 +29,6 @@ export const LoginPageForm = ({ onSuccess }: Props) => {
   const clearError = useAppStore((s) => s.clearError);
 
   const [hasCyrillic, setHasCyrillic] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -52,7 +50,9 @@ export const LoginPageForm = ({ onSuccess }: Props) => {
     clearError();
     authService
       .login(data.email, data.password, data.rememberMe)
-      .then(() => onSuccess())
+      .then(() => {
+        onSuccess();
+      })
       .catch((e) => {
         setAppError(e.message);
       });
@@ -62,9 +62,6 @@ export const LoginPageForm = ({ onSuccess }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={s.form} noValidate>
-      {isModalOpen && (
-        <Modal message="You have successfully signed in!" onClose={() => setIsModalOpen(false)} />
-      )}
       <div className={s.formTitle}>
         <h2>Already a customer?</h2>
         <p>Welcome back! Sign in for faster checkout.</p>
