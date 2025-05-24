@@ -8,6 +8,7 @@ import { useAppStore } from '@/common/store/app-store';
 import { useUserStore } from '@/common/store/user-store';
 import { ROUTES } from '@/common/config/routes';
 import s from './LoginPageForm.module.scss';
+import cl from '@/common/components/InputField/InputField.module.scss';
 import { useState } from 'react';
 import { FormValueType, loginSchema } from '../validation.ts';
 import { Modal } from '@/common/components/Modal/Modal.tsx';
@@ -69,6 +70,9 @@ export const LoginPageForm = ({ onSuccess }: Props) => {
       </div>
       <div className={s.labelWrapper}>
         <InputField
+          style={{
+            padding: '1.6rem 5.2rem 1.6rem 4.5rem',
+          }}
           icon={<Mail className={s.imgIcon} />}
           placeholder="Email Address"
           type="email"
@@ -82,6 +86,9 @@ export const LoginPageForm = ({ onSuccess }: Props) => {
       </div>
       <div className={s.labelWrapper}>
         <PasswordInput
+          style={{
+            padding: '1.6rem 5.2rem 1.6rem 4.5rem',
+          }}
           icon={<KeyRound className={s.imgIcon} />}
           placeholder="Enter your password"
           error={errors.password?.message}
@@ -92,7 +99,7 @@ export const LoginPageForm = ({ onSuccess }: Props) => {
           }}
         />
         {hasCyrillic && (
-          <p className={s.inputWarning}>Please make sure your keyboard is set to English</p>
+          <p className={cl.error}>Please make sure your keyboard is set to English</p>
         )}
       </div>
       <div className={s.formOptions}>

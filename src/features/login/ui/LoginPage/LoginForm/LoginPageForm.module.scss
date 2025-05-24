@@ -61,14 +61,6 @@
   text-decoration: none;
 }
 
-.inputError,
-.inputWarning {
-  margin: 0.4rem 0;
-  font-size: var(--font-error-size);
-  color: var(--error-color);
-  text-align: start;
-}
-
 @media (width <= 500px) {
   .form {
     gap: 1.2rem;

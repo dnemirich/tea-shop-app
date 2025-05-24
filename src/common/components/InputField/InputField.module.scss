@@ -1,7 +1,6 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 8.4rem;
 }
 
 .label {
@@ -9,8 +8,8 @@
   display: flex;
   align-items: center;
   height: 5.6rem;
-  border: 1px solid var(--primary-dark-color);
   background-color: var(--bg-color-light);
+  border: 1px solid var(--outline-color);
 }
 
 .icon {
@@ -19,9 +18,8 @@
 }
 
 .input {
-  flex: 1;
   width: 100%;
-  padding: 1.6rem 5.2rem 1.6rem 4.5rem;
+  padding: 1.6rem 1.2rem;
   font-family: var(--primary-font-family), sans-serif;
   font-size: 1.6rem;
   background: transparent;
@@ -39,11 +37,11 @@
   background-color: var(--secondary-light-color);
   border: none;
   cursor: pointer;
-  border-left: 0.1rem var(--primary-dark-color) solid;
+  border-left: 0.1rem var(--outline-color) solid;
 }
 
 .error {
-  margin-top: 0.4rem;
-  font-size: 1.4rem;
+  margin-top: 0.2rem;
+  font-size: 1.2rem;
   color: var(--error-color);
 }
