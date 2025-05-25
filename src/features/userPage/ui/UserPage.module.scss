@@ -1,0 +1,8 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 5rem;
+  padding: 2rem;
+  background-color: var(--secondary-light-color);
+}
