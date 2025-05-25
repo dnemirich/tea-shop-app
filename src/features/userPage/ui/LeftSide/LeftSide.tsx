@@ -4,7 +4,7 @@ import s from './LeftSide.module.scss';
 
 export const LeftSide = () => {
   return (
-    <div className={s.wrapper}>
+    <div className={s.leftSideWrapper}>
       <Salutation />
       <OptionList />
     </div>

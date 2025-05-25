@@ -1,5 +1,13 @@
-.wrapper {
+.leftSideWrapper {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  padding: 3rem;
+  gap: 4rem;
+}
+
+@media (width <= 825px) {
+  .leftSideWrapper {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
 }

@@ -3,14 +3,14 @@ import s from './OptionList.module.scss';
 
 export const OptionList: React.FC = () => {
   return (
-    <div className={s.wrapper}>
+    <div className={s.optionsWrapper}>
       <button>
-        <User size={20} />
+        <User size={14} />
         <span>My details</span>
       </button>
       <button>
-        <Home size={20} />
-        <span>Address book</span>
+        <Home size={14} />
+        <span>Addresses</span>
       </button>
     </div>
   );

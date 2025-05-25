@@ -1,2 +1,8 @@
-.wrapper {
+.salutationWrapper {
+  font-size: var(--font-main-size);
+  line-height: 3.5rem;
+
+  p {
+    font-size: var(--font-lg-size);
+  }
 }
