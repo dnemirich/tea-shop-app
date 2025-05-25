@@ -1,90 +1,15 @@
-// import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
-// import { createCustomerApiRoot } from './password-flow-client';
-//
-//
-// type AuthService = {
-//   login: (
-//     email: string,
-//     password: string,
-//     rememberMe?: boolean,
-//   ) => Promise<ByProjectKeyRequestBuilder>;
-//   logout: () => void;
-//   getCurrentUser: () => { email: string; apiRoot: ByProjectKeyRequestBuilder } | null;
-//   restoreSession: () => Promise<ByProjectKeyRequestBuilder | null>;
-//   checkAuth: () => Promise<boolean>;
-// };
-//
-// export const createAuthService = (): AuthService => {
-//   let currentUser: { email: string; apiRoot: ByProjectKeyRequestBuilder } | null = null;
-//
-//   return {
-//     async login(email, password, rememberMe = false) {
-//       if (currentUser?.email === email) {
-//         return currentUser.apiRoot;
-//       }
-//
-//       const apiRoot = createCustomerApiRoot(email, password);
-//       await apiRoot.me().get().execute();
-//
-//       currentUser = { email, apiRoot };
-//       if (rememberMe) {
-//         sessionStorage.setItem('authEmail', email);
-//       } else {
-//         sessionStorage.removeItem('authEmail');
-//       }
-//
-//       return apiRoot;
-//     },
-//
-//     logout() {
-//       currentUser = null;
-//       sessionStorage.removeItem('authEmail');
-//     },
-//
-//     getCurrentUser() {
-//       return currentUser;
-//     },
-//
-//     async restoreSession() {
-//       const email = sessionStorage.getItem('authEmail');
-//       if (!email) return null;
-//
-//       try {
-//         const apiRoot = createCustomerApiRoot(email, '');
-//         await apiRoot.me().get().execute();
-//         currentUser = { email, apiRoot };
-//         return apiRoot;
-//       } catch {
-//         this.logout();
-//         return null;
-//       }
-//     },
-//
-//     async checkAuth() {
-//       if (this.getCurrentUser()) return true;
-//
-//       try {
-//         const apiRoot = await this.restoreSession();
-//         return !!apiRoot;
-//       } catch {
-//         return false;
-//       }
-//     },
-//   };
-// };
-//
-// export const authService = createAuthService();
-
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 import { createCustomerApiRoot } from './password-flow-client';
 import { useUserStore } from '@/common/store/user-store';
 
+type UserInfo = {
+  email: string;
+  firstName: string;
+  lastName: string;
+};
+
 export type AuthService = {
-  login: (
-    email: string,
-    password: string,
-    rememberMe?: boolean,
-  ) => Promise<ByProjectKeyRequestBuilder>;
+  login: (email: string, password: string, rememberMe?: boolean) => Promise<UserInfo>;
   logout: () => void;
   getApiRoot: () => ByProjectKeyRequestBuilder | null;
   restoreSession: () => Promise<ByProjectKeyRequestBuilder | null>;
@@ -97,10 +22,18 @@ export const createAuthService = (): AuthService => {
   return {
     async login(email, password, rememberMe = false) {
       const root = createCustomerApiRoot(email, password);
-      await root.me().get().execute();
+
+      const res = await root.me().get().execute();
+      const customer = res.body;
+
+      const user = {
+        email: customer.email,
+        firstName: customer.firstName ?? '',
+        lastName: customer.lastName ?? '',
+      };
 
       apiRoot = root;
-      setLoggedIn(email);
+      setLoggedIn(user);
 
       if (rememberMe) {
         sessionStorage.setItem('authEmail', email);
@@ -108,7 +41,7 @@ export const createAuthService = (): AuthService => {
         sessionStorage.removeItem('authEmail');
       }
 
-      return root;
+      return user;
     },
 
     logout() {
@@ -127,10 +60,18 @@ export const createAuthService = (): AuthService => {
 
       try {
         const root = createCustomerApiRoot(email, '');
-        await root.me().get().execute();
+        const res = await root.me().get().execute();
 
         apiRoot = root;
-        setLoggedIn(email);
+
+        const customer = res.body;
+        const user = {
+          email: customer.email,
+          firstName: customer.firstName ?? '',
+          lastName: customer.lastName ?? '',
+        };
+
+        setLoggedIn(user);
         return root;
       } catch {
         this.logout();

@@ -4,7 +4,9 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 type UserState = {
   isLoggedIn: boolean;
   email: string | null;
-  setLoggedIn: (email: string) => void;
+  firstName: string | null;
+  lastName: string | null;
+  setLoggedIn: (user: { email: string; firstName: string; lastName: string }) => void;
   setLoggedOut: () => void;
 };
 
@@ -13,8 +15,11 @@ export const useUserStore = create<UserState>()(
     (set) => ({
       isLoggedIn: false,
       email: null,
-      setLoggedIn: (email) => set({ isLoggedIn: true, email }),
-      setLoggedOut: () => set({ isLoggedIn: false, email: null }),
+      firstName: null,
+      lastName: null,
+      setLoggedIn: ({ email, firstName, lastName }) =>
+        set({ isLoggedIn: true, email, firstName, lastName }),
+      setLoggedOut: () => set({ isLoggedIn: false, email: null, firstName: null, lastName: null }),
     }),
     {
       name: 'user-storage',
