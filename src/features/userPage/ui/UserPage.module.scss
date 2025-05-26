@@ -6,9 +6,3 @@
   flex-wrap: wrap;
   background-color: var(--secondary-light-color);
 }
-
-@media (width <= 825px) {
-  .wrapper {
-    justify-content: center;
-  }
-}

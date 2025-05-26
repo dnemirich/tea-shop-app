@@ -8,6 +8,8 @@
 @media (width <= 825px) {
   .leftSideWrapper {
     flex-direction: row;
-    justify-content: flex-start;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
   }
 }

@@ -28,9 +28,20 @@
 
 @media (width <= 825px) {
   .optionsWrapper {
-    gap: 0.5rem;
+    flex-direction: row;
+
     button {
       font-size: var(--font-button-size);
+    }
+  }
+}
+
+@media (width <= 560px) {
+  .optionsWrapper {
+    flex-direction: column;
+
+    button {
+      font-size: 1rem;
     }
   }
 }
