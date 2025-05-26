@@ -12,8 +12,20 @@ import { KeyRound, Mail } from 'lucide-react';
 import { ROUTES } from '@/common/config/routes.ts';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '@/features/login/api/authService.ts';
+import { InputField } from '@/common/components/InputField/InputField.tsx';
+import { Checkbox } from '@/common/components/Checkbox/Checkbox.tsx';
+import { SelectField } from '@/common/components/SelectField/SelectField.tsx';
+import { Button } from '@/common/components/Button/Button.tsx';
 
 export type RegistrationFormData = z.infer<typeof registrationSchema>;
+
+const countryOptions = [
+  { value: 'Russia', label: 'Russia' },
+  { value: 'Belarus', label: 'Belarus' },
+  { value: 'Kazakhstan', label: 'Kazakhstan' },
+  { value: 'Armenia', label: 'Armenia' },
+  { value: 'Uzbekistan', label: 'Uzbekistan' },
+];
 
 export const RegistrationForm = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -87,171 +99,138 @@ export const RegistrationForm = () => {
       <div className={s.formFields}>
         <div className={s.formColumn}>
           <div className={s.fieldsWrapper}>
-            <div>
-              <input {...register('firstName')} className={s.input} placeholder={'First name'} />
-              {errors.firstName && <span className={s.error}>{errors.firstName.message}</span>}
-            </div>
-            <div>
-              <input {...register('lastName')} className={s.input} placeholder={'Last name'} />
-              {errors.lastName && <span className={s.error}>{errors.lastName.message}</span>}
-            </div>
+            <InputField
+              {...register('firstName')}
+              placeholder="First name"
+              error={errors.firstName?.message}
+            />
+            <InputField
+              {...register('lastName')}
+              placeholder="Last name"
+              error={errors.lastName?.message}
+            />
           </div>
-          <label>
-            <input {...register('dateOfBirth')} className={s.input} type={'date'} />
-            <span className={s.info}>Date of birth</span>
-            {errors.dateOfBirth && <span className={s.error}>{errors.dateOfBirth.message}</span>}
-          </label>
-          <label className={s.label}>
-            <Mail className={s.icon} size={24} />
-            <input
+          <div>
+            <InputField
+              {...register('dateOfBirth')}
+              type={'date'}
+              info="Date of birth"
+              error={errors.dateOfBirth?.message}
+            />
+          </div>
+          <div className={s.label}>
+            <InputField
+              style={{
+                padding: '1.6rem 5.2rem 1.6rem 4.5rem',
+              }}
+              icon={<Mail className={s.imgIcon} size={24} />}
               {...register('email')}
-              className={`${s.input} ${s.inputWithIcon}`}
               placeholder={'Email address'}
+              error={errors.email?.message}
             />
-            {errors.email && <span className={s.error}>{errors.email.message}</span>}
-          </label>
-          <label className={s.label}>
-            <KeyRound className={s.icon} />
-            <input
+          </div>
+          <div className={s.label}>
+            <InputField
+              style={{
+                padding: '1.6rem 5.2rem 1.6rem 4.5rem',
+              }}
+              type="password"
+              icon={<KeyRound className={s.imgIcon} />}
               {...register('password')}
-              className={`${s.input} ${s.inputWithIcon}`}
-              type={'password'}
               placeholder={'Create strong password'}
+              info="Password should contain at least one digit and lower- and upper-case letters"
+              error={errors.password?.message}
             />
-            <span className={s.info}>
-              Password should contain at least one digit and lower- and upper-case letters
-            </span>
-            {errors.password && <span className={s.error}>{errors.password.message}</span>}
-          </label>
-          <label className={s.label}>
-            <KeyRound className={s.icon} />
-            <input
+          </div>
+          <div className={s.label}>
+            <InputField
+              style={{
+                padding: '1.6rem 5.2rem 1.6rem 4.5rem',
+              }}
+              type="password"
+              icon={<KeyRound className={s.imgIcon} />}
               {...register('confirmPassword')}
-              className={`${s.input} ${s.inputWithIcon}`}
-              type={'password'}
               placeholder={'Repeat your password'}
+              error={errors.confirmPassword?.message}
             />
-            {errors.confirmPassword && (
-              <span className={s.error}>{errors.confirmPassword.message}</span>
-            )}
-          </label>
+          </div>
         </div>
         <div className={s.formColumn}>
           <h3 className={s.sectionTitle}>Shipping address</h3>
-          <div>
-            <input
-              {...register('shippingAddress.street')}
-              className={s.input}
-              placeholder="Street and house"
-            />
-            {errors.shippingAddress?.street && (
-              <span className={s.error}>{errors.shippingAddress.street?.message}</span>
-            )}
-          </div>
+          <InputField
+            {...register('shippingAddress.street')}
+            placeholder="Street and house"
+            error={errors.shippingAddress?.street?.message}
+          />
           <div className={s.fieldsWrapper}>
+            <InputField
+              {...register('shippingAddress.postalCode')}
+              type="number"
+              placeholder="Postal code"
+              error={errors.shippingAddress?.postalCode?.message}
+            />
             <div>
-              <input
-                {...register('shippingAddress.postalCode')}
-                className={s.input}
-                placeholder="Postal code"
-                type="number"
-                maxLength={7}
+              <InputField
+                {...register('shippingAddress.city')}
+                placeholder="City"
+                error={errors.shippingAddress?.city?.message}
               />
-              {errors.shippingAddress?.postalCode && (
-                <span className={s.error}>{errors.shippingAddress.postalCode?.message}</span>
-              )}
-            </div>
-            <div>
-              <input {...register('shippingAddress.city')} className={s.input} placeholder="City" />
-              {errors?.shippingAddress?.city && (
-                <span className={s.error}>{errors.shippingAddress?.city?.message}</span>
-              )}
             </div>
           </div>
-          <div className={s.selectWrapper}>
-            <select {...register('shippingAddress.country')} className={s.select}>
-              <option value="">Country</option>
-              <option value="Russia">Russia</option>
-              <option value="Belarus">Belarus</option>
-              <option value="Kazakhstan">Kazakhstan</option>
-              <option value="Armenia">Armenia</option>
-              <option value="Uzbekistan">Uzbekistan</option>
-            </select>
-            {errors?.shippingAddress?.country && (
-              <span className={s.error}>{errors.shippingAddress?.country?.message}</span>
-            )}
-          </div>
-          <label>
-            <input type={'checkbox'} onChange={() => setIsDefaultShipping(!isDefaultShipping)} />
-            <span className={s.checkboxText}>Set as default shipping address</span>
-          </label>
+          <SelectField
+            {...register('shippingAddress.country')}
+            options={countryOptions}
+            error={errors.shippingAddress?.country?.message}
+          />
+          <Checkbox
+            checked={isDefaultShipping}
+            onChange={() => setIsDefaultShipping(!isDefaultShipping)}
+            label="Set as default shipping address"
+          />
           <div>
             <h3 className={s.sectionTitle}>Billing address</h3>
             <span className={s.sectionSupplementaryText}>(Same as shipping address)</span>
           </div>
-          <label>
-            <input type={'checkbox'} onChange={() => setIsChecked(!isChecked)} />
-            <span className={s.checkboxText}>Bill to different address</span>
-          </label>
+          <Checkbox
+            checked={isChecked}
+            onChange={() => setIsChecked(!isChecked)}
+            label="Bill to different address"
+          />
           {isChecked && (
             <>
-              <div>
-                <input
-                  {...register('billingAddress.street')}
-                  className={s.input}
-                  placeholder="Street and house"
-                />
-                {errors.billingAddress?.street && (
-                  <span className={s.error}>{errors.billingAddress.street?.message}</span>
-                )}
-              </div>
+              <InputField
+                {...register('billingAddress.street')}
+                placeholder="Street and house"
+                error={errors.billingAddress?.street?.message}
+              />
               <div className={s.fieldsWrapper}>
-                <div>
-                  <input
-                    {...register('billingAddress.postalCode')}
-                    className={s.input}
-                    placeholder="Postal code"
-                    type="number"
-                  />
-                  {errors.billingAddress?.postalCode && (
-                    <span className={s.error}>{errors.billingAddress.postalCode?.message}</span>
-                  )}
-                </div>
-                <div>
-                  <input
-                    {...register('billingAddress.city')}
-                    className={s.input}
-                    placeholder="City"
-                  />
-                  {errors?.billingAddress?.city && (
-                    <span className={s.error}>{errors.billingAddress?.city?.message}</span>
-                  )}
-                </div>
+                <InputField
+                  {...register('billingAddress.postalCode')}
+                  type="number"
+                  placeholder="Postal code"
+                  error={errors.billingAddress?.postalCode?.message}
+                />
+                <InputField
+                  {...register('billingAddress.city')}
+                  placeholder="City"
+                  error={errors.billingAddress?.city?.message}
+                />
               </div>
-              <div className={s.selectWrapper}>
-                <select {...register('billingAddress.country')} className={s.select}>
-                  <option value="">Country</option>
-                  <option value="Russia">Russia</option>
-                  <option value="Belarus">Belarus</option>
-                  <option value="Kazakhstan">Kazakhstan</option>
-                  <option value="Armenia">Armenia</option>
-                  <option value="Uzbekistan">Uzbekistan</option>
-                </select>
-                {errors?.billingAddress?.country && (
-                  <span className={s.error}>{errors.billingAddress?.country?.message}</span>
-                )}
-              </div>
-              <label>
-                <input type={'checkbox'} onChange={() => setIsDefaultBilling(!isDefaultBilling)} />
-                <span className={s.checkboxText}>Set as default billing address</span>
-              </label>
+              <SelectField
+                {...register('billingAddress.country')}
+                options={countryOptions}
+                error={errors.billingAddress?.country?.message}
+              />
+              <Checkbox
+                checked={isDefaultBilling}
+                onChange={() => setIsDefaultBilling(!isDefaultBilling)}
+                label="Set as default billing address"
+              />
             </>
           )}
         </div>
       </div>
-      <button type={'submit'} className={s.btn}>
-        Sign up
-      </button>
+      <Button type="submit" text="Sign up" />
       <p className={s.supplementaryText}>
         Already have an account?{' '}
         <span className={s.link}>
