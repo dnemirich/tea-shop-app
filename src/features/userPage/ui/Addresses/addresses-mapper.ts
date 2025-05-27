@@ -8,6 +8,7 @@ export const mapSdkAddress = (sdk: SdkAddress): Address => ({
   streetName: sdk.streetName ?? '',
   streetNumber: sdk.streetNumber ?? '',
   postalCode: sdk.postalCode ?? '',
+  id: sdk.id ?? '',
 });
 
 export const mapSdkAddresses = (addresses: SdkAddress[] = []): Address[] =>

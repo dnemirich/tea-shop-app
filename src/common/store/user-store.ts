@@ -9,12 +9,17 @@ type UserState = {
   lastName: string | null;
   dateOfBirth: string | null;
   addresses: Address[] | null;
+  defaultShippingAddress: string | null;
+  defaultBillingAddress: string | null;
+
   setLoggedIn: (user: {
     email: string;
     firstName: string;
     lastName: string;
     dateOfBirth: string;
     addresses: Address[];
+    defaultShippingAddress: string;
+    defaultBillingAddress: string;
   }) => void;
   setLoggedOut: () => void;
 };
@@ -28,8 +33,27 @@ export const useUserStore = create<UserState>()(
       lastName: null,
       dateOfBirth: null,
       addresses: null,
-      setLoggedIn: ({ email, firstName, lastName, dateOfBirth, addresses }) =>
-        set({ isLoggedIn: true, email, firstName, lastName, dateOfBirth, addresses }),
+      defaultShippingAddress: null,
+      defaultBillingAddress: null,
+      setLoggedIn: ({
+        email,
+        firstName,
+        lastName,
+        dateOfBirth,
+        addresses,
+        defaultShippingAddress,
+        defaultBillingAddress,
+      }) =>
+        set({
+          isLoggedIn: true,
+          email,
+          firstName,
+          lastName,
+          dateOfBirth,
+          addresses,
+          defaultShippingAddress,
+          defaultBillingAddress,
+        }),
       setLoggedOut: () =>
         set({
           isLoggedIn: false,
@@ -38,6 +62,8 @@ export const useUserStore = create<UserState>()(
           lastName: null,
           dateOfBirth: null,
           addresses: null,
+          defaultShippingAddress: null,
+          defaultBillingAddress: null,
         }),
     }),
     {

@@ -8,6 +8,7 @@ export const MyDetails = () => {
 
   return (
     <div className={s.myDetailsWrapper}>
+      <h2>My details</h2>
       <div className={s.info}>
         <span>First name</span>
         <p>{firstName}</p>

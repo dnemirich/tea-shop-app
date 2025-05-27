@@ -36,6 +36,8 @@ export const createAuthService = (): AuthService => {
         lastName: customer.lastName ?? '',
         dateOfBirth: customer.dateOfBirth ?? '',
         addresses: mapSdkAddresses(customer.addresses),
+        defaultShippingAddress: customer.defaultShippingAddressId ?? '',
+        defaultBillingAddress: customer.defaultBillingAddressId ?? '',
       };
 
       apiRoot = root;
@@ -77,6 +79,8 @@ export const createAuthService = (): AuthService => {
           lastName: customer.lastName ?? '',
           dateOfBirth: customer.dateOfBirth ?? '',
           addresses: mapSdkAddresses(customer.addresses),
+          defaultShippingAddress: customer.defaultShippingAddressId ?? '',
+          defaultBillingAddress: customer.defaultBillingAddressId ?? '',
         };
 
         setLoggedIn(user);
