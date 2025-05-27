@@ -24,19 +24,19 @@ export const Catalog = () => {
           .productProjections()
           .get({
             queryArgs: {
-              limit: 6, 
-              where: 'published=true' 
-            }
+              limit: 6,
+              where: 'published=true',
+            },
           })
           .execute();
 
-        const mappedProducts = response.body.results.map(product => ({
+        const mappedProducts = response.body.results.map((product) => ({
           id: product.id,
           name: product.name?.['en'] || product.name?.['ru'] || 'Unnamed Product',
           description: product.description?.['en'] || product.description?.['ru'] || '',
           price: product.masterVariant.prices?.[0]?.value.centAmount / 100 || 0,
           imageUrl: product.masterVariant.images?.[0]?.url || 'https://via.placeholder.com/150',
-          weight: 100 
+          weight: 100,
         }));
 
         setProducts(mappedProducts);
@@ -57,7 +57,7 @@ export const Catalog = () => {
 
   return (
     <div className={styles.catalogContainer}>
-      {products.map(product => (
+      {products.map((product) => (
         <TeaCardComponent
           key={product.id}
           imageSrc={product.imageUrl}

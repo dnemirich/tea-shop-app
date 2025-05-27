@@ -1,5 +1,4 @@
 .tea-filter-container {
- 
   max-width: 300px;
   padding: 20px;
   background-color: #f9f9f9;
@@ -19,12 +18,12 @@
 }
 
 .reset-button {
+  font-size: 0.9rem;
+  color: #666;
   background: none;
   border: none;
-  color: #666;
   cursor: pointer;
   text-decoration: underline;
-  font-size: 0.9rem;
 }
 
 .reset-button:hover {

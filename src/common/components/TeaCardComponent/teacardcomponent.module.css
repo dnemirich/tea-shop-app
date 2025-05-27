@@ -1,35 +1,35 @@
 .card {
   max-width: 200px;
-  text-align: center;
   font-family: sans-serif;
+  text-align: center;
 }
 
 .image,
 .imagePlaceholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 260px;
   height: 260px;
+  font-size: 0.875rem;
+  color: #9ca3af; /* gray-400 */
+  background-color: #f3f4f6; /* light gray for placeholder */
+  border: 1px dashed #d1d5db; /* optional dashed border */
   margin-bottom: 1rem;
   object-fit: cover;
-  background-color: #f3f4f6; /* light gray for placeholder */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af; /* gray-400 */
-  font-size: 0.875rem;
-  border: 1px dashed #d1d5db; /* optional dashed border */
 }
 
 .name {
+  margin: 0;
   font-size: 1.125rem;
   font-weight: 500;
   color: #1f2937;
-  margin: 0;
 }
 
 .description {
+  margin: 0.25rem 0;
   font-size: 0.875rem;
   color: #4b5563;
-  margin: 0.25rem 0;
 }
 
 .price {
