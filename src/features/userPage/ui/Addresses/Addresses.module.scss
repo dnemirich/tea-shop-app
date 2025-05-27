@@ -1,3 +1,31 @@
 .addressesWrapper {
-  width: 100%;
+  padding: 1.6rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+
+  .addressCard {
+    flex: 1;
+  }
+
+  .info {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+
+    span {
+      font-size: var(--font-error-size);
+      color: var(--item-color);
+    }
+
+    p {
+      font-size: var(--font-main-size);
+      font-weight: 400;
+      border: 0.1rem solid var(--outline-color);
+      padding: 1.6rem 1.2rem;
+    }
+  }
 }

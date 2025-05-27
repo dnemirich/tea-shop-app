@@ -12,12 +12,24 @@ export const Addresses: React.FC = () => {
     <div className={s.addressesWrapper}>
       {addresses.map((address, index) => (
         <div key={index} className={s.addressCard}>
-          <p>Country: {address.country}</p>
-          <p>City: {address.city}</p>
-          <p>
-            Street: {address.streetName} {address.streetNumber}
-          </p>
-          <p>Postal code: {address.postalCode}</p>
+          <div className={s.info}>
+            <span>Country</span>
+            <p>{address.country}</p>
+          </div>
+          <div className={s.info}>
+            <span>City</span>
+            <p>{address.city}</p>
+          </div>
+          <div className={s.info}>
+            <span>Street</span>
+            <p>
+              {address.streetName} {address.streetNumber}
+            </p>
+          </div>
+          <div className={s.info}>
+            <span>Postal code</span>
+            <p>{address.postalCode}</p>
+          </div>
         </div>
       ))}
     </div>

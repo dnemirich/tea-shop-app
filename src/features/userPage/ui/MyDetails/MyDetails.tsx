@@ -8,15 +8,15 @@ export const MyDetails = () => {
 
   return (
     <div className={s.myDetailsWrapper}>
-      <div>
+      <div className={s.info}>
         <span>First name</span>
         <p>{firstName}</p>
       </div>
-      <div>
+      <div className={s.info}>
         <span>Last name</span>
         <p>{lastName}</p>
       </div>
-      <div>
+      <div className={s.info}>
         <span>Date of birth</span>
         <p>{dateOfBirth}</p>
       </div>
