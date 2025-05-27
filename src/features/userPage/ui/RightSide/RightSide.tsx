@@ -9,11 +9,19 @@ type Props = {
 
 export const RightSide: React.FC<Props> = ({ selectedOption }) => {
   if (selectedOption === 'MyDetails') {
-    return <MyDetails />;
+    return (
+      <div className={s.wrapper}>
+        <MyDetails />
+      </div>
+    );
   }
 
   if (selectedOption === 'Addresses') {
-    return <Addresses />;
+    return (
+      <div className={s.wrapper}>
+        <Addresses />
+      </div>
+    );
   }
 
   return (

@@ -1,11 +1,15 @@
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 import { createCustomerApiRoot } from './password-flow-client';
 import { useUserStore } from '@/common/store/user-store';
+import { Address } from '@/common/types/user-types';
+import { mapSdkAddresses } from '@/features/userPage/ui/Addresses/addresses-mapper';
 
 type UserInfo = {
   email: string;
   firstName: string;
   lastName: string;
+  dateOfBirth: string;
+  addresses: Address[];
 };
 
 export type AuthService = {
@@ -30,6 +34,8 @@ export const createAuthService = (): AuthService => {
         email: customer.email,
         firstName: customer.firstName ?? '',
         lastName: customer.lastName ?? '',
+        dateOfBirth: customer.dateOfBirth ?? '',
+        addresses: mapSdkAddresses(customer.addresses),
       };
 
       apiRoot = root;
@@ -69,6 +75,8 @@ export const createAuthService = (): AuthService => {
           email: customer.email,
           firstName: customer.firstName ?? '',
           lastName: customer.lastName ?? '',
+          dateOfBirth: customer.dateOfBirth ?? '',
+          addresses: mapSdkAddresses(customer.addresses),
         };
 
         setLoggedIn(user);
