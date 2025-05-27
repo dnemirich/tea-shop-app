@@ -1,0 +1,56 @@
+.tea-filter-container {
+ 
+  max-width: 300px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.reset-button {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 0.9rem;
+}
+
+.reset-button:hover {
+  color: #333;
+}
+
+.filter-category {
+  margin-bottom: 20px;
+}
+
+.category-title {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.filter-option {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.filter-option input {
+  margin-right: 8px;
+}
+
+.filter-option label {
+  cursor: pointer;
+}

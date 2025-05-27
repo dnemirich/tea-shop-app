@@ -77,3 +77,18 @@ main {
   margin: 0 auto;
   padding: 0 2rem;
 }
+
+.catalogHeaderImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  margin: 0;
+  padding: 0;
+}
+
+.catalogPageContainer {
+  padding: 0;
+  margin: 0;
+ 
+}

@@ -10,11 +10,18 @@ import Layout from '@/common/components/Layout/Layout';
 import { LoginPage } from '@/features/login/ui/LoginPage/LoginPage.tsx';
 import { ROUTES } from '@/common/config/routes.ts';
 import { NotFoundPage } from '@/common/components/NotFoundPage/NotFoundPage.tsx';
+import { CatalogPage } from '@/common/components/CatalogPage';
+
+
+
+
 
 function App() {
   const { error, clearError } = useAppStore();
 
   useEffect(() => {
+    
+   
     if (error) {
       toast.error(error, {
         className: s.notification,
@@ -49,6 +56,7 @@ function App() {
           {/* <Route index element={<Home />} />
         <Route path="about" element={<About />} /> */}
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
+          <Route path={ROUTES.CATALOG} element={<CatalogPage />} />
         </Route>
       </Routes>
       <ToastContainer />
