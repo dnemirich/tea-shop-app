@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { Minus } from 'lucide-react';
-import {FilterCategory } from '../../types/catalog-types'
-
-
+import { FilterCategory } from '../../types/catalog-types';
 
 const TeaFilter: React.FC = () => {
   const [filters, setFilters] = useState<FilterCategory[]>([
@@ -132,7 +130,7 @@ const TeaFilter: React.FC = () => {
               </label>
             ) : (
               <span className="toggle-icon" aria-hidden="true">
-               {expandedCategories[category.title] ? <Minus size={16} /> : <Plus size={16} />}
+                {expandedCategories[category.title] ? <Minus size={16} /> : <Plus size={16} />}
               </span>
             )}
           </div>

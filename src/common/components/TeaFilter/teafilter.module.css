@@ -1,11 +1,10 @@
 .tea-filter-container {
   max-width: 300px;
   padding: 20px;
+  font-family: Arial, sans-serif;
   background-color: #f9f9f9;
   border-radius: 8px;
-  font-family: Arial, sans-serif;
 }
-
 
 .filter-category {
   margin-bottom: 20px;
@@ -13,32 +12,27 @@
   padding-bottom: 15px;
 }
 
-
 .category-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
   padding: 5px 0;
+  cursor: pointer;
   user-select: none;
 }
 
-.category-header:hover {
-  opacity: 0.8;
-}
-
 .category-title {
-  font-size: 1.1rem;
   margin: 0;
-  color: #333;
+  font-size: 1.1rem;
   font-weight: 500;
+  color: #333;
 }
 
 .toggle-icon {
   font-size: 1.2rem;
-  color: #666;
   font-weight: bold;
   line-height: 1;
+  color: #666;
 }
 
 .category-options {
@@ -60,9 +54,9 @@
 }
 
 .filter-label {
-  cursor: pointer;
   font-size: 0.95rem;
   color: #555;
+  cursor: pointer;
 }
 
 .filter-label:hover {
@@ -70,13 +64,11 @@
 }
 
 .no-options {
+  font-size: 0.9rem;
   color: #999;
   font-style: italic;
-  font-size: 0.9rem;
 }
 
-
-/* Стили для переключателя */
 .toggle-switch {
   position: relative;
   display: inline-block;
@@ -85,50 +77,41 @@
 }
 
 .toggle-switch input {
-  opacity: 0;
   width: 0;
   height: 0;
+  opacity: 0;
 }
 
 .toggle-slider {
   position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background-color: #ccc;
-  transition: .4s;
   border-radius: 24px;
+  transition: 0.4s;
+  cursor: pointer;
 }
 
-.toggle-slider:before {
+.toggle-slider::before {
   position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 4px;
   bottom: 4px;
+  left: 4px;
+  width: 16px;
+  height: 16px;
   background-color: white;
-  transition: .4s;
   border-radius: 50%;
+  transition: 0.4s;
+  content: '';
 }
 
 input:checked + .toggle-slider {
-  background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
-input:checked + .toggle-slider:before {
+input:checked + .toggle-slider::before {
   transform: translateX(26px);
 }
 
-/* Дополнительные стили для выравнивания */
-.category-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.toggle-icon, .toggle-switch {
+.toggle-icon,
+.toggle-switch {
   margin-left: 10px;
 }
