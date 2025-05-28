@@ -77,3 +77,14 @@ main {
   margin: 0 auto;
   padding: 0 2rem;
 }
+
+.swiper-pagination-bullet {
+  background: var(--item-color);
+  opacity: 0.6;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--accent-color) !important;
+  transform: scale(1.2);
+  opacity: 1;
+}
