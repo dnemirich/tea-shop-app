@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './promo.module.css';
-import SectionHeading from '../SectionHeading/SectionHeading';
+import { SectionHeading } from '../SectionHeading/SectionHeading';
 
-const TeaPromo: React.FC = () => {
+export const TeaPromo: React.FC = () => {
   return (
     <section className={styles.container}>
       <div className={styles.imageWrapper}>
@@ -30,5 +30,3 @@ const TeaPromo: React.FC = () => {
     </section>
   );
 };
-
-export default TeaPromo;

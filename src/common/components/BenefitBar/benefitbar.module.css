@@ -9,7 +9,7 @@
   width: 100%;
   padding: clamp(1rem, 3vw, 3rem);
   font-family: Montserrat, sans-serif;
-  background-color: #f6f6f6;
+  background-color: var(--secondary-light-color);
 }
 
 .list {
@@ -20,9 +20,6 @@
   gap: clamp(1rem, 3vw, 4rem);
   width: 100%;
   max-width: 1200px;
-  margin: 0;
-  padding: var(--gap);
-  list-style: none;
 }
 
 .item {
@@ -30,13 +27,13 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
-  color: #1a1a1a;
+  color: var(--primary-dark-color);
   white-space: nowrap;
 }
 
 .icon {
-  font-size: 1.2rem;
-  color: #b4a311;
+  font-size: var(--font-button-size);
+  color: var(--accent-color);
 }
 
 .text {

@@ -26,7 +26,7 @@ const benefits = [
   },
 ];
 
-const BenefitBar: React.FC = () => {
+export const BenefitBar: React.FC = () => {
   return (
     <section className={styles.wrapper}>
       <ul className={styles.list}>
@@ -40,5 +40,3 @@ const BenefitBar: React.FC = () => {
     </section>
   );
 };
-
-export default BenefitBar;

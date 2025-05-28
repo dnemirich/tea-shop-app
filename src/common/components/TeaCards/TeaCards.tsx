@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './TeaCards.module.css';
-import SectionHeading from '../SectionHeading/SectionHeading';
+import { SectionHeading } from '../SectionHeading/SectionHeading';
 
 type TeaCardProps = {
   title: string;
@@ -8,7 +8,7 @@ type TeaCardProps = {
   description: string;
 };
 
-const TeaCard: React.FC<TeaCardProps> = ({ title, image, description }) => {
+ const TeaCard: React.FC<TeaCardProps> = ({ title, image, description }) => {
   return (
     <div className={styles.card}>
       <div className={styles.imageContainer}>
@@ -27,7 +27,7 @@ const TeaCard: React.FC<TeaCardProps> = ({ title, image, description }) => {
   );
 };
 
-const TeaCards: React.FC = () => {
+ export const TeaCards: React.FC = () => {
   const teaTypes = [
     {
       title: 'BLACK TEA',
@@ -97,4 +97,4 @@ const TeaCards: React.FC = () => {
   );
 };
 
-export default TeaCards;
+

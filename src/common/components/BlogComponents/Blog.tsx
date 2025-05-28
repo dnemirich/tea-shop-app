@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import styles from './blog.module.css';
-import SectionHeading from '../SectionHeading/SectionHeading';
+import { SectionHeading } from '../SectionHeading/SectionHeading';
 
-interface BlogPost {
+type BlogPost = {
   title: string;
   description: string;
   fullContent: string;
   imageUrl: string;
   imageAlt: string;
-}
+};
 
-const BlogPosts = () => {
+export const Blog = () => {
   const [expandedPost, setExpandedPost] = useState<number | null>(null);
 
   const posts: BlogPost[] = [
@@ -65,5 +65,3 @@ const BlogPosts = () => {
     </>
   );
 };
-
-export default BlogPosts;

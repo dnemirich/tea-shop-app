@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './subscribe.module.css';
 import { Send } from 'lucide-react';
-import SectionHeading from '../SectionHeading/SectionHeading';
+import { SectionHeading } from '../SectionHeading/SectionHeading';
 
-const Subscribe: React.FC = () => {
+export const Subscribe: React.FC = () => {
   return (
     <section className={styles.container}>
       <div className={styles.imageWrapper}>
@@ -40,5 +40,3 @@ const Subscribe: React.FC = () => {
     </section>
   );
 };
-
-export default Subscribe;

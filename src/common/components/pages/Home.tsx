@@ -1,14 +1,15 @@
 import React from 'react';
-import Promo from '../PromoPage/Promo';
-import BenefitBar from '../BenefitBar/BenefitBar';
-import TeaCards from '../TeaCards/TeaCards';
-import Blog from '../BlogComponents/Blog';
-import Subscribe from '../Subscribe/Subscribe';
+import { TeaPromo } from '../PromoPage/Promo';
+
+import { TeaCards } from '../TeaCards/TeaCards';
+import { BenefitBar } from '../BenefitBar/BenefitBar';
+import { Subscribe } from '../Subscribe/Subscribe';
+import { Blog } from '../BlogComponents/Blog';
 
 const Home: React.FC = () => {
   return (
     <div>
-      <Promo />
+      <TeaPromo />
       <BenefitBar />
       <TeaCards />
       <Blog />

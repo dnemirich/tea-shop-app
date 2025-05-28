@@ -1,17 +1,9 @@
-:root {
-  --gap-lg: clamp(2rem, 6vw, 5.5rem);
-  --image-size: clamp(280px, 50vw, 628px);
-  --text-width: clamp(300px, 40vw, 456px);
-  --font-body: clamp(0.95rem, 1vw, 1rem);
-}
-
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  padding: 0 1rem 50px;
-  font-family: Montserrat, sans-serif;
+  padding: 0 1rem 5rem;
 }
 
 @media (width >= 1024px) {
@@ -21,10 +13,6 @@
     align-items: flex-start;
     gap: var(--gap-lg);
   }
-}
-
-.customClass {
-  text-align: left;
 }
 
 .imageWrapper {
@@ -45,7 +33,6 @@
 .textWrapper {
   width: 100%;
   max-width: var(--text-width);
-  height: auto;
   text-align: center;
 }
 
@@ -56,9 +43,9 @@
 }
 
 .paragraph {
-  font-size: 16px;
-  line-height: 1.5;
-  color: #282828;
+  font-size: var(--font-main-size);
+  line-height: var(--line-body);
+  color: var(--primary-dark-color);
   margin-bottom: 1.5rem;
 }
 
@@ -69,37 +56,34 @@
 
 .input {
   width: 100%;
-  padding: 12px 0;
-  font-family: Montserrat, sans-serif;
-  font-size: 14px;
-  letter-spacing: 2px;
+  padding: 1.2rem 0;
+  font-size: var(--font-button-size);
+  letter-spacing: 0.2rem;
   background: transparent;
   border: none;
   transition: border-color 0.2s ease;
-  padding-right: 42px;
-  border-bottom: 1px solid #ccc;
+  padding-right: 4.2rem;
+  border-bottom: 1px solid var(--outline-color);
 }
 
 .input:focus {
-  outline: none;
-  border-color: #999;
+  border-color: var(--item-color);
 }
 
 .input::placeholder {
-  font-size: 14px;
-  color: #7a7a7a;
-  text-align: left;
+  font-size: var(--font-button-size);
+  color: var(--outline-color);
 }
 
 .sendButton {
   position: absolute;
   top: 50%;
-  right: 8px;
+  right: 0.8rem;
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px;
-  color: #454141;
+  gap: 0.6rem;
+  padding: 0.4rem;
+  color: var(--item-color);
   background: none;
   border: none;
   cursor: pointer;
@@ -108,7 +92,7 @@
 
 .sendText {
   display: none;
-  font-size: 16px;
+  font-size: var(--font-main-size);
   letter-spacing: 0.02em;
 }
 
@@ -120,12 +104,12 @@
 
 @media (width <= 767px) {
   .input {
-    padding-right: 30px;
-    font-size: 12px;
-    letter-spacing: 1px;
+    padding-right: 3rem;
+    font-size: 1.2rem;
+    letter-spacing: 0.1rem;
   }
 
   .input::placeholder {
-    font-size: 12px;
+    font-size: 1.2rem;
   }
 }
