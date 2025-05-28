@@ -1,6 +1,6 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.css";
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
 import { Pagination } from 'swiper/modules';
 import s from './Carousel.module.scss';
 
