@@ -8,7 +8,7 @@ type TeaCardProps = {
   description: string;
 };
 
- const TeaCard: React.FC<TeaCardProps> = ({ title, image, description }) => {
+const TeaCard: React.FC<TeaCardProps> = ({ title, image, description }) => {
   return (
     <div className={styles.card}>
       <div className={styles.imageContainer}>
@@ -27,7 +27,7 @@ type TeaCardProps = {
   );
 };
 
- export const TeaCards: React.FC = () => {
+export const TeaCards: React.FC = () => {
   const teaTypes = [
     {
       title: 'BLACK TEA',
@@ -96,5 +96,3 @@ type TeaCardProps = {
     </section>
   );
 };
-
-

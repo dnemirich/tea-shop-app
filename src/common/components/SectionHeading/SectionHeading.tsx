@@ -3,7 +3,7 @@ import styles from './sectionheading.module.css';
 type SectionHeadingProps = {
   title: string;
   className?: string;
-}
+};
 
 export const SectionHeading = ({ title, className }: SectionHeadingProps) => {
   return (
