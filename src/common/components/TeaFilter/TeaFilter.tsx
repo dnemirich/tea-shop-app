@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
+import { Plus } from 'lucide-react';
+import { Minus } from 'lucide-react';
+import {FilterCategory } from '../../types/catalog-types'
 
-type FilterOption = {
-  name: string;
-  selected: boolean;
-};
 
-type FilterCategory = {
-  title: string;
-  options: FilterOption[];
-};
 
 const TeaFilter: React.FC = () => {
   const [filters, setFilters] = useState<FilterCategory[]>([
@@ -60,15 +55,28 @@ const TeaFilter: React.FC = () => {
     },
     {
       title: 'INGREDIENTS',
-      options: [], // Можно добавить опции позже
+      options: [],
     },
     {
       title: 'CAFFEINE',
-      options: [], // Можно добавить опции позже
+      options: [
+        { name: 'With caffeine', selected: false },
+        { name: 'Caffeine-free', selected: false },
+      ],
+      isToggle: true,
     },
   ]);
 
-  // Обработчик изменения состояния чекбокса
+  const [expandedCategories, setExpandedCategories] = useState<{ [key: string]: boolean }>({});
+  const [caffeineToggle, setCaffeineToggle] = useState(false);
+
+  const toggleCategory = (title: string) => {
+    setExpandedCategories((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }));
+  };
+
   const handleFilterChange = (categoryIndex: number, optionIndex: number) => {
     const updatedFilters = [...filters];
     updatedFilters[categoryIndex].options[optionIndex].selected =
@@ -76,39 +84,79 @@ const TeaFilter: React.FC = () => {
     setFilters(updatedFilters);
   };
 
-  // Обработчик сброса всех фильтров
-  const resetFilters = () => {
-    const resetFilters = filters.map((category) => ({
-      ...category,
-      options: category.options.map((option) => ({ ...option, selected: false })),
-    }));
-    setFilters(resetFilters);
+  const handleCaffeineToggle = () => {
+    const newState = !caffeineToggle;
+    setCaffeineToggle(newState);
+
+    const updatedFilters = [...filters];
+    const caffeineCategoryIndex = updatedFilters.findIndex((f) => f.title === 'CAFFEINE');
+
+    if (caffeineCategoryIndex !== -1) {
+      updatedFilters[caffeineCategoryIndex].options = [
+        { name: 'With caffeine', selected: newState },
+        { name: 'Caffeine-free', selected: !newState },
+      ];
+      setFilters(updatedFilters);
+    }
   };
+
   return (
     <div className="tea-filter-container">
-      <div className="filter-header">
-        <h2>Filters</h2>
-        <button onClick={resetFilters} className="reset-button">
-          Reset all
-        </button>
-      </div>
-
       {filters.map((category, categoryIndex) => (
         <div key={category.title} className="filter-category">
-          <h3 className="category-title">{category.title}</h3>
-          <div className="category-options">
-            {category.options.map((option, optionIndex) => (
-              <div key={option.name} className="filter-option">
+          <div
+            className="category-header"
+            onClick={() => !category.isToggle && toggleCategory(category.title)}
+            onKeyDown={(e) => {
+              if (!category.isToggle && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                toggleCategory(category.title);
+              }
+            }}
+            tabIndex={0}
+            role={category.isToggle ? undefined : 'button'}
+            aria-expanded={category.isToggle ? undefined : expandedCategories[category.title]}
+            aria-controls={category.isToggle ? undefined : `${category.title}-options`}
+            id={`${category.title}-header`}
+          >
+            <h3 className="category-title">{category.title}</h3>
+            {category.isToggle ? (
+              <label className="toggle-switch">
                 <input
                   type="checkbox"
-                  id={`${category.title}-${option.name}`}
-                  checked={option.selected}
-                  onChange={() => handleFilterChange(categoryIndex, optionIndex)}
+                  checked={caffeineToggle}
+                  onChange={handleCaffeineToggle}
+                  aria-label="Toggle caffeine filter"
                 />
-                <label htmlFor={`${category.title}-${option.name}`}>{option.name}</label>
-              </div>
-            ))}
+                <span className="toggle-slider"></span>
+              </label>
+            ) : (
+              <span className="toggle-icon" aria-hidden="true">
+               {expandedCategories[category.title] ? <Minus size={16} /> : <Plus size={16} />}
+              </span>
+            )}
           </div>
+
+          {!category.isToggle && expandedCategories[category.title] && (
+            <div
+              id={`${category.title}-options`}
+              className="category-options"
+              aria-labelledby={`${category.title}-header`}
+            >
+              {category.options.map((option, optionIndex) => (
+                <div key={option.name} className="filter-option">
+                  <input
+                    type="checkbox"
+                    id={`${category.title}-${option.name}`}
+                    checked={option.selected}
+                    onChange={() => handleFilterChange(categoryIndex, optionIndex)}
+                    className="filter-checkbox"
+                  />
+                  <label htmlFor={`${category.title}-${option.name}`}>{option.name}</label>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ))}
     </div>

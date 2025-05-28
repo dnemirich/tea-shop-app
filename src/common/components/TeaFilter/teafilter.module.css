@@ -3,41 +3,47 @@
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
+  font-family: Arial, sans-serif;
 }
 
-.filter-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.filter-header h2 {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-.reset-button {
-  font-size: 0.9rem;
-  color: #666;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.reset-button:hover {
-  color: #333;
-}
 
 .filter-category {
   margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px 0;
+  user-select: none;
+}
+
+.category-header:hover {
+  opacity: 0.8;
 }
 
 .category-title {
   font-size: 1.1rem;
-  margin-bottom: 10px;
+  margin: 0;
   color: #333;
+  font-weight: 500;
+}
+
+.toggle-icon {
+  font-size: 1.2rem;
+  color: #666;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.category-options {
+  margin-top: 10px;
+  padding-left: 5px;
 }
 
 .filter-option {
@@ -46,10 +52,83 @@
   align-items: center;
 }
 
-.filter-option input {
-  margin-right: 8px;
+.filter-checkbox {
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
 
-.filter-option label {
+.filter-label {
   cursor: pointer;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.filter-label:hover {
+  color: #333;
+}
+
+.no-options {
+  color: #999;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+
+/* Стили для переключателя */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+  background-color: #4CAF50;
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+/* Дополнительные стили для выравнивания */
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggle-icon, .toggle-switch {
+  margin-left: 10px;
 }
