@@ -1,0 +1,43 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-wrap: break-word;
+  font-size: 1.4rem;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  text-transform: uppercase;
+}
+
+.link {
+  &:hover {
+    color: var(--accent-color);
+  }
+}
+
+.currentPage {
+  color: var(--accent-color);
+}
+
+.separator {
+  & > svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+.ellipsis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+}
