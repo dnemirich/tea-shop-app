@@ -19,7 +19,7 @@ import Globe from '@/assets/icons/globe-icon.svg';
 import Kettle from '@/assets/icons/kettle-icon.svg';
 import Timer from '@/assets/icons/timer-icon.svg';
 import { Button } from '@/common/components/Button/Button.tsx';
-import { Minus, Plus } from 'lucide-react';
+import { Minus, Plus, ShoppingBasket } from 'lucide-react';
 import s from './ProductPage.module.scss';
 import { Carousel } from '@/common/components/Carousel/Carousel.tsx';
 
@@ -35,10 +35,10 @@ export const ProductPage = () => {
 
   useEffect(() => {
     productSlug &&
-      getProductBySlug(productSlug).then((res) => {
-        console.log(res.body.results[0]);
-        setProduct(res.body.results[0]);
-      });
+    getProductBySlug(productSlug).then((res) => {
+      console.log(res.body.results[0]);
+      setProduct(res.body.results[0]);
+    });
   }, [productSlug]);
 
   let name = '';
@@ -81,7 +81,7 @@ export const ProductPage = () => {
     const caffeineAttr = product.masterVariant.attributes.find(
       (attr) => attr.name === 'caffeine-free',
     );
-    if (caffeineAttr) hasCaffeine = caffeineAttr.value ? 'No caffeine' : 'Has caffeine';
+    if (caffeineAttr) hasCaffeine = caffeineAttr.value ? 'no caffeine' : 'has caffeine';
 
     const steepingTimeAttr = product.masterVariant.attributes.find(
       (attr) => attr.name === 'steeping-time',
@@ -124,110 +124,109 @@ export const ProductPage = () => {
         </BreadcrumbList>
       </Breadcrumb>
       {product && (
-        <>
-          <div>
+        <div className={s.pageContent}>
+          <div className={s.upperContent}>
             <Carousel images={images} />
-            <div>
-              <h2>{name}</h2>
-              <p>{description}</p>
-              <p>
+            <div className={s.mainInfo}>
+              <h2 className={s.name}>{name}</h2>
+              <p className={s.description}>{description}</p>
+              <p className={s.origin}>
                 <img src={Globe} alt={'globe'} width={24} height={24} />
-                Origin:{origin}
+                Origin: {origin}
               </p>
-              <p>Euro: €{price}</p>
-              <p>Variants:</p>
-              <div role={'radiogroup'}>
-                <label>
+              <p className={s.price}>€{price}</p>
+              <p className={s.variantsHeading}>Variants</p>
+              <div role={'radiogroup'} className={s.variants}>
+                <label className={`${s.variant} ${s.selected}`}>
                   <input type={'radio'} name={'weight'} value={'sample'} hidden />
                   <img src={Sample} alt={'Sample'} width={50} height={50} />
                   <span>Sample</span>
                 </label>
-                <label>
+                <label className={s.variant}>
                   <input type={'radio'} name={'weight'} value={'50'} hidden />
                   <img src={Bag50} alt={'Bag 50'} width={50} height={50} />
                   <span>50 g bag</span>
                 </label>
-                <label>
+                <label className={s.variant}>
                   <input type={'radio'} name={'weight'} value={'100'} hidden />
                   <img src={Bag100} alt={'Bag 100'} width={50} height={50} />
                   <span>100 g bag</span>
                 </label>
-                <label>
+                <label className={s.variant}>
                   <input type={'radio'} name={'weight'} value={'250'} hidden />
                   <img src={Bag250} alt={'Bag 250'} width={50} height={50} />
                   <span>250 g bag</span>
                 </label>
               </div>
               <div>
-                <div>
-                  <Button
-                    className={s.counterBtn}
-                    onClick={() => (productCount > 0 ? setProductCount((prev) => prev - 1) : 0)}
-                  >
-                    <Minus />
-                  </Button>
-                  <span>{productCount}</span>
-                  <Button
-                    className={s.counterBtn}
-                    onClick={() => setProductCount((prev) => prev + 1)}
-                  >
-                    <Plus />
-                  </Button>
-                  <Button className={s.btn}>Add to bag</Button>
+                <div className={s.counterContainer}>
+                  <div className={s.counter}>
+                    <Button
+                      className={s.counterBtn}
+                      onClick={() => (productCount > 0 ? setProductCount((prev) => prev - 1) : 0)}
+                    >
+                      <Minus />
+                    </Button>
+                    <span className={s.count}>{productCount}</span>
+                    <Button
+                      className={s.counterBtn}
+                      onClick={() => setProductCount((prev) => prev + 1)}
+                    >
+                      <Plus />
+                    </Button>
+                  </div>
+                  <Button className={s.btn}><ShoppingBasket />Add to bag</Button>
                 </div>
               </div>
             </div>
           </div>
-          <div>
-            <div>
-              <h3>Steeping instructions</h3>
-              <ul>
-                <li>
-                  <img src={Kettle} alt={'Kettle'} width={24} height={24} />
-                  <span>Serving size</span>
+          <div className={s.lowerContent}>
+            <div className={s.leftColumn}>
+              <h3 className={s.sectionTitle}>Steeping instructions</h3>
+              <ul className={s.attributesList}>
+                <li className={s.attributesListItem}>
+                  <img src={Kettle} alt={'Kettle'} className={s.imgIcon} />
+                  <span className={s.attributeName}>Serving size:</span>
                   <span>{servingSize}</span>
                 </li>
-                <li>
-                  <img src={Water} alt={'water temp'} width={24} height={24} />
-                  <span>Water temperature</span>
+                <li className={s.attributesListItem}>
+                  <img src={Water} alt={'water temp'} className={s.imgIcon} />
+                  <span className={s.attributeName}>Water temperature:</span>
                   <span>{waterTemp}</span>
                 </li>
-                <li>
-                  <img src={Timer} alt={'Timer'} width={24} height={24} />
-                  <span>Steeping time</span>
+                <li className={s.attributesListItem}>
+                  <img src={Timer} alt={'Timer'} className={s.imgIcon} />
+                  <span className={s.attributeName}>Steeping time:</span>
                   <span>{steepingTime}</span>
                 </li>
-                <li>
+                <li className={s.attributesListItem}>
                   <span
-                    style={{
-                      display: 'inline-block',
-                      backgroundColor: teaColor,
-                      width: '20px',
-                      height: '20px',
-                      borderRadius: '50%',
-                    }}
+                    className={s.teaColor}
+                    style={{ backgroundColor: teaColor}}
                   ></span>
-                  <span>Tea color</span>
+                  <span className={s.attributeName}>Tea color</span>
                 </li>
               </ul>
             </div>
             <div>
-              <h3>About this tea</h3>
-              <div>
-                <div>
-                  <h4>Flavor</h4>
-                  <p>{flavor.join(', ')}</p>
+              <div className={s.rightColumn}>
+                <h3 className={s.sectionTitle}>About this tea</h3>
+                <div className={s.qualitiesContainer}>
+                  <div className={s.quality}>
+                    <h4 className={s.attributeName}>Flavor</h4>
+                    <p>{flavor.join(', ')}</p>
+                  </div>
+                  <div className={s.quality}>
+                    <h4 className={s.attributeName}>Caffeine</h4>
+                    <p>{hasCaffeine}</p>
+                  </div>
                 </div>
-                <div>
-                  <h4>Caffeine</h4>
-                  <p>{hasCaffeine}</p>
-                </div>
+                <h3 className={s.sectionTitle}>Ingredients</h3>
+                <p className={s.ingredientsList}>{ingredients.join(', ')}</p>
               </div>
-              <h3>Ingredients</h3>
-              <p>{ingredients.join(', ')}</p>
             </div>
           </div>
-        </>
+        </div>
       )}
     </>
   );
