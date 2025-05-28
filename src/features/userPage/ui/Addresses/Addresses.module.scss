@@ -4,9 +4,19 @@
   padding: 1.8rem;
   gap: 2rem;
 
-  h2 {
-    font-size: var(--font-lg-size);
-    text-transform: uppercase;
+  .titleWrapper {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    .icon {
+      cursor: pointer;
+    }
+
+    h2 {
+      font-size: var(--font-lg-size);
+      text-transform: uppercase;
+    }
   }
 }
 

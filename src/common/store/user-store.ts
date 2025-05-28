@@ -22,6 +22,10 @@ type UserState = {
     defaultBillingAddress: string;
   }) => void;
   setLoggedOut: () => void;
+
+  updateUserInfo: (
+    data: Partial<Omit<UserState, 'setLoggedIn' | 'setLoggedOut' | 'updateUserInfo'>>,
+  ) => void;
 };
 
 export const useUserStore = create<UserState>()(
@@ -65,6 +69,8 @@ export const useUserStore = create<UserState>()(
           defaultShippingAddress: null,
           defaultBillingAddress: null,
         }),
+
+      updateUserInfo: (data) => set((state) => ({ ...state, ...data })),
     }),
     {
       name: 'user-storage',

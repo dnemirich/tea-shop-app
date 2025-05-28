@@ -5,9 +5,23 @@
   flex-direction: column;
   gap: 2rem;
 
-  h2 {
-    font-size: var(--font-lg-size);
-    text-transform: uppercase;
+  .titleWrapper {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    .icon {
+      cursor: pointer;
+    }
+
+    h2 {
+      font-size: var(--font-lg-size);
+      text-transform: uppercase;
+    }
+  }
+
+  Button {
+    margin-top: 3rem;
   }
 }
 
@@ -21,10 +35,14 @@
     color: var(--item-color);
   }
 
-  p {
+  p,
+  input {
+    font-family: var(--primary-font-family);
     font-size: var(--font-main-size);
     font-weight: 400;
     border: 0.1rem solid var(--outline-color);
     padding: 1.6rem 1.2rem;
+    max-width: 45rem;
+    width: 100%;
   }
 }

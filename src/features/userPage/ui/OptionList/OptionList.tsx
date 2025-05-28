@@ -17,7 +17,7 @@ export const OptionList: React.FC<Props> = ({ setSelectedOption }) => {
       />
       <Button
         type="submit"
-        text="addresses"
+        text="address book"
         icon={<Home size={14} />}
         onClick={() => setSelectedOption('Addresses')}
       />

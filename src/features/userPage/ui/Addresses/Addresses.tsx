@@ -1,5 +1,6 @@
 import { useUserStore } from '@/common/store/user-store';
 import s from './Addresses.module.scss';
+import { Pencil } from 'lucide-react';
 
 export const Addresses: React.FC = () => {
   const addresses = useUserStore((state) => state.addresses);
@@ -12,7 +13,10 @@ export const Addresses: React.FC = () => {
 
   return (
     <div className={s.wrapper}>
-      <h2>Address book</h2>
+      <div className={s.titleWrapper}>
+        <h2>Address book</h2>
+        <Pencil size={16} className={s.icon} />
+      </div>
       <div className={s.addressesWrapper}>
         {addresses.map((address, id) => (
           <div key={id} className={`${s.addressCard}`}>
