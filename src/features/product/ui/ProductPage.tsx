@@ -35,10 +35,10 @@ export const ProductPage = () => {
 
   useEffect(() => {
     productSlug &&
-    getProductBySlug(productSlug).then((res) => {
-      console.log(res.body.results[0]);
-      setProduct(res.body.results[0]);
-    });
+      getProductBySlug(productSlug).then((res) => {
+        console.log(res.body.results[0]);
+        setProduct(res.body.results[0]);
+      });
   }, [productSlug]);
 
   let name = '';
@@ -175,7 +175,10 @@ export const ProductPage = () => {
                       <Plus />
                     </Button>
                   </div>
-                  <Button className={s.btn}><ShoppingBasket />Add to bag</Button>
+                  <Button className={s.btn}>
+                    <ShoppingBasket />
+                    Add to bag
+                  </Button>
                 </div>
               </div>
             </div>
@@ -200,10 +203,7 @@ export const ProductPage = () => {
                   <span>{steepingTime}</span>
                 </li>
                 <li className={s.attributesListItem}>
-                  <span
-                    className={s.teaColor}
-                    style={{ backgroundColor: teaColor}}
-                  ></span>
+                  <span className={s.teaColor} style={{ backgroundColor: teaColor }}></span>
                   <span className={s.attributeName}>Tea color</span>
                 </li>
               </ul>

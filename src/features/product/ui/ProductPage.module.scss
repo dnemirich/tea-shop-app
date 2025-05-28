@@ -23,7 +23,6 @@
   font-weight: 600;
 }
 
-
 .variantsHeading,
 .origin {
   font-size: clamp(1.2rem, 2vw, 1.6rem);
@@ -125,7 +124,8 @@
   font-weight: 300;
 }
 
-.leftColumn, .rightColumn {
+.leftColumn,
+.rightColumn {
   display: flex;
   flex-direction: column;
 }
@@ -144,14 +144,14 @@
   gap: 3rem;
 }
 
-.attributesListItem{
+.attributesListItem {
   position: relative;
   display: flex;
   align-items: center;
   gap: 0.8rem;
 
   &:not(:last-child)::after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: -1.5rem;
     left: 3.2rem;
@@ -159,7 +159,6 @@
     height: 0.1rem;
     background-color: var(--outline-color);
   }
-
 }
 
 .attributeName {
@@ -169,12 +168,12 @@
   text-transform: uppercase;
 }
 
-.qualitiesContainer{
+.qualitiesContainer {
   display: flex;
   gap: 9rem;
 }
 
-.quality{
+.quality {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
