@@ -60,14 +60,29 @@ const BreadcrumbEllipsis = ({ className, ...props }: React.ComponentProps<'span'
     <MoreHorizontal />
   </span>
 );
-BreadcrumbEllipsis.displayName = 'BreadcrumbElipssis';
+BreadcrumbEllipsis.displayName = 'BreadcrumbEllipsis';
 
-export {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-  BreadcrumbEllipsis,
+type Links = {
+  name?: string;
+  path?: string;
+}[];
+
+export const BreadcrumbMenu = ({ links }: { links: Links }) => {
+  return (
+    <BreadcrumbList>
+      {links.map((link, index) => (
+        <React.Fragment key={index}>
+          <BreadcrumbItem>
+            {link.path ? (
+              <BreadcrumbLink href={link.path}>{link.name}</BreadcrumbLink>
+            ) : (
+              <BreadcrumbPage>{link.name}</BreadcrumbPage>
+            )}
+          </BreadcrumbItem>
+          {index < links.length - 1 && <BreadcrumbSeparator />}{' '}
+          {/* Рендерим разделитель вне <li> */}
+        </React.Fragment>
+      ))}
+    </BreadcrumbList>
+  );
 };

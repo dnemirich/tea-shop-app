@@ -15,6 +15,6 @@ export const getProductBySlug = (slug: string) => {
     .execute();
 };
 
-export const getCategoryByKey = (ID: string) => {
+export const getCategoryById = (ID: string) => {
   return apiRoot.categories().withId({ ID }).get().execute();
 };

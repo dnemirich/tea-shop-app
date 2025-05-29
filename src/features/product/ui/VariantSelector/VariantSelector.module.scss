@@ -1,0 +1,25 @@
+.variants {
+  display: flex;
+  gap: 1.4rem;
+}
+
+.variant {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  width: 8.4rem;
+  height: 10.1rem;
+  font-size: 1.4rem;
+
+  &:hover,
+  &.selected {
+    border: 0.2rem solid var(--accent-color);
+  }
+}
+
+.variantsHeading {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 500;
+}
