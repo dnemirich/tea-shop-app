@@ -3,6 +3,7 @@ import s from './MyDetails.module.scss';
 import { Pencil } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/common/components/Button/Button';
+import { updateCustomer } from '../../api/user-api';
 
 export const MyDetails = () => {
   const firstName = useUserStore((state) => state.firstName);
@@ -16,14 +17,41 @@ export const MyDetails = () => {
   const [dateOfBirthValue, setdateOfBirthValue] = useState(dateOfBirth || '');
 
   const updateUser = useUserStore((state) => state.updateUserInfo);
+  const email = useUserStore((state) => state.email);
+  const password = useUserStore((state) => state.password);
 
-  const handleSave = () => {
-    updateUser({
-      firstName: firstNameValue,
-      lastName: lastNameValue,
-      dateOfBirth: dateOfBirthValue,
-    });
-    setIsEditing(false);
+  const handleSave = async () => {
+    try {
+      if (!email) {
+        console.error('Missing email');
+        return;
+      }
+
+      if (!password) {
+        console.error('Missing password');
+        return;
+      }
+
+      await updateCustomer(
+        {
+          firstName: firstNameValue,
+          lastName: lastNameValue,
+          dateOfBirth: dateOfBirthValue,
+        },
+        email,
+        password,
+      );
+
+      updateUser({
+        firstName: firstNameValue,
+        lastName: lastNameValue,
+        dateOfBirth: dateOfBirthValue,
+      });
+
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Failed to update user details:', error);
+    }
   };
 
   return (

@@ -5,6 +5,7 @@ import { Address } from '../types/user-types';
 type UserState = {
   isLoggedIn: boolean;
   email: string | null;
+  password: string | null;
   firstName: string | null;
   lastName: string | null;
   dateOfBirth: string | null;
@@ -14,6 +15,7 @@ type UserState = {
 
   setLoggedIn: (user: {
     email: string;
+    password: string;
     firstName: string;
     lastName: string;
     dateOfBirth: string;
@@ -33,6 +35,7 @@ export const useUserStore = create<UserState>()(
     (set) => ({
       isLoggedIn: false,
       email: null,
+      password: null,
       firstName: null,
       lastName: null,
       dateOfBirth: null,
@@ -41,6 +44,7 @@ export const useUserStore = create<UserState>()(
       defaultBillingAddress: null,
       setLoggedIn: ({
         email,
+        password,
         firstName,
         lastName,
         dateOfBirth,
@@ -51,6 +55,7 @@ export const useUserStore = create<UserState>()(
         set({
           isLoggedIn: true,
           email,
+          password,
           firstName,
           lastName,
           dateOfBirth,
@@ -62,6 +67,7 @@ export const useUserStore = create<UserState>()(
         set({
           isLoggedIn: false,
           email: null,
+          password: null,
           firstName: null,
           lastName: null,
           dateOfBirth: null,

@@ -32,6 +32,7 @@ export const createAuthService = (): AuthService => {
 
       const user = {
         email: customer.email,
+        password,
         firstName: customer.firstName ?? '',
         lastName: customer.lastName ?? '',
         dateOfBirth: customer.dateOfBirth ?? '',
@@ -45,8 +46,10 @@ export const createAuthService = (): AuthService => {
 
       if (rememberMe) {
         sessionStorage.setItem('authEmail', email);
+        sessionStorage.setItem('authPassword', email);
       } else {
         sessionStorage.removeItem('authEmail');
+        sessionStorage.removeItem('authPassword');
       }
 
       return user;
@@ -56,6 +59,7 @@ export const createAuthService = (): AuthService => {
       apiRoot = null;
       setLoggedOut();
       sessionStorage.removeItem('authEmail');
+      sessionStorage.removeItem('authPassword');
     },
 
     getApiRoot() {
@@ -64,10 +68,13 @@ export const createAuthService = (): AuthService => {
 
     async restoreSession() {
       const email = sessionStorage.getItem('authEmail');
-      if (!email) return null;
+      const password = sessionStorage.getItem('authPassword');
+      if (!email || !password) {
+        return null;
+      }
 
       try {
-        const root = createCustomerApiRoot(email, '');
+        const root = createCustomerApiRoot(email, password);
         const res = await root.me().get().execute();
 
         apiRoot = root;
@@ -75,6 +82,7 @@ export const createAuthService = (): AuthService => {
         const customer = res.body;
         const user = {
           email: customer.email,
+          password,
           firstName: customer.firstName ?? '',
           lastName: customer.lastName ?? '',
           dateOfBirth: customer.dateOfBirth ?? '',
