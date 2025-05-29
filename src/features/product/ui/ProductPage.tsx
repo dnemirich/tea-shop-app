@@ -22,6 +22,30 @@ import { Carousel } from '@/common/components/Carousel/Carousel.tsx';
 import { TeaInfoBox } from './TeaInfoBox/TeaInfoBox.tsx';
 import { ROUTES } from '@/common/config/routes.ts';
 
+const OUNCE_SIZE = 28.35;
+const VARIANTS = [
+  {
+    title: 'Sample',
+    icon: Sample,
+    value: 'sample',
+  },
+  {
+    title: '50 g bag',
+    icon: Bag50,
+    value: '50',
+  },
+  {
+    title: '100 g bag',
+    icon: Bag100,
+    value: '100',
+  },
+  {
+    title: '250 g bag',
+    icon: Bag250,
+    value: '250',
+  }
+]
+
 export const ProductPage = () => {
   const { categoryName, productSlug } = useParams();
   const [product, setProduct] = useState<ProductProjection>();
@@ -132,41 +156,31 @@ export const ProductPage = () => {
                 <img src={Globe} alt={'globe'} width={24} height={24} />
                 Origin: {origin}
               </p>
-              <p className={s.price}>€{calculatedPrice === 0? price: calculatedPrice.toFixed(2)}</p>
+              <p className={s.price}>
+                €{calculatedPrice === 0 ? price : calculatedPrice.toFixed(2)}
+              </p>
               <p className={s.variantsHeading}>Variants</p>
               <div role={'radiogroup'} className={s.variants}>
-                <label className={`${s.variant} ${selectedValue === 'sample' ? s.selected : ''}`}>
-                  <input type={'radio'} name={'weight'} value={'sample'} hidden onChange={() => {
-                    setCalculatedPrice(price);
-                    setSelectedValue('sample');
-                  }} />
-                  <img src={Sample} alt={'Sample'} width={50} height={50} />
-                  <span>Sample</span>
-                </label>
-                <label className={`${s.variant} ${selectedValue === '50' ? s.selected : ''}`}>
-                  <input type={'radio'} name={'weight'} value={'50'} hidden onChange={() => {
-                    setCalculatedPrice((price / 28.35) * 50);
-                    setSelectedValue('50');
-                  }} />
-                  <img src={Bag50} alt={'Bag 50'} width={50} height={50} />
-                  <span>50 g bag</span>
-                </label>
-                <label className={`${s.variant} ${selectedValue === '100' ? s.selected : ''}`}>
-                  <input type={'radio'} name={'weight'} value={'100'} hidden onChange={() => {
-                    setCalculatedPrice((price / 28.35) * 100);
-                    setSelectedValue('100');
-                  }}/>
-                  <img src={Bag100} alt={'Bag 100'} width={50} height={50} />
-                  <span>100 g bag</span>
-                </label>
-                <label className={`${s.variant} ${selectedValue === '250' ? s.selected : ''}`}>
-                  <input type={'radio'} name={'weight'} value={'250'} hidden onChange={() => {
-                    setCalculatedPrice((price / 28.35) * 250);
-                    setSelectedValue('250');
-                  }} />
-                  <img src={Bag250} alt={'Bag 250'} width={50} height={50} />
-                  <span>250 g bag</span>
-                </label>
+                {VARIANTS.map((variant, index) => (
+                  <label className={`${s.variant} ${selectedValue === variant.value ? s.selected : ''}`} key={index}>
+                    <input
+                      type={'radio'}
+                      name={'weight'}
+                      value={variant.value}
+                      hidden
+                      onChange={() => {
+                        if (variant.value === 'sample') {
+                          setCalculatedPrice(price);
+                        } else {
+                          setCalculatedPrice((price / OUNCE_SIZE) * Number(variant.value));
+                        }
+                        setSelectedValue(variant.value);
+                      }}
+                    />
+                    <img src={variant.icon} alt={variant.title} width={50} height={50} />
+                    <span>{variant.title}</span>
+                  </label>
+                ))}
               </div>
               <div>
                 <div className={s.counterContainer}>
@@ -193,8 +207,17 @@ export const ProductPage = () => {
               </div>
             </div>
           </div>
-          {categoryName !== 'teaware' && <TeaInfoBox servingSize={servingSize} waterTemp={waterTemp} steepingTime={steepingTime}
-                                                     teaColor={teaColor} flavor={flavor} hasCaffeine={hasCaffeine} ingredients={ingredients} />}
+          {categoryName !== 'teaware' && (
+            <TeaInfoBox
+              servingSize={servingSize}
+              waterTemp={waterTemp}
+              steepingTime={steepingTime}
+              teaColor={teaColor}
+              flavor={flavor}
+              hasCaffeine={hasCaffeine}
+              ingredients={ingredients}
+            />
+          )}
         </div>
       )}
     </>
