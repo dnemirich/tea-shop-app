@@ -9,12 +9,14 @@ export const MyDetails = () => {
   const firstName = useUserStore((state) => state.firstName);
   const lastName = useUserStore((state) => state.lastName);
   const dateOfBirth = useUserStore((state) => state.dateOfBirth);
+  const emailAddress = useUserStore((state) => state.email);
 
   const [isEditing, setIsEditing] = useState(false);
 
   const [firstNameValue, setFirstNameValue] = useState(firstName || '');
   const [lastNameValue, setLastNameValue] = useState(lastName || '');
   const [dateOfBirthValue, setdateOfBirthValue] = useState(dateOfBirth || '');
+  const [emailValue, setEmailValue] = useState(emailAddress || '');
 
   const updateUser = useUserStore((state) => state.updateUserInfo);
   const email = useUserStore((state) => state.email);
@@ -37,6 +39,7 @@ export const MyDetails = () => {
           firstName: firstNameValue,
           lastName: lastNameValue,
           dateOfBirth: dateOfBirthValue,
+          email: emailValue,
         },
         email,
         password,
@@ -46,6 +49,7 @@ export const MyDetails = () => {
         firstName: firstNameValue,
         lastName: lastNameValue,
         dateOfBirth: dateOfBirthValue,
+        email: emailValue,
       });
 
       setIsEditing(false);
@@ -86,6 +90,15 @@ export const MyDetails = () => {
           />
         ) : (
           <p>{dateOfBirth}</p>
+        )}
+      </div>
+
+      <div className={s.info}>
+        <span>Email address</span>
+        {isEditing ? (
+          <input value={emailValue ?? ''} onChange={(e) => setEmailValue(e.target.value)} />
+        ) : (
+          <p>{emailAddress}</p>
         )}
       </div>
       {isEditing ? <Button text="Save changes" onClick={handleSave} /> : ''}

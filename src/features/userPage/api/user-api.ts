@@ -11,6 +11,7 @@ export type UpdateCustomerData = Partial<{
   firstName: string;
   lastName: string;
   dateOfBirth: string;
+  email: string;
   addresses: Address[];
   defaultShippingAddress: string;
   defaultBillingAddress: string;
@@ -47,6 +48,13 @@ export const updateCustomer = async (
       action: 'setDateOfBirth',
       dateOfBirth: userData.dateOfBirth,
     } as MyCustomerSetDateOfBirthAction);
+  }
+
+  if (userData.email) {
+    actions.push({
+      action: 'changeEmail',
+      email: userData.email,
+    });
   }
 
   if (userData.addresses) {
