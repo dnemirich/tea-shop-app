@@ -1,0 +1,8 @@
+.title {
+  margin: var(--spacing-xl) 0;
+  font-family: var(--secondary-font-family);
+  font-size: var(--font-xl-size);
+  line-height: 1.25;
+  color: var(--primary-dark-color);
+  text-align: center;
+}
