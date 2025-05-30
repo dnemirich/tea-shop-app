@@ -10,6 +10,7 @@ import Layout from '@/common/components/Layout/Layout';
 import { LoginPage } from '@/features/login/ui/LoginPage/LoginPage.tsx';
 import { ROUTES } from '@/common/config/routes.ts';
 import { NotFoundPage } from '@/common/components/NotFoundPage/NotFoundPage.tsx';
+import { HomePage } from '@/features/home/ui/HomePage.tsx';
 import { ProductPage } from '@/features/product/ui/ProductPage.tsx';
 
 function App() {
@@ -50,6 +51,9 @@ function App() {
           {/* <Route index element={<Home />} />
         <Route path="about" element={<About />} /> */}
           <Route path={'/shop/:categoryName/:productSlug'} element={<ProductPage />} />
+          <Route index element={<HomePage />} />
+
+          {/* <Route path="about" element={<About />} /> */}
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
         </Route>
       </Routes>

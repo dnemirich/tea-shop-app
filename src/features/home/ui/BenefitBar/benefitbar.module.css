@@ -1,0 +1,52 @@
+:root {
+  --gap: clamp(0.5rem, 2vw, 1.5rem);
+  --font-size-text: clamp(1.4rem, 1vw, 1.6rem);
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: clamp(1rem, 3vw, 3rem);
+  font-family: Montserrat, sans-serif;
+  background-color: var(--secondary-light-color);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 4rem);
+  width: 100%;
+  max-width: 120rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem;
+  color: var(--primary-dark-color);
+  white-space: nowrap;
+}
+
+.icon {
+  font-size: var(--font-button-size);
+  color: var(--accent-color);
+}
+
+.text {
+  font-size: var(--font-size-text);
+  line-height: 1.2;
+  letter-spacing: 0.1px;
+  text-transform: uppercase;
+}
+
+@media (width <= 400px) {
+  .item {
+    flex-direction: column;
+    text-align: center;
+    white-space: normal;
+  }
+}
