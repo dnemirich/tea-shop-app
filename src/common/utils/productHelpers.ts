@@ -1,10 +1,5 @@
 import type { Attribute, ProductProjection } from '@commercetools/platform-sdk';
-import {
-  AttributeMapper,
-  type TeaAttributes,
-  type TeawareAttributes,
-  type ValueType,
-} from '../types/product-types';
+import { AttributeMapper, type TeaAttributes, type ValueType } from '../types/product-types';
 
 const getAttrValue = (attributes: Attribute[], name: string) =>
   attributes.find((attr) => attr.name === name)?.value;
@@ -41,73 +36,30 @@ const mapTeaAttributes: AttributeMapper<TeaAttributes> = (product) => {
   };
 };
 
-const mapTeawareAttributes: AttributeMapper<TeawareAttributes> = (product) => {
-  const attributes = product.masterVariant.attributes || [];
-  const prices = product.masterVariant.prices || [];
-  const name = product.name['en-US'];
-  const description = product.description?.['en-US'] || '';
-  const images = product.masterVariant.images?.map((img) => img.url) || [];
-  const price = prices[0]?.value?.centAmount / 100 || 0;
-  const material = getAttrValue(attributes, 'material')?.['en-US'] || '';
-  const volume = getAttrValue(attributes, 'volume') || 0;
-  const teawareType = getAttrValue(attributes, 'teaware-type')?.['en-US'] || '';
+const getDefaultAttributes = (): TeaAttributes => ({
+  name: '',
+  description: '',
+  images: [],
+  origin: '',
+  price: 0,
+  flavor: [],
+  hasCaffeine: '',
+  servingSize: '',
+  waterTemp: '',
+  steepingTime: '',
+  teaColor: '',
+  ingredients: [],
+});
 
-  return {
-    name,
-    description,
-    images,
-    price,
-    material,
-    volume,
-    teawareType,
-  };
-};
-
-const getDefaultAttributes = (category: string): TeaAttributes | TeawareAttributes => {
-  if (category === 'teaware') {
-    return {
-      name: '',
-      description: '',
-      images: [],
-      price: 0,
-      material: '',
-      volume: 0,
-      teawareType: '',
-    };
-  }
-
-  return {
-    name: '',
-    description: '',
-    images: [],
-    origin: '',
-    price: 0,
-    flavor: [],
-    hasCaffeine: '',
-    servingSize: '',
-    waterTemp: '',
-    steepingTime: '',
-    teaColor: '',
-    ingredients: [],
-  };
-};
-
-export const extractProductAttributes = (
-  category: string,
-  product?: ProductProjection,
-): TeaAttributes | TeawareAttributes => {
+export const extractProductAttributes = (product?: ProductProjection): TeaAttributes => {
   if (
     !product ||
     !product.description ||
     !product.masterVariant.attributes ||
     !product.masterVariant.prices
   ) {
-    return getDefaultAttributes(category);
+    return getDefaultAttributes();
   }
 
-  if (category === 'teaware') {
-    return mapTeawareAttributes(product);
-  } else {
-    return mapTeaAttributes(product);
-  }
+  return mapTeaAttributes(product);
 };

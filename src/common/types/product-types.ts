@@ -18,12 +18,6 @@ export type TeaAttributes = ProductAttributes & {
   ingredients: string[];
 };
 
-export type TeawareAttributes = ProductAttributes & {
-  material: string;
-  volume: number;
-  teawareType: string;
-};
-
 export type ValueType = {
   ru: string;
   'en-US': string;
