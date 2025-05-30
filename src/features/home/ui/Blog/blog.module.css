@@ -1,6 +1,6 @@
 :root {
   --font-title: clamp(1.25rem, 2vw, 1.75rem);
-  --font-desc: clamp(1rem, 1.5vw, 1.125rem);
+  --font-desc: clamp(1.2rem, 1.5vw, 1.4rem);
   --gap: clamp(1rem, 3vw, 2rem);
 }
 
