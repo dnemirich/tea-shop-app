@@ -2,7 +2,6 @@ import { RegistrationPage } from '@/features/registration/ui/RegistrationPage/Re
 import { useAppStore } from '@/common/store/app-store.ts';
 import { toast, ToastContainer } from 'react-toastify';
 import s from './App.module.scss';
-// import { anonymousApiRoot } from '@/features/login/api/anonymous-client.ts';
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from '@/common/components/Layout/Layout';
@@ -13,7 +12,7 @@ import { NotFoundPage } from '@/common/components/NotFoundPage/NotFoundPage.tsx'
 import { UserPage } from '@/features/userPage/ui/UserPage';
 
 function App() {
-  const { error, clearError } = useAppStore();
+  const { error, clearError, success, clearSuccess } = useAppStore();
 
   useEffect(() => {
     if (error) {
@@ -28,18 +27,18 @@ function App() {
     }
   }, [error, clearError]);
 
-  // useEffect(() => {
-  //   const anonymousSession = async () => {
-  //     try {
-  //       const response = await anonymousApiRoot;
-  //       // console.log('anonymous session:', response);
-  //     } catch (err) {
-  //       // console.log('failed to create anon session:', err);
-  //     }
-  //   };
-  //
-  //   anonymousSession();
-  // }, []);
+  useEffect(() => {
+    if (success) {
+      toast.error(success, {
+        className: s.success,
+        autoClose: false,
+        theme: 'colored',
+        closeOnClick: true,
+        position: 'top-center',
+      });
+      clearSuccess();
+    }
+  }, [success, clearSuccess]);
 
   return (
     <>

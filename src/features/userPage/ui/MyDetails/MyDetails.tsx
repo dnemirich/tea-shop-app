@@ -4,6 +4,7 @@ import { Pencil } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/common/components/Button/Button';
 import { updateCustomer } from '../../api/user-api';
+import { useAppStore } from '@/common/store/app-store';
 
 export const MyDetails = () => {
   const firstName = useUserStore((state) => state.firstName);
@@ -21,6 +22,11 @@ export const MyDetails = () => {
   const updateUser = useUserStore((state) => state.updateUserInfo);
   const email = useUserStore((state) => state.email);
   const password = useUserStore((state) => state.password);
+
+  const setAppError = useAppStore((s) => s.setAppError);
+  const clearError = useAppStore((s) => s.clearError);
+
+  const setSuccess = useAppStore((s) => s.setSuccess);
 
   const handleSave = async () => {
     try {
@@ -52,9 +58,11 @@ export const MyDetails = () => {
         email: emailValue,
       });
 
+      clearError();
+      setSuccess('Profile updated successfully!');
       setIsEditing(false);
-    } catch (error) {
-      console.error('Failed to update user details:', error);
+    } catch {
+      setAppError('Failed to update your profile');
     }
   };
 
