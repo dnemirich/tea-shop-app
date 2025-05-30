@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import s from './App.module.scss';
 // import { anonymousApiRoot } from '@/features/login/api/anonymous-client.ts';
 import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Layout from '@/common/components/Layout/Layout';
 
 import { LoginPage } from '@/features/login/ui/LoginPage/LoginPage.tsx';

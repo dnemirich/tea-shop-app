@@ -1,7 +1,7 @@
 import { apiRoot } from '@/common/config/api-client.ts';
 
 export const getProducts = () => {
-  return apiRoot.productProjections().get().execute();
+  return apiRoot.products().get().execute();
 };
 
 export const getProductBySlug = (slug: string) => {
@@ -17,4 +17,8 @@ export const getProductBySlug = (slug: string) => {
 
 export const getCategoryById = (ID: string) => {
   return apiRoot.categories().withId({ ID }).get().execute();
+};
+
+export const getDiscounts = () => {
+  return apiRoot.productDiscounts().get().execute();
 };

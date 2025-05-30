@@ -25,6 +25,26 @@
   font-weight: 600;
 }
 
+.discount {
+  .oldPrice {
+    position: relative;
+    opacity: 0.6;
+    margin-right: 1rem;
+
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 30%;
+      display: block;
+      width: clamp(6rem, 7vw, 8rem);
+      height: 0.2rem;
+      background-color: var(--item-color);
+      content: '';
+      transform: rotate(-30deg);
+    }
+  }
+}
+
 .property {
   display: flex;
   align-items: center;
@@ -38,6 +58,14 @@
   max-height: 40rem;
   overflow: auto;
   font-size: clamp(1.2rem, 2vw, 1.6rem);
+}
+
+.discountLabel {
+  width: fit-content;
+  padding: 0.2rem 0.8rem;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  color: var(--primary-light-color);
+  background-color: var(--error-color);
 }
 
 @media (width <= 830px) {
