@@ -80,7 +80,8 @@ export const TeaCards: React.FC = () => {
     {
       title: 'FRUIT TEA',
       image: 'fruit-tea.jpg',
-      description: 'Fruit tea bursts with natural sweetness and vibrant, juicy flavors from real fruit pieces and herbs. Naturally caffeine-free, it’s a refreshing and flavorful choice that can be enjoyed hot or iced, any time of day.',
+      description:
+        'Fruit tea bursts with natural sweetness and vibrant, juicy flavors from real fruit pieces and herbs. Naturally caffeine-free, it’s a refreshing and flavorful choice that can be enjoyed hot or iced, any time of day.',
     },
   ];
 

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/common/config/routes.ts';
 
 export const Promo: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <section className={styles.container}>
       <div className={styles.imageWrapper}>
@@ -29,7 +29,9 @@ export const Promo: React.FC = () => {
           of reflection. Whether you are seeking comfort, clarity, or curiosity in a cup, you will
           find it here.
         </p>
-        <Button className={styles.button} onClick={() => navigate(ROUTES.SHOP)}>Browse teas</Button>
+        <Button className={styles.button} onClick={() => navigate(ROUTES.SHOP)}>
+          Browse teas
+        </Button>
       </div>
     </section>
   );
