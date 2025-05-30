@@ -19,6 +19,8 @@
   --font-lg-size: 2.2rem;
   --font-button-size: 1.2rem;
   --font-error-size: 1.4rem;
+  --swiper-pagination-bullet-width: 1.2rem;
+  --swiper-pagination-bullet-height: 1.2rem;
 }
 
 *,

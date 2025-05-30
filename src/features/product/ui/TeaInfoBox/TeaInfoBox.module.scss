@@ -2,7 +2,7 @@
   display: flex;
   gap: 16rem;
   padding: 4rem 10rem;
-  font-size: 1.4rem;
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
   background-color: var(--secondary-light-color);
 }
 
@@ -19,7 +19,7 @@
 }
 
 .sectionTitle {
-  font-size: 3.2rem;
+  font-size: clamp(2.6rem, 2vw, 3.2rem);
   font-weight: 300;
 }
 
@@ -54,14 +54,14 @@
     position: absolute;
     bottom: -1.5rem;
     left: 3.2rem;
-    width: 26.4rem;
+    width: clamp(18rem, 2vw, 26.4rem);
     height: 0.1rem;
     background-color: var(--outline-color);
   }
 }
 
 .attributeName {
-  font-size: 1.4rem;
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
   font-weight: 500;
   color: var(--secondary-dark-color);
   text-transform: uppercase;
@@ -92,4 +92,15 @@
 
 .ingredientsList {
   max-width: 40rem;
+}
+
+@media screen and (width <= 830px) {
+  .lowerContent {
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+    width: 70vw;
+    padding: 4rem;
+    align-self: center;
+  }
 }

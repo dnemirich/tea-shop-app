@@ -60,7 +60,7 @@ export const VariantSelector = ({ onPriceChange, price }: Props) => {
                 setSelectedValue(variant.value);
               }}
             />
-            <img src={variant.icon} alt={variant.title} width={50} height={50} />
+            <img src={variant.icon} alt={variant.title} className={s.icon} />
             <span>{variant.title}</span>
           </label>
         ))}
