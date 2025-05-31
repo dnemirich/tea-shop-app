@@ -9,18 +9,14 @@ type Props = {
 export const OptionList: React.FC<Props> = ({ setSelectedOption }) => {
   return (
     <div className={s.optionsWrapper}>
-      <Button
-        type="submit"
-        text="my details"
-        icon={<User size={14} />}
-        onClick={() => setSelectedOption('MyDetails')}
-      />
-      <Button
-        type="submit"
-        text="address book"
-        icon={<Home size={14} />}
-        onClick={() => setSelectedOption('Addresses')}
-      />
+      <Button type="button" onClick={() => setSelectedOption('MyDetails')}>
+        <User size={14} />
+        <span>my details</span>
+      </Button>
+      <Button type="button" onClick={() => setSelectedOption('Addresses')}>
+        <Home size={14} />
+        <span>addresses</span>
+      </Button>
     </div>
   );
 };

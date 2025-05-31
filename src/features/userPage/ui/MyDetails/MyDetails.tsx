@@ -109,7 +109,13 @@ export const MyDetails = () => {
           <p>{emailAddress}</p>
         )}
       </div>
-      {isEditing ? <Button text="Save changes" onClick={handleSave} /> : ''}
+      {isEditing ? (
+        <Button type="button" onClick={handleSave}>
+          save changes
+        </Button>
+      ) : (
+        ''
+      )}
     </div>
   );
 };
