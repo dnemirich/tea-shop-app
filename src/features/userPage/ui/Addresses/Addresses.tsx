@@ -4,7 +4,6 @@ import { Pencil } from 'lucide-react';
 
 export const Addresses: React.FC = () => {
   const addresses = useUserStore((state) => state.addresses);
-  console.log(addresses);
   const defaultShippingId = useUserStore((state) => state.defaultShippingAddress);
   const defaultBillingId = useUserStore((state) => state.defaultBillingAddress);
 

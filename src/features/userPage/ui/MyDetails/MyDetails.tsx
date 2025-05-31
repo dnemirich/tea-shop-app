@@ -66,6 +66,15 @@ export const MyDetails = () => {
     }
   };
 
+  const formatDate = (dateStr: string | null) => {
+    if (!dateStr) {
+      return '';
+    }
+
+    const [year, month, day] = dateStr.split('-');
+    return `${day}.${month}.${year}`;
+  };
+
   return (
     <div className={s.myDetailsWrapper}>
       <div className={s.titleWrapper}>
@@ -97,7 +106,7 @@ export const MyDetails = () => {
             onChange={(e) => setdateOfBirthValue(e.target.value)}
           />
         ) : (
-          <p>{dateOfBirth}</p>
+          <p>{formatDate(dateOfBirth)}</p>
         )}
       </div>
 
