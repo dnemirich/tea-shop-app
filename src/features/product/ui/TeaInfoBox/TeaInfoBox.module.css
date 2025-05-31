@@ -1,0 +1,106 @@
+.lowerContent {
+  display: flex;
+  gap: 16rem;
+  padding: 4rem 10rem;
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
+  background-color: var(--secondary-light-color);
+}
+
+.imgIcon {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.teaColor {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.sectionTitle {
+  font-size: clamp(2.6rem, 2vw, 3.2rem);
+  font-weight: 300;
+}
+
+.leftColumn,
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.leftColumn {
+  gap: 3.1rem;
+}
+
+.rightColumn {
+  gap: 2.4rem;
+}
+
+.attributesList {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.attributesListItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.attributesListItem:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: -1.5rem;
+  left: 3.2rem;
+  width: clamp(18rem, 3vw, 26.4rem);
+  height: 0.1rem;
+  background-color: var(--outline-color);
+}
+
+.attributeName {
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
+  font-weight: 500;
+  color: var(--secondary-dark-color);
+  text-transform: uppercase;
+}
+
+.qualitiesContainer {
+  display: flex;
+  gap: 9rem;
+  height: 7rem;
+}
+
+.quality {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.quality:not(:last-child)::after {
+  position: absolute;
+  top: -1rem;
+  right: -4.5rem;
+  width: 0.1rem;
+  height: 7rem;
+  background-color: var(--outline-color);
+  content: '';
+}
+
+.ingredientsList {
+  max-width: 40rem;
+}
+
+@media screen and (width <= 830px) {
+  .lowerContent {
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+    width: 70vw;
+    padding: 4rem;
+    align-self: center;
+  }
+}

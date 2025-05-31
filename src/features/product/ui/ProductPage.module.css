@@ -1,0 +1,74 @@
+.pageContent {
+  display: flex;
+  flex-direction: column;
+  gap: 6.6rem;
+  margin: 3.7rem 0;
+}
+
+.upperContent {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(5rem, 3vw, 9rem);
+}
+
+.mainInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2.1rem;
+  width: 100%;
+  max-width: 57rem;
+}
+
+.name,
+.price {
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 600;
+}
+
+.discount .oldPrice {
+  position: relative;
+  opacity: 0.6;
+  margin-right: 1rem;
+}
+
+.discount .oldPrice::after {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  display: block;
+  width: clamp(6rem, 7vw, 8rem);
+  height: 0.2rem;
+  background-color: var(--item-color);
+  content: '';
+  transform: rotate(-30deg);
+}
+
+.property {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 500;
+}
+
+.description {
+  height: 100%;
+  max-height: 40rem;
+  overflow: auto;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+}
+
+.discountLabel {
+  width: fit-content;
+  padding: 0.2rem 0.8rem;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  color: var(--primary-light-color);
+  background-color: var(--error-color);
+}
+
+@media (width <= 830px) {
+  .upperContent {
+    flex-direction: column;
+    align-items: center;
+  }
+}
