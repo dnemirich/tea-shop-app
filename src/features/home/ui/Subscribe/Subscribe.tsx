@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './subscribe.module.css';
 import { Send } from 'lucide-react';
-import { SectionHeading } from '../SectionHeading/SectionHeading';
+import { SectionHeading } from '@/features/home/ui/SectionHeading/SectionHeading.tsx';
 
 export const Subscribe: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ export const Subscribe: React.FC = () => {
       </div>
 
       <div className={styles.textWrapper}>
-        <SectionHeading title="Subscribe to our newsletter" className={styles.customСlass} />
+        <SectionHeading title="Subscribe to our newsletter" />
 
         <p className={styles.paragraph}>
           Want to be the first to know about our newest tea arrivals, seasonal specials, and tea

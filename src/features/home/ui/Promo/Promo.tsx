@@ -1,8 +1,12 @@
 import React from 'react';
 import styles from './promo.module.css';
-import { SectionHeading } from '../SectionHeading/SectionHeading';
+import { SectionHeading } from '@/features/home/ui/SectionHeading/SectionHeading.tsx';
+import { Button } from '@/common/components/Button/Button.tsx';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/common/config/routes.ts';
 
-export const TeaPromo: React.FC = () => {
+export const Promo: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <section className={styles.container}>
       <div className={styles.imageWrapper}>
@@ -25,7 +29,9 @@ export const TeaPromo: React.FC = () => {
           of reflection. Whether you are seeking comfort, clarity, or curiosity in a cup, you will
           find it here.
         </p>
-        <button className={styles.button}>BROWSE TEAS</button>
+        <Button className={styles.button} onClick={() => navigate(ROUTES.SHOP)}>
+          Browse teas
+        </Button>
       </div>
     </section>
   );

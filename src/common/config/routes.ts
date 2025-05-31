@@ -4,4 +4,5 @@ export const ROUTES = {
   REGISTER: '/register',
   NOT_FOUND: '*',
   USER: '/my-account',
+  SHOP: '/shop',
 } as const;

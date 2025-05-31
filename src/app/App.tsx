@@ -10,7 +10,7 @@ import { LoginPage } from '@/features/login/ui/LoginPage/LoginPage.tsx';
 import { ROUTES } from '@/common/config/routes.ts';
 import { NotFoundPage } from '@/common/components/NotFoundPage/NotFoundPage.tsx';
 import { UserPage } from '@/features/userPage/ui/UserPage';
-import Home from '@/common/components/pages/Home';
+import { HomePage } from '@/features/home/ui/HomePage.tsx';
 
 function App() {
   const { error, clearError, success, clearSuccess } = useAppStore();
@@ -48,7 +48,9 @@ function App() {
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<RegistrationPage />} />
           <Route path={ROUTES.USER} element={<UserPage />} />
-          <Route index element={<Home />} />
+          <Route index element={<HomePage />} />
+
+          {/* <Route path="about" element={<About />} /> */}
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
         </Route>
       </Routes>

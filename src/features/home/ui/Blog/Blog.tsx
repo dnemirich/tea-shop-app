@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './blog.module.css';
-import { SectionHeading } from '../SectionHeading/SectionHeading';
+import { SectionHeading } from '@/features/home/ui/SectionHeading/SectionHeading.tsx';
 
 type BlogPost = {
   title: string;

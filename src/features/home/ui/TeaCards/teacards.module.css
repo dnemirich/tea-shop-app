@@ -9,18 +9,6 @@
   gap: var(--gap);
 }
 
-@media (width >= 600px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (width >= 1024px) {
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(36rem, 1fr));
-  }
-}
-
 .card {
   display: flex;
   flex-direction: column;
@@ -93,4 +81,16 @@
   font-size: var(--font-main-size);
   line-height: 1.4;
   text-align: center;
+}
+
+@media (width >= 600px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 1024px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(36rem, 1fr));
+  }
 }
