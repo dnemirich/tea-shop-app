@@ -71,23 +71,4 @@ main {
   padding: 2rem;
 }
 
-.container {
-  max-width: 120rem;
-  height: 100%;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
 
-.catalogHeaderImage {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin: 0;
-  padding: 0;
-  object-fit: cover;
-}
-
-.catalogPageContainer {
-  margin: 0;
-  padding: 0;
-}

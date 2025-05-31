@@ -1,0 +1,45 @@
+.catalogWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mainContent {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.leftSidebar {
+  flex: 0 0 250px;
+}
+
+.rightContent {
+  flex: 1;
+}
+
+.sortRow {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cardContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    flex-direction: column;
+  }
+
+  .leftSidebar {
+    flex: 1;
+    width: 100%;
+  }
+
+  .sortRow {
+    justify-content: flex-start;
+  }
+}

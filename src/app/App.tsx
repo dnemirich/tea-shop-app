@@ -6,11 +6,11 @@ import s from './App.module.scss';
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from '@/common/components/Layout/Layout';
-
 import { LoginPage } from '@/features/login/ui/LoginPage/LoginPage.tsx';
 import { ROUTES } from '@/common/config/routes.ts';
 import { NotFoundPage } from '@/common/components/NotFoundPage/NotFoundPage.tsx';
-import { CatalogPage } from '@/common/components/CatalogPage';
+import { CatalogPage } from '@/common/components/CatalogPage/CatalogPage';
+
 
 function App() {
   const { error, clearError } = useAppStore();
