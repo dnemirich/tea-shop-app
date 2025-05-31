@@ -3,4 +3,4 @@ export type ProductDiscount = {
   references: string[];
   value: number;
   isActive: boolean;
-}
+};

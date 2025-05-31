@@ -15,12 +15,10 @@
   animation: scroll 30s linear infinite;
 }
 
-
 .message {
   font-size: clamp(1.6rem, 2.2vw, 2rem);
   padding-right: 2rem;
   color: var(--primary-light-color);
-
 }
 
 @keyframes scroll {
@@ -32,4 +30,3 @@
     transform: translateX(-100%);
   }
 }
-

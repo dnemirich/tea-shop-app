@@ -12,12 +12,11 @@ export const HomePage: React.FC = () => {
   const [discount, setDiscount] = useState<ProductDiscount | null>(null);
 
   useEffect(() => {
-    getDiscountsInfo().then((discountInfo) => setDiscount(discountInfo))
-  }, [
-  ])
+    getDiscountsInfo().then((discountInfo) => setDiscount(discountInfo));
+  }, []);
   return (
     <div>
-      {discount?.isActive && <Marquee info={discount}/>}
+      {discount?.isActive && <Marquee info={discount} />}
       <Promo />
       <BenefitBar />
       <TeaCards />
