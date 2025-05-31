@@ -40,8 +40,10 @@ export const SortBy = ({ onSortChange }: SortByProps) => {
       {isOpen && (
         <ul className={styles.dropdownMenu}>
           {sortOptions.map((option) => (
-            <li key={option.value} className={styles.menuItem} onClick={() => handleSelect(option)}>
-              {option.label}
+            <li key={option.value} className={styles.menuItem} role="none">
+              <button className={styles.menuButton} onClick={() => handleSelect(option)}>
+                {option.label}
+              </button>
             </li>
           ))}
         </ul>

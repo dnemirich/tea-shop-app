@@ -1,10 +1,10 @@
 .paginationContainer {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   gap: 8px;
   margin-top: 32px;
-  flex-wrap: wrap;
 }
 
 .pages {
@@ -13,18 +13,18 @@
 }
 
 .pageButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-width: 36px;
   height: 36px;
   padding: 0 8px;
-  border: 1px solid #e0e0e0;
-  background-color: white;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
   font-size: 14px;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .pageButton:hover:not(.active) {
@@ -33,23 +33,23 @@
 }
 
 .pageButton.active {
-  background-color: #4caf50;
-  color: white;
-  border-color: #4caf50;
   font-weight: 500;
+  color: white;
+  background-color: #4caf50;
+  border-color: #4caf50;
 }
 
 .navButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 36px;
   height: 36px;
-  border: 1px solid #e0e0e0;
   background-color: white;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .navButton:hover:not(.disabled) {
@@ -63,18 +63,15 @@
 }
 
 .ellipsis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 36px;
   height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: #888;
 }
 
-
-
-
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .paginationContainer {
     gap: 4px;
   }

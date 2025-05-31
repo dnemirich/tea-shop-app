@@ -15,23 +15,22 @@ export const ImageGallery = ({ images }: { images: string[] }) => {
   return (
     <div className={styles.galleryContainer}>
       <div className={styles.mainImageWrapper}>
-        <img 
-          src={images[currentIndex]} 
+        <img
+          src={images[currentIndex]}
           alt={`Product view ${currentIndex + 1}`}
           className={styles.mainImage}
         />
-        
-       
+
         {images.length > 1 && (
           <>
-            <button 
+            <button
               className={`${styles.navButton} ${styles.prevButton}`}
               onClick={prevImage}
               aria-label="Previous image"
             >
               &lt;
             </button>
-            <button 
+            <button
               className={`${styles.navButton} ${styles.nextButton}`}
               onClick={nextImage}
               aria-label="Next image"
@@ -42,7 +41,6 @@ export const ImageGallery = ({ images }: { images: string[] }) => {
         )}
       </div>
 
-     
       {images.length > 1 && (
         <div className={styles.thumbnails}>
           {images.map((img, index) => (

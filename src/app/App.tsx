@@ -11,7 +11,6 @@ import { ROUTES } from '@/common/config/routes.ts';
 import { NotFoundPage } from '@/common/components/NotFoundPage/NotFoundPage.tsx';
 import { CatalogPage } from '@/common/components/CatalogPage/CatalogPage';
 
-
 function App() {
   const { error, clearError } = useAppStore();
 

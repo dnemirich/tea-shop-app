@@ -8,29 +8,27 @@
   display: flex;
   align-items: center;
   gap: 18px;
+  width: 100%;
+  padding: 8px 12px;
+  box-sizing: border-box;
   font-size: large;
-
-  text-transform: uppercase;
   color: #1c1c1c;
+  text-transform: uppercase;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px 12px;
-
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .dropdownMenu {
-  padding: 10px;
-  font-size: large;
   position: absolute;
   top: 100%;
   left: 0;
-  margin-top: 4px;
-  background-color: white;
-  text-transform: uppercase;
-  width: 100%;
-  box-sizing: border-box;
   z-index: 10;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: large;
+  text-transform: uppercase;
+  background-color: white;
+  margin-top: 4px;
 }
