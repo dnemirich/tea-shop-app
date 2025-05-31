@@ -1,4 +1,4 @@
-import s from './Marquee.module.css';
+import s from './Marquee.module.scss';
 import type { ProductDiscount } from '@/common/types/discounts-types.ts';
 
 type Props = {
