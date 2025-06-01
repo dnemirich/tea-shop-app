@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './AddressCars.module.scss';
+import s from './AddressCard.module.scss';
 import { Pencil, Trash2 } from 'lucide-react';
 import { Address, Countries } from '@/common/types/user-types';
 import { Checkbox } from '@/common/components/Checkbox/Checkbox';
