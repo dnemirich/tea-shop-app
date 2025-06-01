@@ -6,11 +6,7 @@ import { registrationSchema } from './validation.ts';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { createCustomer } from '@/features/registration/api';
-import {
-  type RegistrationAddress,
-  Countries,
-  type RegistrationCustomer,
-} from '@/common/types/user-types.ts';
+import { type Address, Countries, type Customer } from '@/common/types/user-types.ts';
 import { useAppStore } from '@/common/store/app-store.ts';
 import { KeyRound, Mail } from 'lucide-react';
 import { ROUTES } from '@/common/config/routes.ts';
@@ -48,7 +44,7 @@ export const RegistrationForm = () => {
   } = useForm<RegistrationFormData>({ resolver: zodResolver(registrationSchema) });
 
   const onSubmit: SubmitHandler<RegistrationFormData> = async (data) => {
-    const addresses: RegistrationAddress[] = [
+    const addresses: Address[] = [
       {
         country: Countries[data.shippingAddress.country],
         city: data.shippingAddress.city,
@@ -72,7 +68,7 @@ export const RegistrationForm = () => {
     const shippingIndex = 0;
     const billingIndex = isChecked ? 1 : shippingIndex;
 
-    const finalData: RegistrationCustomer = {
+    const finalData: Customer = {
       email: data.email,
       password: data.password,
       firstName: data.firstName,

@@ -19,6 +19,8 @@
   --font-lg-size: 2.2rem;
   --font-button-size: clamp(1.4rem, 1vw, 1.6rem);
   --font-error-size: 1.4rem;
+  --swiper-pagination-bullet-width: 1.2rem;
+  --swiper-pagination-bullet-height: 1.2rem;
   --font-xl-size: 3.2rem;
   --line-height-xl: 4rem;
   --spacing-xl: 4rem;
@@ -88,4 +90,15 @@ main {
   height: 100%;
   margin: 0 auto;
   padding: 0 2rem;
+}
+
+.swiper-pagination-bullet {
+  background: var(--item-color);
+  opacity: 0.6;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--accent-color) !important;
+  transform: scale(1.2);
+  opacity: 1;
 }

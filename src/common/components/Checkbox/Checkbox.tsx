@@ -8,6 +8,6 @@ type Props = {
 export const Checkbox = ({ label, ...props }: Props) => (
   <label className={s.checkbox}>
     <input type="checkbox" {...props} className={s.input} />
-    <span className={s.span}>{label}</span>
+    <span>{label}</span>
   </label>
 );

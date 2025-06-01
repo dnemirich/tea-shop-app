@@ -3,7 +3,7 @@ import { useAppStore } from '@/common/store/app-store.ts';
 import { toast, ToastContainer } from 'react-toastify';
 import s from './App.module.scss';
 import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Layout from '@/common/components/Layout/Layout';
 
 import { LoginPage } from '@/features/login/ui/LoginPage/LoginPage.tsx';
@@ -11,6 +11,7 @@ import { ROUTES } from '@/common/config/routes.ts';
 import { NotFoundPage } from '@/common/components/NotFoundPage/NotFoundPage.tsx';
 import { UserPage } from '@/features/userPage/ui/UserPage';
 import { HomePage } from '@/features/home/ui/HomePage.tsx';
+import { ProductPage } from '@/features/product/ui/ProductPage.tsx';
 import { authService } from '@/features/login/api/authService';
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<RegistrationPage />} />
           <Route path={ROUTES.USER} element={<UserPage />} />
+          <Route path={'/shop/:categoryName/:productSlug'} element={<ProductPage />} />
           <Route index element={<HomePage />} />
 
           {/* <Route path="about" element={<About />} /> */}

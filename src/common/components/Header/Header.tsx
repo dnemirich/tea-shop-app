@@ -1,19 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
 import { Search, User, LogOut, ShoppingBasket } from 'lucide-react';
 import LeafLogo from '@/assets/img/leafLogo.svg';
 import { useUserStore } from '@/common/store/user-store.ts';
 import { ROUTES } from '@/common/config/routes.ts';
 import { authService } from '@/features/login/api/authService.ts';
-import { Popover } from '@/common/components/Popover/Popover.tsx';
 
 export const Header = () => {
   const { isLoggedIn } = useUserStore();
   const [showSearch, setShowSearch] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (showSearch) {
@@ -27,40 +25,11 @@ export const Header = () => {
 
   const handleLogout = () => {
     authService.logout();
-    navigate(ROUTES.HOME);
   };
 
   const handleToggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
-
-  const navItems = isLoggedIn
-    ? [
-        {
-          label: 'Logout',
-          icon: <LogOut size={18} />,
-          classname: styles.authButton,
-          action: handleLogout,
-        },
-        {
-          label: 'My account',
-          classname: styles.registerButton,
-          action: () => navigate(ROUTES.USER),
-        },
-      ]
-    : [
-        {
-          label: 'Login',
-          icon: <User size={18} />,
-          classname: styles.authButton,
-          action: () => navigate(ROUTES.LOGIN),
-        },
-        {
-          label: 'Register',
-          classname: styles.registerButton,
-          action: () => navigate(ROUTES.REGISTER),
-        },
-      ];
 
   return (
     <header className={styles.header}>
@@ -103,10 +72,23 @@ export const Header = () => {
                 className={`${styles.searchInput} ${showSearch ? styles.visible : ''}`}
               />
             </div>
-            <Popover
-              trigger={<User size={24} className={isLoggedIn ? `${styles.loggedTrigger}` : ''} />}
-              items={navItems}
-            />
+
+            {isLoggedIn ? (
+              <button onClick={handleLogout} className={styles.authButton}>
+                <LogOut size={18} />
+                <span>Logout</span>
+              </button>
+            ) : (
+              <>
+                <Link to={ROUTES.LOGIN} className={styles.authButton}>
+                  <User size={18} />
+                  <span>Login</span>
+                </Link>
+                <Link to={ROUTES.REGISTER} className={styles.registerButton}>
+                  <span>Register</span>
+                </Link>
+              </>
+            )}
             <Link to="/cart" aria-label="Go to cart? ">
               <button className={styles.iconButton} aria-label="Shopping basket">
                 <ShoppingBasket size={24} />
