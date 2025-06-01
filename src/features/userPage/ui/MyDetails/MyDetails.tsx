@@ -71,7 +71,7 @@ export const MyDetails = () => {
     <div className={s.myDetailsWrapper}>
       <div className={s.titleWrapper}>
         <h2>My details</h2>
-        <Pencil size={16} className={s.icon} onClick={() => setIsEditing(true)} />
+        <Pencil size={18} className={s.icon} onClick={() => setIsEditing(true)} />
       </div>
       <div className={s.info}>
         <span>First name</span>

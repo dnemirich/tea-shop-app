@@ -69,8 +69,12 @@ export const AddressForm: React.FC<Props> = ({ initialData = {}, onSubmit, onCan
       ))}
 
       <div className={s.actions}>
-        <Button onClick={handleSubmit}>Save</Button>
-        <Button onClick={onCancel}>Cancel</Button>
+        <Button className={s.button} onClick={handleSubmit}>
+          Save
+        </Button>
+        <Button className={s.button} onClick={onCancel}>
+          Cancel
+        </Button>
       </div>
     </div>
   );

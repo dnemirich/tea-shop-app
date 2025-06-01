@@ -3,7 +3,7 @@ import { Salutation } from '../Salutation/Salutation';
 import s from './LeftSide.module.scss';
 
 type Props = {
-  setSelectedOption: (option: 'MyDetails' | 'Addresses') => void;
+  setSelectedOption: (option: 'MyDetails' | 'Addresses' | 'PasswordChange') => void;
 };
 
 export const LeftSide = ({ setSelectedOption }: Props) => {

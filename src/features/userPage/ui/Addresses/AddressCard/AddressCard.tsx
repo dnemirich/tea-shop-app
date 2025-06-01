@@ -2,7 +2,6 @@ import React from 'react';
 import s from './AddressCars.module.scss';
 import { Pencil, Trash2 } from 'lucide-react';
 import { Address } from '@/common/types/user-types';
-import { Button } from '@/common/components/Button/Button';
 import { Checkbox } from '@/common/components/Checkbox/Checkbox';
 
 type Props = {
@@ -24,52 +23,57 @@ export const AddressCard: React.FC<Props> = ({
 }) => {
   return (
     <div className={s.addressCard}>
-      {(isDefaultShipping || isDefaultBilling) && (
-        <span className={s.default}>
-          {isDefaultShipping && 'Default Shipping Address'}
-          {isDefaultBilling && 'Default Billing Address'}
-        </span>
-      )}
+      <div className={s.defaultWrapper}>
+        {(isDefaultShipping || isDefaultBilling) && (
+          <span className={s.default}>
+            {isDefaultShipping && 'Default Shipping Address'}
+            {isDefaultBilling && 'Default Billing Address'}
+          </span>
+        )}
+      </div>
 
-      <div className={s.info}>
-        <span>Country</span>
-        <p>{address.country}</p>
-      </div>
-      <div className={s.info}>
-        <span>City</span>
-        <p>{address.city}</p>
-      </div>
-      <div className={s.info}>
-        <span>Street</span>
-        <p>
-          {address.streetName} {address.streetNumber}
-        </p>
-      </div>
-      <div className={s.info}>
-        <span>Postal Code</span>
-        <p>{address.postalCode}</p>
+      <div className={s.fields}>
+        <div className={s.info}>
+          <span>Country</span>
+          <p>{address.country}</p>
+        </div>
+        <div className={s.info}>
+          <span>City</span>
+          <p>{address.city}</p>
+        </div>
+        <div className={s.info}>
+          <span>Street</span>
+          <p>
+            {address.streetName} {address.streetNumber}
+          </p>
+        </div>
+        <div className={s.info}>
+          <span>Postal Code</span>
+          <p>{address.postalCode}</p>
+        </div>
       </div>
 
       <div className={s.actions}>
-        <Button type="button" onClick={() => onEdit(address)}>
-          <Pencil size={16} />
-        </Button>
-        <Button type="button" onClick={() => onDelete(address.id)}>
-          <Trash2 size={16} />
-        </Button>
-
-        {!isDefaultShipping && (
-          <Checkbox
-            onChange={() => onSetDefault(address.id, 'shipping')}
-            label="Set as default shipping address"
-          />
-        )}
-        {!isDefaultBilling && (
-          <Checkbox
-            onChange={() => onSetDefault(address.id, 'billing')}
-            label="Set as default billing address"
-          />
-        )}
+        <div className={s.buttons}>
+          <Pencil className={s.icon} size={18} onClick={() => onEdit(address)} />
+          <Trash2 className={s.icon} size={18} onClick={() => onDelete(address.id)} />
+        </div>
+        <div className={s.checkboxWrapper}>
+          {!isDefaultShipping && (
+            <Checkbox
+              className={s.checkbox}
+              onChange={() => onSetDefault(address.id, 'shipping')}
+              label="Set as default shipping address"
+            />
+          )}
+          {!isDefaultBilling && (
+            <Checkbox
+              className={s.checkbox}
+              onChange={() => onSetDefault(address.id, 'billing')}
+              label="Set as default billing address"
+            />
+          )}
+        </div>
       </div>
     </div>
   );

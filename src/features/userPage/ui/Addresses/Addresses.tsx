@@ -11,7 +11,6 @@ export const Addresses: React.FC = () => {
   const addresses = useUserStore((state) => state.addresses);
   const defaultShippingId = useUserStore((state) => state.defaultShippingAddress);
   const defaultBillingId = useUserStore((state) => state.defaultBillingAddress);
-  const updateUserInfo = useUserStore((state) => state.updateUserInfo);
 
   const [editingAddress, setEditingAddress] = useState<null | Address>(null);
   const [showForm, setShowForm] = useState(false);
@@ -78,11 +77,16 @@ export const Addresses: React.FC = () => {
 
   if (showForm) {
     return (
-      <AddressForm
-        initialData={editingAddress || {}}
-        onSubmit={handleSubmit}
-        onCancel={() => setShowForm(false)}
-      />
+      <div className={s.wrapper}>
+        <div className={s.titleWrapper}>
+          <h2>Edit </h2>
+        </div>
+        <AddressForm
+          initialData={editingAddress || {}}
+          onSubmit={handleSubmit}
+          onCancel={() => setShowForm(false)}
+        />
+      </div>
     );
   }
 
@@ -90,7 +94,7 @@ export const Addresses: React.FC = () => {
     <div className={s.wrapper}>
       <div className={s.titleWrapper}>
         <h2>Address book</h2>
-        <HousePlus className={s.icon} size={16} onClick={handleAdd} />
+        <HousePlus className={s.icon} size={18} onClick={handleAdd} />
       </div>
       <div className={s.addressesWrapper}>
         {addresses &&

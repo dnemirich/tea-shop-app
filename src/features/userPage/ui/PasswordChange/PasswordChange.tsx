@@ -41,7 +41,7 @@ export const PasswordChange = () => {
     <div className={s.passwordWrapper}>
       <div className={s.titleWrapper}>
         <h2>Password</h2>
-        <Pencil size={16} className={s.icon} />
+        <Pencil size={18} className={s.icon} />
       </div>
       <div className={s.labelWrapper}>
         <InputField

@@ -1,5 +1,5 @@
 .wrapper {
-  width: 55rem;
+  width: 60rem;
   box-sizing: border-box;
 
   img {
@@ -9,7 +9,7 @@
   }
 }
 
-@media (width <= 825px) {
+@media (width <= 925px) {
   .wrapper {
     width: 100%;
     max-width: none;
