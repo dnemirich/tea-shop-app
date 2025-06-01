@@ -15,7 +15,8 @@ import styles from './catalogpage.module.css';
 
 // Типы и API
 import { Product } from './Types/catalogTypes';
-import { fetchCategories, fetchProducts } from './catalog-api';
+import { fetchCategories, fetchProducts, searchProducts } from './catalog-api';
+import { useSearchStore } from '@/common/store/search-store';
 
 export const CatalogPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -29,7 +30,7 @@ export const CatalogPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState('');
+  const searchQuery = useSearchStore((state) => state.searchQuery);
   const navigate = useNavigate();
   const productsPerPage = 9;
 
@@ -51,7 +52,9 @@ export const CatalogPage = () => {
     const loadProducts = async () => {
       try {
         setLoading(true);
-        const result = await fetchProducts(categories);
+        const result = searchQuery
+          ? await searchProducts(searchQuery, categories)
+          : await fetchProducts(categories);
         setProducts(result);
         setFiltered(result);
         setSorted(result);
@@ -62,8 +65,9 @@ export const CatalogPage = () => {
         setLoading(false);
       }
     };
-    loadProducts();
-  }, [categories]);
+    const timer = setTimeout(loadProducts, 300);
+    return () => clearTimeout(timer);
+  }, [categories, searchQuery]);
 
   useEffect(() => {
     let result = [...products];
@@ -86,19 +90,10 @@ export const CatalogPage = () => {
       result = result.filter((p) => (selectedCaffeine ? p.hasCaffeine : !p.hasCaffeine));
     }
 
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      result = result.filter((p) => {
-      
-        const nameEn = p.name?.['en-US']?.toLowerCase() || '';
-        return nameEn.includes(query);
-      });
-    }
-
     setFiltered(result);
     setSorted(result);
     setCurrentPage(1);
-  }, [selectedFlavors, selectedOrigins, selectedTeaTypes, selectedCaffeine, products, searchQuery]);
+  }, [selectedFlavors, selectedOrigins, selectedTeaTypes, selectedCaffeine, products]);
 
   // --- Sorting ---
   const handleSortChange = (sortBy: string) => {

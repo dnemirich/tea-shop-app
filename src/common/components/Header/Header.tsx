@@ -6,12 +6,15 @@ import LeafLogo from '@/assets/img/leafLogo.svg';
 import { useUserStore } from '@/common/store/user-store.ts';
 import { ROUTES } from '@/common/config/routes.ts';
 import { authService } from '@/features/login/api/authService.ts';
+import { useSearchStore } from '@/common/store/search-store';
 
 export const Header = () => {
   const { isLoggedIn } = useUserStore();
   const [showSearch, setShowSearch] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const searchQuery = useSearchStore((state) => state.searchQuery);
+  const setSearchQuery = useSearchStore((state) => state.setSearchQuery);
 
   useEffect(() => {
     if (showSearch) {
@@ -70,6 +73,8 @@ export const Header = () => {
                 type="text"
                 placeholder="Search..."
                 className={`${styles.searchInput} ${showSearch ? styles.visible : ''}`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
 

@@ -12,6 +12,35 @@ export const fetchCategories = async (): Promise<Record<string, string>> => {
   );
 };
 
+const mapProduct = (product: any, categories: Record<string, string>): Product => {
+  const attrs = product.masterVariant.attributes || [];
+
+  const getVal = (name: string) => attrs.find((a) => a.name === name)?.value;
+  const getList = (name: string): string[] => {
+    const val = getVal(name);
+    if (!Array.isArray(val)) return [];
+    return val.map((v) => v['en-US'] || v['ru'] || '').filter(Boolean);
+  };
+
+  const catId = product.categories?.[0]?.id;
+  return {
+    id: product.id,
+    productType: categories[catId] || 'Unknown',
+    name: product.name?.['en-US'] || '',
+    description: product.description?.['en-US'] || '',
+    price: getVal('price-per-ounce') || 0,
+    currency: product.masterVariant.prices?.[0]?.value?.currencyCode || 'USD',
+    images: product.masterVariant.images?.map((img) => img.url) || [
+      'https://via.placeholder.com/150',
+    ],
+    weight: 100,
+    flavor: getList('flavor'),
+    origin: getVal('origin')?.['en-US'] || '',
+    hasCaffeine: !getVal('caffeine-free'),
+    ingredients: getList('ingredients'),
+  };
+};
+
 export const fetchProducts = async (categories: Record<string, string>): Promise<Product[]> => {
   const response = await apiRoot
     .productProjections()
@@ -24,33 +53,32 @@ export const fetchProducts = async (categories: Record<string, string>): Promise
     })
     .execute();
 
-  return response.body.results.map((product) => {
-    const attrs = product.masterVariant.attributes || [];
+  return response.body.results.map((product) => mapProduct(product, categories));
+};
 
-    const getVal = (name: string) => attrs.find((a) => a.name === name)?.value;
-    const getList = (name: string): string[] => {
-      const val = getVal(name);
-      if (!Array.isArray(val)) return [];
-      return val.map((v) => v['en-US'] || v['ru'] || '').filter(Boolean);
-    };
+export const searchProducts = async (
+  query: string,
+  categories: Record<string, string>,
+): Promise<Product[]> => {
+  try {
+    const response = await apiRoot
+      .productProjections()
+      .search()
+      .get({
+        queryArgs: {
+          'text.en': query,
+          'text.ru': query,
+          fuzzy: true,
+          limit: 100,
+          filter: ['published:true'],
+          expand: ['categories[*]'],
+        },
+      })
+      .execute();
 
-    const catId = product.categories?.[0]?.id;
-    return {
-      id: product.id,
-      productType: categories[catId] || 'Unknown',
-      name: product.name?.['en-US'] || '',
-      description: product.description?.['en-US'] || '',
-      price: getVal('price-per-ounce') || 0,
-      currency: product.masterVariant.prices?.[0]?.value?.currencyCode || 'USD',
-      images: product.masterVariant.images?.map((img) => img.url) || [
-        'https://via.placeholder.com/150',
-      ],
-      weight: 100,
-      flavor: getList('flavor'),
-      origin: getVal('origin')?.['en-US'] || '',
-      hasCaffeine: !getVal('caffeine-free'),
-      ingredients: getList('ingredients'),
-      color: getVal('color')?.['en-US'] || '',
-    };
-  });
+    return response.body.results.map((product) => mapProduct(product, categories));
+  } catch (error) {
+    console.error('Search failed:', error);
+    return [];
+  }
 };

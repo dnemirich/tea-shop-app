@@ -4,6 +4,7 @@ export type Product = {
   name: string;
   description?: string;
   price?: number;
+  currency?: string;
   images?: string[];
   weight?: number;
   flavor?: string[];
