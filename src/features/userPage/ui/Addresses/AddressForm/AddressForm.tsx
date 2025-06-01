@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Address } from '@/common/types/user-types';
 import s from './AddressForm.module.scss';
+import { Button } from '@/common/components/Button/Button';
 
 type Props = {
   initialData?: Partial<Address>;
@@ -45,25 +46,31 @@ export const AddressForm: React.FC<Props> = ({ initialData = {}, onSubmit, onCan
     onSubmit(newAddress);
   };
 
+  const fields: { label: string; key: keyof Address }[] = [
+    { label: 'Country', key: 'country' },
+    { label: 'City', key: 'city' },
+    { label: 'Street Name', key: 'streetName' },
+    { label: 'Street Number', key: 'streetNumber' },
+    { label: 'Postal Code', key: 'postalCode' },
+  ];
+
   return (
     <div className={s.form}>
-      {['country', 'city', 'streetName', 'streetNumber', 'postalCode'].map((field) => (
-        <div key={field} className={s.field}>
-          <label>{field}</label>
+      {fields.map(({ label, key }) => (
+        <div key={key} className={s.field}>
+          <label>{label}</label>
           <input
             type="text"
-            value={form[field as keyof Address] || ''}
-            onChange={(e) => handleChange(field as keyof Address, e.target.value)}
+            value={form[key] || ''}
+            onChange={(e) => handleChange(key, e.target.value)}
           />
-          {errors[field] && <span className={s.error}>{errors[field]}</span>}
+          {errors[key] && <span className={s.error}>{errors[key]}</span>}
         </div>
       ))}
 
       <div className={s.actions}>
-        <button onClick={handleSubmit}>Save</button>
-        <button onClick={onCancel} type="button">
-          Cancel
-        </button>
+        <Button onClick={handleSubmit}>Save</Button>
+        <Button onClick={onCancel}>Cancel</Button>
       </div>
     </div>
   );

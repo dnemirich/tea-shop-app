@@ -5,6 +5,7 @@ import { AddressCard } from './AddressCard/AddressCard';
 import { Address } from '@/common/types/user-types';
 import { useState } from 'react';
 import { AddressForm } from './AddressForm/AddressForm';
+import { updateCustomer } from '../../api/user-api';
 
 export const Addresses: React.FC = () => {
   const addresses = useUserStore((state) => state.addresses);
@@ -25,27 +26,53 @@ export const Addresses: React.FC = () => {
     setShowForm(true);
   };
 
-  const deleteAddress = (id: string) => {
-    const updated = addresses?.filter((addr) => addr.id !== id) || [];
-    updateUserInfo({ addresses: updated });
-    // TODO: call API to sync
+  const deleteAddress = async (id: string) => {
+    const { email, password, addresses } = useUserStore.getState();
+    if (!email || !password || !addresses) return;
+
+    const updatedAddresses = addresses.filter((a) => a.id !== id);
+
+    try {
+      await updateCustomer({ addresses: updatedAddresses }, email, password);
+      useUserStore.getState().updateUserInfo({ addresses: updatedAddresses });
+    } catch (err) {
+      console.error('Failed to delete address:', err);
+    }
   };
 
-  const setDefaultAddress = (id: string, type: 'shipping' | 'billing') => {
-    if (type === 'shipping') updateUserInfo({ defaultShippingAddress: id });
-    if (type === 'billing') updateUserInfo({ defaultBillingAddress: id });
-    // TODO: call API to sync
+  const setDefaultAddress = async (id: string, type: 'shipping' | 'billing') => {
+    const { email, password } = useUserStore.getState();
+    if (!email || !password) return;
+
+    const payload =
+      type === 'shipping' ? { defaultShippingAddress: id } : { defaultBillingAddress: id };
+
+    try {
+      await updateCustomer(payload, email, password);
+      useUserStore.getState().updateUserInfo(payload);
+    } catch (err) {
+      console.error('Failed to set default address:', err);
+    }
   };
 
-  const handleSubmit = (address: Address) => {
-    if (addresses) {
-      const exists = addresses.some((a) => a.id === address.id);
-      const updated = exists
+  const handleSubmit = async (address: Address) => {
+    const { email, password, addresses } = useUserStore.getState();
+
+    if (!email || !password) return;
+
+    const exists = addresses?.some((a) => a.id === address.id);
+    const updatedAddresses =
+      exists && addresses
         ? addresses.map((a) => (a.id === address.id ? address : a))
-        : [...addresses, address];
-      updateUserInfo({ addresses: updated });
+        : [...(addresses || []), address];
+
+    try {
+      await updateCustomer({ addresses: updatedAddresses }, email, password);
+
+      useUserStore.getState().updateUserInfo({ addresses: updatedAddresses });
       setShowForm(false);
-      // TODO: call API to sync
+    } catch (err) {
+      console.error('Failed to update address:', err);
     }
   };
 

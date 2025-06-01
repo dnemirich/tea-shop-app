@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './AddressCars.module.scss';
-import { Pencil, Trash2, Star } from 'lucide-react';
+import { Pencil, Trash2 } from 'lucide-react';
 import { Address } from '@/common/types/user-types';
 import { Button } from '@/common/components/Button/Button';
 import { Checkbox } from '@/common/components/Checkbox/Checkbox';
@@ -60,14 +60,12 @@ export const AddressCard: React.FC<Props> = ({
 
         {!isDefaultShipping && (
           <Checkbox
-            checked={isDefaultShipping}
             onChange={() => onSetDefault(address.id, 'shipping')}
             label="Set as default shipping address"
           />
         )}
         {!isDefaultBilling && (
           <Checkbox
-            checked={isDefaultShipping}
             onChange={() => onSetDefault(address.id, 'billing')}
             label="Set as default billing address"
           />
