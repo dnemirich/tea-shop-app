@@ -35,7 +35,7 @@
     color: var(--item-color);
   }
 
-  p,
+  .infoP,
   input {
     width: 100%;
     max-width: 45rem;
@@ -45,4 +45,15 @@
     font-weight: 400;
     border: 0.1rem solid var(--outline-color);
   }
+}
+
+.errorMessage {
+  font-size: var(--font-error-size);
+  color: var(--error-color);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }

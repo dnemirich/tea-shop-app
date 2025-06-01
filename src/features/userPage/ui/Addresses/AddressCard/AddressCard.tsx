@@ -3,6 +3,7 @@ import s from './AddressCars.module.scss';
 import { Pencil, Trash2 } from 'lucide-react';
 import { Address } from '@/common/types/user-types';
 import { Checkbox } from '@/common/components/Checkbox/Checkbox';
+import { CountryOptions } from '../AddressForm/AddressForm';
 
 type Props = {
   address: Address;
@@ -11,6 +12,11 @@ type Props = {
   onEdit: (address: Address) => void;
   onDelete: (id: string) => void;
   onSetDefault: (id: string, type: 'shipping' | 'billing') => void;
+};
+
+const getCountryName = (code: string) => {
+  const country = CountryOptions.find((c) => c.value === code);
+  return country ? country.label : code;
 };
 
 export const AddressCard: React.FC<Props> = ({
@@ -35,7 +41,7 @@ export const AddressCard: React.FC<Props> = ({
       <div className={s.fields}>
         <div className={s.info}>
           <span>Country</span>
-          <p>{address.country}</p>
+          <p>{getCountryName(address.country)}</p>
         </div>
         <div className={s.info}>
           <span>City</span>

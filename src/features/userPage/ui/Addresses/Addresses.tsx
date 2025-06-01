@@ -6,6 +6,7 @@ import { Address } from '@/common/types/user-types';
 import { useState } from 'react';
 import { AddressForm } from './AddressForm/AddressForm';
 import { updateCustomer } from '../../api/user-api';
+import { useAppStore } from '@/common/store/app-store';
 
 export const Addresses: React.FC = () => {
   const addresses = useUserStore((state) => state.addresses);
@@ -14,6 +15,10 @@ export const Addresses: React.FC = () => {
 
   const [editingAddress, setEditingAddress] = useState<null | Address>(null);
   const [showForm, setShowForm] = useState(false);
+
+  const setAppError = useAppStore((s) => s.setAppError);
+  const clearError = useAppStore((s) => s.clearError);
+  const setSuccess = useAppStore((s) => s.setSuccess);
 
   const handleEdit = (address: Address) => {
     setEditingAddress(address);
@@ -32,10 +37,12 @@ export const Addresses: React.FC = () => {
     const updatedAddresses = addresses.filter((a) => a.id !== id);
 
     try {
+      clearError();
       await updateCustomer({ addresses: updatedAddresses }, email, password);
       useUserStore.getState().updateUserInfo({ addresses: updatedAddresses });
+      setSuccess('Address deleted successfully');
     } catch (err) {
-      console.error('Failed to delete address:', err);
+      setAppError('Failed to delete address');
     }
   };
 
@@ -66,12 +73,14 @@ export const Addresses: React.FC = () => {
         : [...(addresses || []), address];
 
     try {
+      clearError();
       await updateCustomer({ addresses: updatedAddresses }, email, password);
 
       useUserStore.getState().updateUserInfo({ addresses: updatedAddresses });
       setShowForm(false);
+      setSuccess(exists ? 'Address updated successfully' : 'Address added successfully');
     } catch (err) {
-      console.error('Failed to update address:', err);
+      setAppError(exists ? 'Failed to update address' : 'Failed to add new address');
     }
   };
 

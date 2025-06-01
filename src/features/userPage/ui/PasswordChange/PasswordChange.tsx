@@ -7,7 +7,6 @@ import { changePassword } from '@/features/login/api/authService';
 import { InputField } from '@/common/components/InputField/InputField';
 
 export const PasswordChange = () => {
-  /*const [isEditing, setIsEditing] = useState(false);*/
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -27,7 +26,6 @@ export const PasswordChange = () => {
     changePassword(currentPassword, newPassword)
       .then(() => {
         setSuccess('Password updated successfully');
-        /*setIsEditing(false);*/
         setCurrentPassword('');
         setNewPassword('');
         setConfirmPassword('');
