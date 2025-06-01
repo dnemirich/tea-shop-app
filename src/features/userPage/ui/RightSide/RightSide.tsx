@@ -1,10 +1,11 @@
 import { Addresses } from '../Addresses/Addresses';
 import { MyDetails } from '../MyDetails/MyDetails';
+import { PasswordChange } from '../PasswordChange/PasswordChange';
 import Image from '../userPageImg.jpg';
 import s from './RightSide.module.scss';
 
 type Props = {
-  selectedOption: 'MyDetails' | 'Addresses' | null;
+  selectedOption: 'MyDetails' | 'Addresses' | 'PasswordChange' | null;
 };
 
 export const RightSide: React.FC<Props> = ({ selectedOption }) => {
@@ -12,6 +13,14 @@ export const RightSide: React.FC<Props> = ({ selectedOption }) => {
     return (
       <div className={s.wrapper}>
         <MyDetails />
+      </div>
+    );
+  }
+
+  if (selectedOption === 'PasswordChange') {
+    return (
+      <div className={s.wrapper}>
+        <PasswordChange />
       </div>
     );
   }
