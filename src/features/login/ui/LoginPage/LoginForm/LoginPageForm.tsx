@@ -107,7 +107,7 @@ export const LoginPageForm = ({ onSuccess }: Props) => {
         </a>
       </div>
       <Button type="submit" disabled={isSubmitting} className={s.btn}>
-        Sign in
+        sign in
       </Button>
     </form>
   );
