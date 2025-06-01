@@ -1,7 +1,7 @@
-import type { Customer } from '@/common/types/user-types.ts';
+import type { RegistrationCustomer } from '@/common/types/user-types.ts';
 import { apiRoot } from '@/common/config/api-client.ts';
 
-export const createCustomer = (customerData: Customer) => {
+export const createCustomer = (customerData: RegistrationCustomer) => {
   return apiRoot
     .me()
     .signup()
