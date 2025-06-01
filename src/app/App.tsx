@@ -9,7 +9,7 @@ import Layout from '@/common/components/Layout/Layout';
 import { LoginPage } from '@/features/login/ui/LoginPage/LoginPage.tsx';
 import { ROUTES } from '@/common/config/routes.ts';
 import { NotFoundPage } from '@/common/components/NotFoundPage/NotFoundPage.tsx';
-import { UserPage } from '@/features/userPage/ui/UserPage';
+import { UserPage } from '@/features/userPage/ui/UserPage.tsx';
 import { HomePage } from '@/features/home/ui/HomePage.tsx';
 import { ProductPage } from '@/features/product/ui/ProductPage.tsx';
 import { authService } from '@/features/login/api/authService';

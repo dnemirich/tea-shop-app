@@ -4,6 +4,26 @@ export type Address = {
   streetName: string;
   streetNumber: string;
   postalCode: string;
+  id: string;
+};
+
+export type RegistrationAddress = {
+  country: Countries;
+  city: string;
+  streetName: string;
+  streetNumber: string;
+  postalCode: string;
+};
+
+export type RegistrationCustomer = {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  addresses: RegistrationAddress[];
+  defaultShippingAddress?: number;
+  defaultBillingAddress?: number;
 };
 
 export type Customer = {
@@ -13,8 +33,8 @@ export type Customer = {
   lastName: string;
   dateOfBirth: string;
   addresses: Address[];
-  defaultShippingAddress?: number;
-  defaultBillingAddress?: number;
+  defaultShippingAddress?: string;
+  defaultBillingAddress?: string;
 };
 
 export enum Countries {
