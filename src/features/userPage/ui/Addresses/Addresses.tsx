@@ -78,9 +78,7 @@ export const Addresses: React.FC = () => {
   if (showForm) {
     return (
       <div className={s.wrapper}>
-        <div className={s.titleWrapper}>
-          <h2>Edit </h2>
-        </div>
+        <div className={s.titleWrapper}></div>
         <AddressForm
           initialData={editingAddress || {}}
           onSubmit={handleSubmit}
