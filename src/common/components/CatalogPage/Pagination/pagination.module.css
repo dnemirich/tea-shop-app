@@ -10,9 +10,9 @@
 
 .pages {
   display: flex;
-  gap: 4px;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 4px;
 }
 
 .pageButton,
@@ -50,7 +50,7 @@
   color: white;
   background-color: #4caf50;
   border-color: #4caf50;
-  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.2);
+  box-shadow: 0 2px 4px rgb(76 175 80 / 20%);
 }
 
 .navButton.disabled {
@@ -65,14 +65,14 @@
   align-items: center;
   width: 36px;
   height: 36px;
-  color: #888;
   font-size: 14px;
+  color: #888;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .paginationContainer {
-    margin: 24px 0;
     gap: 6px;
+    margin: 24px 0;
   }
 
   .pages {
@@ -83,8 +83,8 @@
   .navButton {
     min-width: 32px;
     height: 32px;
-    font-size: 13px;
     padding: 0 6px;
+    font-size: 13px;
     border-radius: 5px;
   }
 
@@ -95,17 +95,17 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .paginationContainer {
-    margin: 20px 0;
     gap: 4px;
+    margin: 20px 0;
   }
 
   .pageButton {
     min-width: 28px;
     height: 28px;
-    font-size: 12px;
     padding: 0 4px;
+    font-size: 12px;
   }
 
   .navButton {
@@ -118,12 +118,12 @@
     height: 28px;
   }
 
-  .pageButton:not(.active):not(:nth-child(-n + 2)):not(:nth-last-child(-n + 2)) {
+  .pageButton:not(.active, :nth-child(-n + 2), :nth-last-child(-n + 2)) {
     display: none;
   }
 }
 
-@media (max-width: 400px) {
+@media (width <= 400px) {
   .paginationContainer {
     flex-direction: column;
     gap: 8px;

@@ -13,9 +13,9 @@
 }
 
 .leftSidebar {
-  flex: 0 0 250px;
   position: sticky;
   top: 20px;
+  flex: 0 0 250px;
   height: fit-content;
   transition: all 0.3s ease;
 }
@@ -37,7 +37,7 @@
   gap: 30px;
 }
 
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   .cardContainer {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
@@ -52,7 +52,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .mainContent {
     flex-direction: column;
     gap: 15px;
@@ -75,7 +75,7 @@
 }
 
 /* Маленькие мобильные (до 480px) */
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .catalogWrapper {
     padding: 0 10px;
   }
