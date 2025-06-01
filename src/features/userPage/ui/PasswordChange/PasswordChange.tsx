@@ -61,7 +61,7 @@ export const PasswordChange = () => {
           }}
           icon={<KeyRound size={14} />}
           placeholder="Enter new password password"
-          type="password"
+          type="text"
           onChange={(e) => setNewPassword(e.target.value)}
         />
       </div>
@@ -72,7 +72,7 @@ export const PasswordChange = () => {
           }}
           icon={<KeyRound size={14} />}
           placeholder="Confirm password"
-          type="password"
+          type="text"
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
       </div>
