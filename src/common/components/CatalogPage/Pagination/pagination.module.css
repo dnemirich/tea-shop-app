@@ -4,15 +4,19 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin-top: 32px;
+  margin: 32px 0;
+  padding: 0 15px;
 }
 
 .pages {
   display: flex;
   gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.pageButton {
+.pageButton,
+.navButton {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,16 +24,25 @@
   height: 36px;
   padding: 0 8px;
   font-size: 14px;
+  font-weight: 400;
   background-color: white;
   border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  border-radius: 6px;
   transition: all 0.2s ease;
   cursor: pointer;
+  user-select: none;
 }
 
-.pageButton:hover:not(.active) {
+.pageButton:hover:not(.active),
+.navButton:hover:not(.disabled) {
   background-color: #f5f5f5;
   border-color: #d0d0d0;
+  transform: translateY(-1px);
+}
+
+.pageButton:active:not(.active),
+.navButton:active:not(.disabled) {
+  transform: translateY(0);
 }
 
 .pageButton.active {
@@ -37,29 +50,13 @@
   color: white;
   background-color: #4caf50;
   border-color: #4caf50;
-}
-
-.navButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 36px;
-  height: 36px;
-  background-color: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.navButton:hover:not(.disabled) {
-  background-color: #f5f5f5;
-  border-color: #d0d0d0;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.2);
 }
 
 .navButton.disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .ellipsis {
@@ -69,35 +66,76 @@
   width: 36px;
   height: 36px;
   color: #888;
+  font-size: 14px;
 }
 
-@media (width <= 768px) {
+@media (max-width: 768px) {
   .paginationContainer {
+    margin: 24px 0;
+    gap: 6px;
+  }
+
+  .pages {
+    gap: 3px;
+  }
+
+  .pageButton,
+  .navButton {
+    min-width: 32px;
+    height: 32px;
+    font-size: 13px;
+    padding: 0 6px;
+    border-radius: 5px;
+  }
+
+  .ellipsis {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 600px) {
+  .paginationContainer {
+    margin: 20px 0;
     gap: 4px;
   }
 
   .pageButton {
-    min-width: 32px;
-    height: 32px;
-    font-size: 13px;
+    min-width: 28px;
+    height: 28px;
+    font-size: 12px;
+    padding: 0 4px;
   }
 
   .navButton {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
   }
 
-  .pageInputForm {
-    margin-left: 8px;
+  .ellipsis {
+    width: 28px;
+    height: 28px;
   }
 
-  .pageInput {
-    width: 50px;
-    height: 32px;
+  .pageButton:not(.active):not(:nth-child(-n + 2)):not(:nth-last-child(-n + 2)) {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .paginationContainer {
+    flex-direction: column;
+    gap: 8px;
   }
 
-  .goButton {
-    height: 32px;
-    padding: 0 8px;
+  .pages {
+    order: 2;
+  }
+
+  .navButtonsContainer {
+    order: 1;
+    display: flex;
+    gap: 8px;
   }
 }

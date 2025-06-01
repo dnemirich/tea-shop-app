@@ -1,20 +1,28 @@
 .catalogWrapper {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 15px;
+  transition: all 0.3s ease;
 }
 
 .mainContent {
   display: flex;
   gap: 30px;
   margin-top: 20px;
+  transition: all 0.3s ease;
 }
 
 .leftSidebar {
   flex: 0 0 250px;
+  position: sticky;
+  top: 20px;
+  height: fit-content;
+  transition: all 0.3s ease;
 }
 
 .rightContent {
   flex: 1;
+  min-width: 0;
 }
 
 .sortRow {
@@ -29,17 +37,51 @@
   gap: 30px;
 }
 
-@media (width <= 768px) {
-  .mainContent {
-    flex-direction: column;
+@media (max-width: 1024px) {
+  .cardContainer {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 
   .leftSidebar {
-    flex: 1;
+    flex: 0 0 220px;
+  }
+
+  .mainContent {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .leftSidebar {
+    position: static;
     width: 100%;
+    margin-bottom: 15px;
   }
 
   .sortRow {
     justify-content: flex-start;
+  }
+
+  .cardContainer {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+/* Маленькие мобильные (до 480px) */
+@media (max-width: 480px) {
+  .catalogWrapper {
+    padding: 0 10px;
+  }
+
+  .sortRow {
+    flex-direction: column;
+    gap: 10px;
   }
 }
