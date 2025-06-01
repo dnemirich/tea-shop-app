@@ -95,7 +95,7 @@ export const TeaFilter: React.FC<TeaFilterProps> = ({
     }
   };
 
-  const hasActiveFilters = 
+  const hasActiveFilters =
     selectedFlavors.length > 0 ||
     selectedOrigins.length > 0 ||
     selectedTeaTypes.length > 0 ||
@@ -103,11 +103,11 @@ export const TeaFilter: React.FC<TeaFilterProps> = ({
 
   const resetFilters = () => {
     // Clear all selected flavors
-    selectedFlavors.forEach(flavor => onFlavorToggle(flavor));
+    selectedFlavors.forEach((flavor) => onFlavorToggle(flavor));
     // Clear all selected origins
-    selectedOrigins.forEach(origin => onOriginToggle(origin));
+    selectedOrigins.forEach((origin) => onOriginToggle(origin));
     // Clear all selected tea types
-    selectedTeaTypes.forEach(type => onTeaTypeToggle(type));
+    selectedTeaTypes.forEach((type) => onTeaTypeToggle(type));
     // Reset caffeine toggle if it's active
     if (selectedCaffeine) {
       onCaffeineToggle(false);
@@ -117,7 +117,7 @@ export const TeaFilter: React.FC<TeaFilterProps> = ({
   return (
     <div className={styles.teaFilterContainer}>
       {hasActiveFilters && (
-        <button 
+        <button
           onClick={resetFilters}
           className={styles.resetButton}
           aria-label="Reset all filters"
@@ -126,7 +126,7 @@ export const TeaFilter: React.FC<TeaFilterProps> = ({
           Reset filters
         </button>
       )}
-      
+
       {FILTERS.map((filter) => (
         <div key={filter.title} className={styles.filterCategory}>
           <div

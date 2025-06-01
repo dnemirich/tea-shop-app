@@ -10,8 +10,6 @@ export type Product = {
   origin?: string;
   hasCaffeine?: boolean;
   ingredients?: string[];
-  
-
 };
 //filter types
 export type TeaFilterProps = {
@@ -59,7 +57,6 @@ export type OutOfStockProps = {
 };
 
 export type DiscontPrice = {
-
-  originalPrice: number; 
+  originalPrice: number;
   discountedPrice?: number;
-}
+};

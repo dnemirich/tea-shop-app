@@ -10,9 +10,6 @@ import { Product } from './Types/catalogTypes';
 import { OutOfStock } from './OutOfStock/OutOfStock';
 import { useNavigate } from 'react-router-dom';
 
-
-
-
 export const CatalogPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [filtered, setFiltered] = useState<Product[]>([]);
@@ -28,16 +25,9 @@ export const CatalogPage = () => {
   const navigate = useNavigate();
   const productsPerPage = 9;
 
-
-
-
-
   // --- Fetch categories ---
   useEffect(() => {
-    
-    
     const fetchCategories = async () => {
-      
       try {
         const response = await apiRoot.categories().get().execute();
         const map = response.body.results.reduce(
@@ -46,12 +36,11 @@ export const CatalogPage = () => {
             return acc;
           },
           {} as Record<string, string>,
-        ); 
+        );
         setCategories(map);
       } catch (err) {
         console.error('Failed to load categories:', err);
       }
-      
     };
     fetchCategories();
   }, []);
@@ -143,11 +132,6 @@ export const CatalogPage = () => {
     setCurrentPage(1);
   }, [selectedFlavors, selectedOrigins, selectedTeaTypes, selectedCaffeine, products]);
 
-
-
-
-
-  
   // --- Sorting ---
   const handleSortChange = (sortBy: string) => {
     const sorted = [...filtered].sort((a, b) => {
