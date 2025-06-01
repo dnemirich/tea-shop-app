@@ -1,14 +1,21 @@
+// React и хуки
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+// Компоненты
 import { TeaCards } from './TeaCards/TeaCards';
 import { Pagination } from './Pagination/Pagination';
 import { TeaFilter } from './TeaFilter/TeaFilter';
 import { SortBy } from './SortBy/SortBy';
 import { PromoBanner } from './PromoBanner/PromoBanner';
-import styles from './catalogpage.module.css';
-import { apiRoot } from '@/common/config/api-client.ts';
-import { Product } from './Types/catalogTypes';
 import { OutOfStock } from './OutOfStock/OutOfStock';
-import { useNavigate } from 'react-router-dom';
+
+// Стили
+import styles from './catalogpage.module.css';
+
+// Типы и API
+import { Product } from './Types/catalogTypes';
+import { fetchCategories, fetchProducts } from './catalog-api';
 
 export const CatalogPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -22,79 +29,32 @@ export const CatalogPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const productsPerPage = 9;
 
-  // --- Fetch categories ---
   useEffect(() => {
-    const fetchCategories = async () => {
+    const loadCategories = async () => {
       try {
-        const response = await apiRoot.categories().get().execute();
-        const map = response.body.results.reduce(
-          (acc, category) => {
-            acc[category.id] = category.name['en-US'] || '';
-            return acc;
-          },
-          {} as Record<string, string>,
-        );
-        setCategories(map);
+        const result = await fetchCategories();
+        setCategories(result);
       } catch (err) {
         console.error('Failed to load categories:', err);
       }
     };
-    fetchCategories();
+    loadCategories();
   }, []);
 
   useEffect(() => {
     if (!Object.keys(categories).length) return;
 
-    const fetchProducts = async () => {
+    const loadProducts = async () => {
       try {
         setLoading(true);
-        const response = await apiRoot
-          .productProjections()
-          .get({
-            queryArgs: {
-              where: 'published=true',
-              limit: 100,
-              expand: ['categories[*]'],
-            },
-          })
-          .execute();
-
-        const mapped = response.body.results.map((product) => {
-          const attrs = product.masterVariant.attributes || [];
-
-          const getVal = (name: string) => attrs.find((a) => a.name === name)?.value;
-          const getList = (name: string): string[] => {
-            const val = getVal(name);
-            if (!Array.isArray(val)) return [];
-            return val.map((v) => v['en-US'] || v['ru'] || '').filter(Boolean);
-          };
-
-          const catId = product.categories?.[0]?.id;
-          return {
-            id: product.id,
-            productType: categories[catId] || 'Unknown',
-            name: product.name?.['en-US'] || '',
-            description: product.description?.['en-US'] || '',
-            price: getVal('price-per-ounce') || 0,
-            currency: product.masterVariant.prices?.[0]?.value?.currencyCode || 'USD',
-            images: product.masterVariant.images?.map((img) => img.url) || [
-              'https://via.placeholder.com/150',
-            ],
-            weight: 100,
-            flavor: getList('flavor'),
-            origin: getVal('origin')?.['en-US'] || '',
-            hasCaffeine: !getVal('caffeine-free'),
-            ingredients: getList('ingredients'),
-            color: getVal('color')?.['en-US'] || '',
-          };
-        });
-
-        setProducts(mapped);
-        setFiltered(mapped);
-        setSorted(mapped);
+        const result = await fetchProducts(categories);
+        setProducts(result);
+        setFiltered(result);
+        setSorted(result);
       } catch (err) {
         console.error('Failed to load products:', err);
         setError('Failed to load products. Please try again later.');
@@ -102,8 +62,7 @@ export const CatalogPage = () => {
         setLoading(false);
       }
     };
-
-    fetchProducts();
+    loadProducts();
   }, [categories]);
 
   useEffect(() => {
@@ -127,10 +86,19 @@ export const CatalogPage = () => {
       result = result.filter((p) => (selectedCaffeine ? p.hasCaffeine : !p.hasCaffeine));
     }
 
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter((p) => {
+      
+        const nameEn = p.name?.['en-US']?.toLowerCase() || '';
+        return nameEn.includes(query);
+      });
+    }
+
     setFiltered(result);
     setSorted(result);
     setCurrentPage(1);
-  }, [selectedFlavors, selectedOrigins, selectedTeaTypes, selectedCaffeine, products]);
+  }, [selectedFlavors, selectedOrigins, selectedTeaTypes, selectedCaffeine, products, searchQuery]);
 
   // --- Sorting ---
   const handleSortChange = (sortBy: string) => {
@@ -171,7 +139,6 @@ export const CatalogPage = () => {
           setSelectedFlavors([]);
           setSelectedOrigins([]);
           setSelectedTeaTypes([]);
-          setSelectedCaffeine(null);
         }}
       />
     );

@@ -16,6 +16,7 @@ const FILTERS = [
       'Puer',
       'Oolong',
       'Rooibos',
+      'Fruit',
     ],
   },
   {
