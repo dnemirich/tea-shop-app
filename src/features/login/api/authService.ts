@@ -1,32 +1,45 @@
-import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 import { createCustomerApiRoot } from './password-flow-client';
 import { useUserStore } from '@/common/store/user-store';
-import { Address } from '@/common/types/user-types';
 import { mapSdkAddresses } from '@/features/userPage/ui/Addresses/addresses-mapper';
+import { AuthService } from '@/common/types/auth-types';
 
-type UserInfo = {
-  email: string;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-  addresses: Address[];
-};
+export const changePassword = async (currentPassword: string, newPassword: string) => {
+  const { email, getApiRoot } = useUserStore.getState();
 
-export type AuthService = {
-  login: (email: string, password: string, rememberMe?: boolean) => Promise<UserInfo>;
-  logout: () => void;
-  getApiRoot: () => ByProjectKeyRequestBuilder | null;
-  restoreSession: () => Promise<ByProjectKeyRequestBuilder | null>;
+  if (!email) {
+    throw new Error('Not authenticated');
+  }
+
+  const apiRoot = getApiRoot() || createCustomerApiRoot(email, currentPassword);
+
+  try {
+    const me = await apiRoot.me().get().execute();
+    await apiRoot
+      .me()
+      .password()
+      .post({
+        body: {
+          version: me.body.version,
+          currentPassword,
+          newPassword,
+        },
+      })
+      .execute();
+
+    useUserStore.getState().updateUserInfo({ password: newPassword });
+    sessionStorage.setItem('authPassword', newPassword);
+
+    const newApiRoot = createCustomerApiRoot(email, newPassword);
+    useUserStore.getState().setApiRoot(newApiRoot);
+  } catch (error) {
+    throw new Error('Failed to change password');
+  }
 };
 
 export const createAuthService = (): AuthService => {
-  let apiRoot: ByProjectKeyRequestBuilder | null = null;
-  const { setLoggedIn, setLoggedOut } = useUserStore.getState();
-
   return {
     async login(email, password, rememberMe = false) {
       const root = createCustomerApiRoot(email, password);
-
       const res = await root.me().get().execute();
       const customer = res.body;
 
@@ -41,12 +54,13 @@ export const createAuthService = (): AuthService => {
         defaultBillingAddress: customer.defaultBillingAddressId ?? '',
       };
 
-      apiRoot = root;
-      setLoggedIn(user);
+      const store = useUserStore.getState();
+      store.setApiRoot(root);
+      store.setLoggedIn(user);
 
       if (rememberMe) {
         sessionStorage.setItem('authEmail', email);
-        sessionStorage.setItem('authPassword', email);
+        sessionStorage.setItem('authPassword', password);
       } else {
         sessionStorage.removeItem('authEmail');
         sessionStorage.removeItem('authPassword');
@@ -56,28 +70,25 @@ export const createAuthService = (): AuthService => {
     },
 
     logout() {
-      apiRoot = null;
-      setLoggedOut();
+      const store = useUserStore.getState();
+      store.setApiRoot(null);
+      store.setLoggedOut();
       sessionStorage.removeItem('authEmail');
       sessionStorage.removeItem('authPassword');
     },
 
     getApiRoot() {
-      return apiRoot;
+      return useUserStore.getState().getApiRoot();
     },
 
     async restoreSession() {
       const email = sessionStorage.getItem('authEmail');
       const password = sessionStorage.getItem('authPassword');
-      if (!email || !password) {
-        return null;
-      }
+      if (!email || !password) return null;
 
       try {
         const root = createCustomerApiRoot(email, password);
         const res = await root.me().get().execute();
-
-        apiRoot = root;
 
         const customer = res.body;
         const user = {
@@ -91,7 +102,10 @@ export const createAuthService = (): AuthService => {
           defaultBillingAddress: customer.defaultBillingAddressId ?? '',
         };
 
-        setLoggedIn(user);
+        const store = useUserStore.getState();
+        store.setApiRoot(root);
+        store.setLoggedIn(user);
+
         return root;
       } catch {
         this.logout();

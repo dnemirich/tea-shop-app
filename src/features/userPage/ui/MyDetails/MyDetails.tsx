@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/common/components/Button/Button';
 import { updateCustomer } from '../../api/user-api';
 import { useAppStore } from '@/common/store/app-store';
+import { formatDate } from './formatFate';
 
 export const MyDetails = () => {
   const firstName = useUserStore((state) => state.firstName);
@@ -64,15 +65,6 @@ export const MyDetails = () => {
     } catch {
       setAppError('Failed to update your profile');
     }
-  };
-
-  const formatDate = (dateStr: string | null) => {
-    if (!dateStr) {
-      return '';
-    }
-
-    const [year, month, day] = dateStr.split('-');
-    return `${day}.${month}.${year}`;
   };
 
   return (

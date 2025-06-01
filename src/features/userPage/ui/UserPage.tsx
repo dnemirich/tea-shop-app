@@ -4,7 +4,9 @@ import { RightSide } from './RightSide/RightSide';
 import s from './UserPage.module.scss';
 
 export const UserPage = () => {
-  const [selectedOption, setSelectedOption] = useState<'MyDetails' | 'Addresses' | null>(null);
+  const [selectedOption, setSelectedOption] = useState<
+    'MyDetails' | 'Addresses' | 'PasswordChange' | null
+  >(null);
 
   return (
     <div className={s.wrapper}>

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { Address } from '../types/user-types';
+import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 
 type UserState = {
   isLoggedIn: boolean;
@@ -12,6 +13,10 @@ type UserState = {
   addresses: Address[] | null;
   defaultShippingAddress: string | null;
   defaultBillingAddress: string | null;
+
+  apiRoot: ByProjectKeyRequestBuilder | null;
+  setApiRoot: (api: ByProjectKeyRequestBuilder | null) => void;
+  getApiRoot: () => ByProjectKeyRequestBuilder | null;
 
   setLoggedIn: (user: {
     email: string;
@@ -32,7 +37,7 @@ type UserState = {
 
 export const useUserStore = create<UserState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       isLoggedIn: false,
       email: null,
       password: null,
@@ -42,6 +47,11 @@ export const useUserStore = create<UserState>()(
       addresses: null,
       defaultShippingAddress: null,
       defaultBillingAddress: null,
+      apiRoot: null,
+
+      setApiRoot: (api) => set(() => ({ apiRoot: api })),
+      getApiRoot: () => get().apiRoot,
+
       setLoggedIn: ({
         email,
         password,
@@ -74,6 +84,7 @@ export const useUserStore = create<UserState>()(
           addresses: null,
           defaultShippingAddress: null,
           defaultBillingAddress: null,
+          apiRoot: null,
         }),
 
       updateUserInfo: (data) => set((state) => ({ ...state, ...data })),
@@ -81,6 +92,8 @@ export const useUserStore = create<UserState>()(
     {
       name: 'user-storage',
       storage: createJSONStorage(() => sessionStorage),
+      partialize: (state) =>
+        Object.fromEntries(Object.entries(state).filter(([key]) => !['apiRoot'].includes(key))),
     },
   ),
 );

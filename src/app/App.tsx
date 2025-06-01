@@ -11,9 +11,14 @@ import { ROUTES } from '@/common/config/routes.ts';
 import { NotFoundPage } from '@/common/components/NotFoundPage/NotFoundPage.tsx';
 import { UserPage } from '@/features/userPage/ui/UserPage';
 import { HomePage } from '@/features/home/ui/HomePage.tsx';
+import { authService } from '@/features/login/api/authService';
 
 function App() {
   const { error, clearError, success, clearSuccess } = useAppStore();
+
+  useEffect(() => {
+    authService.restoreSession();
+  });
 
   useEffect(() => {
     if (error) {
