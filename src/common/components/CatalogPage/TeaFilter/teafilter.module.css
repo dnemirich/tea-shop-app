@@ -11,39 +11,98 @@
 
 .filterCategory {
   width: 100%;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 20px;
 }
 
 .categoryHeader {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
-  padding-bottom: 30px;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+
+.categoryTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .toggleIcon {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 10px;
+  transition: transform 0.2s ease;
 }
 
 .categoryOptions {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding-left: 10px;
+  gap: 12px;
+  padding-top: 15px;
 }
 
 .filterOption {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
 }
 
 .filterCheckbox {
-  margin: 0;
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
 }
 
+/* Custom checkbox */
+.filterOption label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.filterOption label:hover::before {
+  border-color: #888;
+}
+
+.filterCheckbox:checked + label::before {
+  background: #4caf50;
+  border-color: #4caf50;
+}
+
+.filterCheckbox:checked + label::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+}
+
+.filterOption label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  min-height: 24px;
+}
+
+/* Toggle switch styles */
 .toggleSwitch {
   position: relative;
   display: inline-block;
@@ -52,36 +111,43 @@
 }
 
 .toggleSwitch input {
+  opacity: 0;
   width: 0;
   height: 0;
-  opacity: 0;
 }
 
 .toggleSlider {
   position: absolute;
-  inset: 0;
-  background-color: #952121;
-  border-radius: 20px;
-  transition: 0.4s;
   cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 20px;
+  transition: .4s;
 }
 
-.toggleSlider::before {
+.toggleSlider:before {
   position: absolute;
-  bottom: 2px;
-  left: 2px;
-  width: 16px;
+  content: "";
   height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
   background-color: white;
   border-radius: 50%;
-  transition: 0.4s;
-  content: '';
+  transition: .4s;
 }
 
 input:checked + .toggleSlider {
   background-color: #4caf50;
 }
 
-input:checked + .toggleSlider::before {
+input:checked + .toggleSlider:before {
   transform: translateX(20px);
+}
+
+input:focus + .toggleSlider {
+  box-shadow: 0 0 1px #4caf50;
 }

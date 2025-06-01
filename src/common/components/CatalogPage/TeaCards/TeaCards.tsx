@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import styles from './teacards.module.css';
+import { TeaCardProps } from '../Types/catalogTypes';
 
-type TeaCardProps = {
-  images?: string[];
-  name?: string;
-  description?: string;
-  price?: number;
-  weight?: number;
-  className?: string;
-};
+
 
 export const TeaCards: React.FC<TeaCardProps> = ({
   images = ['https://via.placeholder.com/300'],
