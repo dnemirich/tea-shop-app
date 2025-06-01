@@ -24,35 +24,4 @@
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-
-  .addressCard {
-    border: 0.1rem solid var(--outline-color);
-    flex: 1;
-    padding: 1rem;
-
-    .default {
-      font-size: var(--font-error-size);
-      font-weight: 400;
-      color: var(--accent-color-darkened);
-    }
-  }
-
-  .info {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    padding-left: 0;
-    gap: 0.3rem;
-
-    span {
-      font-size: 1.3rem;
-      color: var(--item-color);
-    }
-
-    p {
-      font-size: var(--font-error-size);
-      font-weight: 400;
-    }
-  }
 }

@@ -1,52 +1,83 @@
 import { useUserStore } from '@/common/store/user-store';
 import s from './Addresses.module.scss';
-import { Pencil } from 'lucide-react';
+import { HousePlus } from 'lucide-react';
+import { AddressCard } from './AddressCard/AddressCard';
+import { Address } from '@/common/types/user-types';
+import { useState } from 'react';
+import { AddressForm } from './AddressForm/AddressForm';
 
 export const Addresses: React.FC = () => {
   const addresses = useUserStore((state) => state.addresses);
   const defaultShippingId = useUserStore((state) => state.defaultShippingAddress);
   const defaultBillingId = useUserStore((state) => state.defaultBillingAddress);
+  const updateUserInfo = useUserStore((state) => state.updateUserInfo);
 
-  if (!addresses || addresses.length === 0) {
-    return <p className={s.emptyMessage}>Not found addresses</p>;
+  const [editingAddress, setEditingAddress] = useState<null | Address>(null);
+  const [showForm, setShowForm] = useState(false);
+
+  const handleEdit = (address: Address) => {
+    setEditingAddress(address);
+    setShowForm(true);
+  };
+
+  const handleAdd = () => {
+    setEditingAddress(null);
+    setShowForm(true);
+  };
+
+  const deleteAddress = (id: string) => {
+    const updated = addresses?.filter((addr) => addr.id !== id) || [];
+    updateUserInfo({ addresses: updated });
+    // TODO: call API to sync
+  };
+
+  const setDefaultAddress = (id: string, type: 'shipping' | 'billing') => {
+    if (type === 'shipping') updateUserInfo({ defaultShippingAddress: id });
+    if (type === 'billing') updateUserInfo({ defaultBillingAddress: id });
+    // TODO: call API to sync
+  };
+
+  const handleSubmit = (address: Address) => {
+    if (addresses) {
+      const exists = addresses.some((a) => a.id === address.id);
+      const updated = exists
+        ? addresses.map((a) => (a.id === address.id ? address : a))
+        : [...addresses, address];
+      updateUserInfo({ addresses: updated });
+      setShowForm(false);
+      // TODO: call API to sync
+    }
+  };
+
+  if (showForm) {
+    return (
+      <AddressForm
+        initialData={editingAddress || {}}
+        onSubmit={handleSubmit}
+        onCancel={() => setShowForm(false)}
+      />
+    );
   }
 
   return (
     <div className={s.wrapper}>
       <div className={s.titleWrapper}>
         <h2>Address book</h2>
-        <Pencil size={16} className={s.icon} />
+        <HousePlus className={s.icon} size={16} onClick={handleAdd} />
       </div>
       <div className={s.addressesWrapper}>
-        {addresses.map((address, id) => (
-          <div key={id} className={`${s.addressCard}`}>
-            {(address.id === defaultShippingId || address.id === defaultBillingId) && (
-              <span className={s.default}>
-                {address.id === defaultShippingId && 'Default Shipping address'}
-                {address.id === defaultBillingId && 'Default Billing address'}
-              </span>
-            )}
-
-            <div className={s.info}>
-              <span>Country</span>
-              <p>{address.country}</p>
-            </div>
-            <div className={s.info}>
-              <span>City</span>
-              <p>{address.city}</p>
-            </div>
-            <div className={s.info}>
-              <span>Street</span>
-              <p>
-                {address.streetName} {address.streetNumber}
-              </p>
-            </div>
-            <div className={s.info}>
-              <span>Postal code</span>
-              <p>{address.postalCode}</p>
-            </div>
-          </div>
-        ))}
+        {addresses &&
+          addresses.map((address) => (
+            <AddressCard
+              key={address.id}
+              address={address}
+              isDefaultShipping={address.id === defaultShippingId}
+              isDefaultBilling={address.id === defaultBillingId}
+              onEdit={handleEdit}
+              onDelete={deleteAddress}
+              onSetDefault={setDefaultAddress}
+            />
+          ))}
       </div>
     </div>
   );
