@@ -17,14 +17,14 @@
   align-items: flex-start;
   gap: 1.2rem;
   margin-top: 3.5rem;
+}
 
-  h2 {
-    font-size: var(--font-lg-size);
-  }
+.formTitle h2 {
+  font-size: var(--font-lg-size);
+}
 
-  p {
-    font-size: 1.6rem;
-  }
+.formTitle p {
+  font-size: 1.6rem;
 }
 
 .formOptions {
@@ -43,10 +43,6 @@
   font-size: 1.6rem;
   color: var(--accent-color);
   text-decoration: none;
-}
-
-.btn {
-  margin-bottom: 3.5rem;
 }
 
 @media (width <= 500px) {

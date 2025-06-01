@@ -106,7 +106,7 @@ export const LoginPageForm = ({ onSuccess }: Props) => {
           Forgot password?
         </a>
       </div>
-      <Button type="submit" disabled={isSubmitting}>
+      <Button type="submit" disabled={isSubmitting} className={s.btn}>
         sign in
       </Button>
     </form>
