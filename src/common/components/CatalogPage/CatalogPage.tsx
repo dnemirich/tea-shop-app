@@ -6,7 +6,9 @@ import { SortBy } from './SortBy/SortBy';
 import { PromoBanner } from './PromoBanner/PromoBanner';
 import styles from './catalogpage.module.css';
 import { apiRoot } from '@/common/config/api-client.ts';
-import { Product } from './Types/catalogTypes';
+import { Product  } from './Types/catalogTypes';
+import { OutOfStock } from './OutOfStock/OutOfStock';
+import { useNavigate } from 'react-router-dom';
 
 export const CatalogPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -22,6 +24,7 @@ export const CatalogPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
 
   const productsPerPage = 9;
 
@@ -162,10 +165,19 @@ export const CatalogPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (loading) return <div className={styles.loading}>Loading products...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
-  if (!loading && !error && !filtered.length)
-    return <div className={styles.empty}>No products found</div>;
+  if (!loading && !error && !filtered.length) {
+    return (
+      <OutOfStock
+        navigateToHome={() => navigate('/')}
+        onResetFilters={() => {
+          setSelectedFlavors([]);
+          setSelectedOrigins([]);
+          setSelectedTeaTypes([]);
+          setSelectedCaffeine(null);
+        }}
+      />
+    );
+  }
 
   return (
     <div className={styles.catalogWrapper}>

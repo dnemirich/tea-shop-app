@@ -51,3 +51,9 @@ export type PaginationProps = {
   onPageChange: (page: number) => void;
   maxVisiblePages?: number;
 };
+
+
+export type OutOfStockProps = {
+  navigateToHome: () => void;
+  onResetFilters: () => void;
+};
