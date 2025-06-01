@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  border: 0.1rem solid var(--outline-color);
-  padding: 1rem;
-  max-width: 25rem;
   width: 100%;
+  max-width: 25rem;
+  padding: 1rem;
+  border: 0.1rem solid var(--outline-color);
 
   .defaultWrapper {
     display: flex;
@@ -13,6 +13,9 @@
   }
 
   .default {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
     font-size: var(--font-main-size);
     font-weight: 400;
     color: var(--accent-color-darkened);
@@ -20,12 +23,12 @@
 }
 
 .info {
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: 0.5rem;
-  padding-left: 0;
   gap: 0.3rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  padding-left: 0;
 
   span {
     font-size: 1.2rem;

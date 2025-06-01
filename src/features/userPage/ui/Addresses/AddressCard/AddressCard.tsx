@@ -25,10 +25,10 @@ export const AddressCard: React.FC<Props> = ({
     <div className={s.addressCard}>
       <div className={s.defaultWrapper}>
         {(isDefaultShipping || isDefaultBilling) && (
-          <span className={s.default}>
-            {isDefaultShipping && 'Default Shipping Address'}
-            {isDefaultBilling && 'Default Billing Address'}
-          </span>
+          <div className={s.default}>
+            {isDefaultShipping && <span>Default Shipping Address</span>}
+            {isDefaultBilling && <span>Default Billing Address</span>}
+          </div>
         )}
       </div>
 
