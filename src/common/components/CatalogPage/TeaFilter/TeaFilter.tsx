@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Minus } from 'lucide-react';
+import { Plus, Minus, X } from 'lucide-react';
 import styles from './teafilter.module.css';
 import { TeaFilterProps } from '../Types/catalogTypes';
 
@@ -95,8 +95,38 @@ export const TeaFilter: React.FC<TeaFilterProps> = ({
     }
   };
 
+  const hasActiveFilters = 
+    selectedFlavors.length > 0 ||
+    selectedOrigins.length > 0 ||
+    selectedTeaTypes.length > 0 ||
+    selectedCaffeine;
+
+  const resetFilters = () => {
+    // Clear all selected flavors
+    selectedFlavors.forEach(flavor => onFlavorToggle(flavor));
+    // Clear all selected origins
+    selectedOrigins.forEach(origin => onOriginToggle(origin));
+    // Clear all selected tea types
+    selectedTeaTypes.forEach(type => onTeaTypeToggle(type));
+    // Reset caffeine toggle if it's active
+    if (selectedCaffeine) {
+      onCaffeineToggle(false);
+    }
+  };
+
   return (
     <div className={styles.teaFilterContainer}>
+      {hasActiveFilters && (
+        <button 
+          onClick={resetFilters}
+          className={styles.resetButton}
+          aria-label="Reset all filters"
+        >
+          <X size={16} />
+          Reset filters
+        </button>
+      )}
+      
       {FILTERS.map((filter) => (
         <div key={filter.title} className={styles.filterCategory}>
           <div

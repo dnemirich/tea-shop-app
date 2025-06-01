@@ -6,31 +6,38 @@ import { SortBy } from './SortBy/SortBy';
 import { PromoBanner } from './PromoBanner/PromoBanner';
 import styles from './catalogpage.module.css';
 import { apiRoot } from '@/common/config/api-client.ts';
-import { Product  } from './Types/catalogTypes';
+import { Product } from './Types/catalogTypes';
 import { OutOfStock } from './OutOfStock/OutOfStock';
 import { useNavigate } from 'react-router-dom';
+
+
+
 
 export const CatalogPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [filtered, setFiltered] = useState<Product[]>([]);
   const [sorted, setSorted] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Record<string, string>>({});
-
   const [selectedFlavors, setSelectedFlavors] = useState<string[]>([]);
   const [selectedOrigins, setSelectedOrigins] = useState<string[]>([]);
   const [selectedTeaTypes, setSelectedTeaTypes] = useState<string[]>([]);
   const [selectedCaffeine, setSelectedCaffeine] = useState<boolean | null>(null);
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
-
   const productsPerPage = 9;
+
+
+
+
 
   // --- Fetch categories ---
   useEffect(() => {
+    
+    
     const fetchCategories = async () => {
+      
       try {
         const response = await apiRoot.categories().get().execute();
         const map = response.body.results.reduce(
@@ -39,11 +46,12 @@ export const CatalogPage = () => {
             return acc;
           },
           {} as Record<string, string>,
-        );
+        ); 
         setCategories(map);
       } catch (err) {
         console.error('Failed to load categories:', err);
       }
+      
     };
     fetchCategories();
   }, []);
@@ -82,6 +90,7 @@ export const CatalogPage = () => {
             name: product.name?.['en-US'] || '',
             description: product.description?.['en-US'] || '',
             price: getVal('price-per-ounce') || 0,
+            currency: product.masterVariant.prices?.[0]?.value?.currencyCode || 'USD',
             images: product.masterVariant.images?.map((img) => img.url) || [
               'https://via.placeholder.com/150',
             ],
@@ -134,6 +143,11 @@ export const CatalogPage = () => {
     setCurrentPage(1);
   }, [selectedFlavors, selectedOrigins, selectedTeaTypes, selectedCaffeine, products]);
 
+
+
+
+
+  
   // --- Sorting ---
   const handleSortChange = (sortBy: string) => {
     const sorted = [...filtered].sort((a, b) => {

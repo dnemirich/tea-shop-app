@@ -10,7 +10,8 @@ export type Product = {
   origin?: string;
   hasCaffeine?: boolean;
   ingredients?: string[];
-  color?: string;
+  
+
 };
 //filter types
 export type TeaFilterProps = {
@@ -52,8 +53,13 @@ export type PaginationProps = {
   maxVisiblePages?: number;
 };
 
-
 export type OutOfStockProps = {
   navigateToHome: () => void;
   onResetFilters: () => void;
 };
+
+export type DiscontPrice = {
+
+  originalPrice: number; 
+  discountedPrice?: number;
+}

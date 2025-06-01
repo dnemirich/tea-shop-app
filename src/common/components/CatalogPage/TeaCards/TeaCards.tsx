@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './teacards.module.css';
 import { TeaCardProps } from '../Types/catalogTypes';
 
+
 export const TeaCards: React.FC<TeaCardProps> = ({
   images = ['https://via.placeholder.com/300'],
   name = 'Product Name',
@@ -20,7 +21,7 @@ export const TeaCards: React.FC<TeaCardProps> = ({
     maximumFractionDigits: 2,
   });
 
-  const maxLength = 100; // макс длина для короткого описания
+  const maxLength = 100;
 
   const shortDescription =
     description.length > maxLength ? description.slice(0, maxLength) + '...' : description;
