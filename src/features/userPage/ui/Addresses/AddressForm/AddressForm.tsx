@@ -10,7 +10,7 @@ type Props = {
   onCancel: () => void;
 };
 
-export const CountryOptions = [
+const CountryOptions = [
   { value: Countries.Belarus, label: 'Belarus' },
   { value: Countries.Russia, label: 'Russia' },
   { value: Countries.Kazakhstan, label: 'Kazakhstan' },
