@@ -47,6 +47,10 @@
   position: relative;
 }
 
+.btn {
+  margin-bottom: 4.2rem;
+}
+
 @media (width <= 768px) {
   .formFields {
     grid-template-columns: 1fr;

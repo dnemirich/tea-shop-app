@@ -230,7 +230,9 @@ export const RegistrationForm = () => {
           )}
         </div>
       </div>
-      <Button type="submit">Sign up</Button>
+      <Button type="submit" className={s.btn}>
+        Sign up
+      </Button>
       <p className={s.supplementaryText}>
         Already have an account?{' '}
         <span className={s.link}>
