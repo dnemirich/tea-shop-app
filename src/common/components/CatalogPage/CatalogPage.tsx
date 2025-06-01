@@ -8,8 +8,6 @@ import styles from './catalogpage.module.css';
 import { apiRoot } from '@/common/config/api-client.ts';
 import { Product } from './Types/catalogTypes';
 
-
-
 export const CatalogPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [filtered, setFiltered] = useState<Product[]>([]);
@@ -47,7 +45,6 @@ export const CatalogPage = () => {
     fetchCategories();
   }, []);
 
- 
   useEffect(() => {
     if (!Object.keys(categories).length) return;
 
@@ -108,7 +105,6 @@ export const CatalogPage = () => {
     fetchProducts();
   }, [categories]);
 
- 
   useEffect(() => {
     let result = [...products];
 
@@ -127,7 +123,7 @@ export const CatalogPage = () => {
     }
 
     if (selectedCaffeine !== null) {
-      result = result.filter((p) => p.hasCaffeine === selectedCaffeine);
+      result = result.filter((p) => (selectedCaffeine ? p.hasCaffeine : !p.hasCaffeine));
     }
 
     setFiltered(result);
@@ -166,7 +162,6 @@ export const CatalogPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
- 
   if (loading) return <div className={styles.loading}>Loading products...</div>;
   if (error) return <div className={styles.error}>{error}</div>;
   if (!loading && !error && !filtered.length)
@@ -198,7 +193,9 @@ export const CatalogPage = () => {
                 prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type],
               )
             }
-            onCaffeineToggle={() => setSelectedCaffeine((prev) => (prev === true ? null : true))}
+            onCaffeineToggle={(hasCaffeine) => {
+              setSelectedCaffeine(hasCaffeine);
+            }}
           />
         </div>
 

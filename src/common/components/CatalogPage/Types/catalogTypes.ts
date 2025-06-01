@@ -1,54 +1,53 @@
 export type Product = {
-    id: string;
-    productType: string;
-    name: string;
-    description?: string;
-    price?: number;
-    images?: string[];
-    weight?: number;
-    flavor?: string[];
-    origin?: string;
-    hasCaffeine?: boolean;
-    ingredients?: string[];
-    color?: string;
-  };
+  id: string;
+  productType: string;
+  name: string;
+  description?: string;
+  price?: number;
+  images?: string[];
+  weight?: number;
+  flavor?: string[];
+  origin?: string;
+  hasCaffeine?: boolean;
+  ingredients?: string[];
+  color?: string;
+};
 //filter types
-  export type TeaFilterProps = {
-    selectedFlavors: string[];
-    selectedOrigins: string[];
-    selectedCaffeine: boolean | null;
-    selectedTeaTypes: string[];
-    onFlavorToggle: (name: string) => void;
-    onOriginToggle: (name: string) => void;
-    onCaffeineToggle: () => void;
-    onTeaTypeToggle: (name: string) => void;
-  };
+export type TeaFilterProps = {
+  selectedFlavors: string[];
+  selectedOrigins: string[];
+  selectedCaffeine: boolean | null;
+  selectedTeaTypes: string[];
+  onFlavorToggle: (name: string) => void;
+  onOriginToggle: (name: string) => void;
+  onCaffeineToggle: (checked: boolean) => void;
+  onTeaTypeToggle: (name: string) => void;
+};
 
 //sort types
 export type SortOption = {
-    value: string;
-    label: string;
-  };
-  
+  value: string;
+  label: string;
+};
 
-  export type SortByProps = {
-    onSortChange?: (value: string) => void;
-  };
+export type SortByProps = {
+  onSortChange?: (value: string) => void;
+};
 
-  //card types 
-  export type TeaCardProps = {
-    images?: string[];
-    name?: string;
-    description?: string;
-    price?: number;
-    weight?: number;
-    className?: string;
-  };
+//card types
+export type TeaCardProps = {
+  images?: string[];
+  name?: string;
+  description?: string;
+  price?: number;
+  weight?: number;
+  className?: string;
+};
 
-//pagination sort 
-export type  PaginationProps = {
-    currentPage: number;
-    totalPages: number;
-    onPageChange: (page: number) => void;
-    maxVisiblePages?: number;
-  }
+//pagination sort
+export type PaginationProps = {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  maxVisiblePages?: number;
+};

@@ -17,8 +17,8 @@
 
 .categoryHeader {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   cursor: pointer;
   user-select: none;
 }
@@ -44,34 +44,34 @@
 }
 
 .filterOption {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
-  position: relative;
-  padding-left: 30px;
   cursor: pointer;
+  padding-left: 30px;
 }
 
 .filterCheckbox {
   position: absolute;
-  opacity: 0;
-  height: 0;
   width: 0;
+  height: 0;
+  opacity: 0;
 }
 
 /* Custom checkbox */
 .filterOption label::before {
-  content: '';
   position: absolute;
-  left: 0;
   top: 50%;
-  transform: translateY(-50%);
+  left: 0;
   width: 18px;
   height: 18px;
+  background: white;
   border: 1px solid #ccc;
   border-radius: 3px;
-  background: white;
   transition: all 0.2s ease;
+  content: '';
+  transform: translateY(-50%);
 }
 
 .filterOption label:hover::before {
@@ -84,25 +84,25 @@
 }
 
 .filterCheckbox:checked + label::after {
-  content: '';
   position: absolute;
-  left: 6px;
   top: 50%;
-  transform: translateY(-50%) rotate(45deg);
+  left: 6px;
   width: 5px;
   height: 10px;
   border: solid white;
+  content: '';
+  transform: translateY(-50%) rotate(45deg);
   border-width: 0 2px 2px 0;
 }
 
 .filterOption label {
-  cursor: pointer;
   display: flex;
   align-items: center;
   min-height: 24px;
+  cursor: pointer;
 }
 
-/* Toggle switch styles */
+
 .toggleSwitch {
   position: relative;
   display: inline-block;
@@ -111,40 +111,37 @@
 }
 
 .toggleSwitch input {
-  opacity: 0;
   width: 0;
   height: 0;
+  opacity: 0;
 }
 
 .toggleSlider {
   position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background-color: #ccc;
   border-radius: 20px;
-  transition: .4s;
+  transition: 0.4s;
+  cursor: pointer;
 }
 
-.toggleSlider:before {
+.toggleSlider::before {
   position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 2px;
   bottom: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
   background-color: white;
   border-radius: 50%;
-  transition: .4s;
+  transition: 0.4s;
+  content: '';
 }
 
 input:checked + .toggleSlider {
   background-color: #4caf50;
 }
 
-input:checked + .toggleSlider:before {
+input:checked + .toggleSlider::before {
   transform: translateX(20px);
 }
 

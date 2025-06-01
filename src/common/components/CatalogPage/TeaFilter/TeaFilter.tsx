@@ -3,8 +3,6 @@ import { Plus, Minus } from 'lucide-react';
 import styles from './teafilter.module.css';
 import { TeaFilterProps } from '../Types/catalogTypes';
 
-
-
 const FILTERS = [
   {
     title: 'COLLECTIONS',
@@ -15,7 +13,7 @@ const FILTERS = [
       'White tea',
       'Matcha',
       'Herbal tea',
-      'Pu’er',
+      'Puer',
       'Oolong',
       'Rooibos',
     ],
@@ -23,7 +21,7 @@ const FILTERS = [
   {
     title: 'ORIGIN',
     key: 'origins',
-    options: ['russia', 'sri lanka', 'germany', 'china', 'india', 'japan', 'taiwan'],
+    options: ['Russia', 'Sri-lanka', 'Germany', 'China', 'India', 'Japan', 'Taiwan'],
   },
   {
     title: 'FLAVOUR',
@@ -47,7 +45,7 @@ const FILTERS = [
     ],
   },
   {
-    title: 'NO CAFFEINE',
+    title: 'CAFFEINE',
     key: 'caffeine',
     options: [],
     isToggle: true,
@@ -120,7 +118,7 @@ export const TeaFilter: React.FC<TeaFilterProps> = ({
                 <input
                   type="checkbox"
                   checked={selectedCaffeine === true}
-                  onChange={onCaffeineToggle}
+                  onChange={(e) => onCaffeineToggle(e.target.checked)}
                   aria-label="Contains caffeine"
                 />
                 <span className={styles.toggleSlider}></span>

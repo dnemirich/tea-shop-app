@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import styles from './teacards.module.css';
 import { TeaCardProps } from '../Types/catalogTypes';
 
-
-
 export const TeaCards: React.FC<TeaCardProps> = ({
   images = ['https://via.placeholder.com/300'],
   name = 'Product Name',

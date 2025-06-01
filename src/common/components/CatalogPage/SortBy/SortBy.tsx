@@ -3,7 +3,6 @@ import styles from './sortby.module.css';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { SortOption, SortByProps } from '../Types/catalogTypes';
 
-
 const sortOptions: SortOption[] = [
   { value: 'price-asc', label: 'By price: lower' },
   { value: 'price-desc', label: 'By price: upper' },

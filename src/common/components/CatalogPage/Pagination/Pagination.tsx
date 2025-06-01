@@ -3,7 +3,6 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 import styles from './pagination.module.css';
 import { PaginationProps } from '../Types/catalogTypes';
 
-
 export const Pagination: React.FC<PaginationProps> = ({
   currentPage = 1,
   totalPages,
