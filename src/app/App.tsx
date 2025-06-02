@@ -21,14 +21,12 @@ function App() {
   const { error, clearError, success, clearSuccess } = useAppStore();
   const { setHasActiveDiscount, setDiscount } = useDiscountStore();
 
-
   useEffect(() => {
     getDiscountsInfo().then((discountInfo) => {
       setHasActiveDiscount(true);
-      setDiscount(discountInfo)
-    })}
-    , [setDiscount, setHasActiveDiscount]);
-
+      setDiscount(discountInfo);
+    });
+  }, [setDiscount, setHasActiveDiscount]);
 
   useEffect(() => {
     authService.restoreSession();

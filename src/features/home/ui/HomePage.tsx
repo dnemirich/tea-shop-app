@@ -8,7 +8,7 @@ import { Marquee } from '@/features/home/ui/Marquee/Marquee.tsx';
 import { useDiscountStore } from '@/common/store/discount-store.ts';
 
 export const HomePage: React.FC = () => {
-  const {discount, hasActiveDiscount} = useDiscountStore()
+  const { discount, hasActiveDiscount } = useDiscountStore();
 
   return (
     <div>

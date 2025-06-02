@@ -27,11 +27,14 @@ export const TeaCard: React.FC<TeaCardProps> = ({
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
-  const [discountSize, setDiscountSize] = useState(0)
-  const {discount} = useDiscountStore()
+  const [discountSize, setDiscountSize] = useState(0);
+  const { discount } = useDiscountStore();
 
   useEffect(() => {
-    if (discount.isActive && discount.references.includes(productType.toLowerCase().split(' ').join('-'))) {
+    if (
+      discount.isActive &&
+      discount.references.includes(productType.toLowerCase().split(' ').join('-'))
+    ) {
       setDiscountSize(discount.value);
     }
   }, [discount, productType]);
@@ -49,7 +52,6 @@ export const TeaCard: React.FC<TeaCardProps> = ({
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-
 
   const category = productType.toLowerCase().split(' ').join('-');
 
@@ -148,11 +150,12 @@ export const TeaCard: React.FC<TeaCardProps> = ({
             <span className={styles.price}>{formattedPrice}</span>
             <span className={styles.weight}> / {weight}</span>
           </div>
-          {discountSize > 0 && <div className={styles.discount}>
-            <span className={styles.price}>{discountedPrice}</span>
-            <span className={styles.weight}> / {weight}</span>
-          </div>
-          }
+          {discountSize > 0 && (
+            <div className={styles.discount}>
+              <span className={styles.price}>{discountedPrice}</span>
+              <span className={styles.weight}> / {weight}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

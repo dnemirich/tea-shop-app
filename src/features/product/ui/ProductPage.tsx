@@ -18,7 +18,7 @@ export const ProductPage = () => {
   const [product, setProduct] = useState<ProductProjection>();
   const [calculatedPrice, setCalculatedPrice] = useState(0);
   const [discountSize, setDiscountSize] = useState(0);
-  const {discount} = useDiscountStore()
+  const { discount } = useDiscountStore();
 
   const category = categoryName?.split('-').join(' ');
   const productName = productSlug?.split('-').join(' ');

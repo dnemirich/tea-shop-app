@@ -6,7 +6,7 @@ type DiscountStore = {
   discount: ProductDiscount;
   setDiscount: (newDiscount: ProductDiscount) => void;
   setHasActiveDiscount: (hasActiveDiscount: boolean) => void;
-}
+};
 
 export const useDiscountStore = create<DiscountStore>((set) => ({
   hasActiveDiscount: false,
@@ -14,4 +14,3 @@ export const useDiscountStore = create<DiscountStore>((set) => ({
   setDiscount: (newDiscount) => set({ discount: newDiscount }),
   setHasActiveDiscount: (hasActiveDiscount) => set({ hasActiveDiscount }),
 }));
-
