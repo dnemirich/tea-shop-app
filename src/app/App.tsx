@@ -55,7 +55,7 @@ function App() {
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<RegistrationPage />} />
           <Route path={ROUTES.USER} element={<UserPage />} />
-          <Route path={'/shop/:categoryName/:productSlug'} element={<ProductPage />} />
+          <Route path={`${ROUTES.SHOP}/:categoryName/:productSlug`} element={<ProductPage />} />
           <Route index element={<HomePage />} />
 
           {/* <Route path="about" element={<About />} /> */}

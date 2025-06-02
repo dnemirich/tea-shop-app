@@ -107,7 +107,7 @@ export const Header = () => {
           </button>
 
           <ul className={`${styles.navList} ${isMenuOpen ? styles.menuOpen : ''}`}>
-            <li className={styles.menuItem}>SHOP</li>
+            <li className={styles.menuItem}><Link to={ROUTES.SHOP}>SHOP</Link></li>
             <li className={styles.menuItem}>BLOG</li>
             <li className={styles.menuItem}>ABOUT US</li>
           </ul>

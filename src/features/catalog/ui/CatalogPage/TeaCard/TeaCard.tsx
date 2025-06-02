@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './teaCards.module.css';
+import styles from './teaCard.module.css';
 
 export type TeaCardProps = {
   images?: string[];
@@ -10,7 +10,7 @@ export type TeaCardProps = {
   className?: string;
 };
 
-export const TeaCards: React.FC<TeaCardProps> = ({
+export const TeaCard: React.FC<TeaCardProps> = ({
   images = ['https://via.placeholder.com/300'],
   name = 'Product Name',
   description = 'No description available',
@@ -42,7 +42,6 @@ export const TeaCards: React.FC<TeaCardProps> = ({
   };
 
   return (
-    <div className={styles.cardContainer}>
       <div className={`${styles.card} ${className}`}>
         <div className={styles.imageContainer}>
           <img
@@ -119,6 +118,5 @@ export const TeaCards: React.FC<TeaCardProps> = ({
           </div>
         </div>
       </div>
-    </div>
   );
 };

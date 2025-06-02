@@ -32,7 +32,7 @@ const FILTERS = [
   {
     title: 'ORIGIN',
     key: 'origins',
-    options: ['Russia', 'Sri-lanka', 'Germany', 'China', 'India', 'Japan', 'Taiwan'],
+    options: ['Russia', 'Sri-Lanka', 'Germany', 'China', 'India', 'Japan', 'Taiwan'],
   },
   {
     title: 'FLAVOUR',

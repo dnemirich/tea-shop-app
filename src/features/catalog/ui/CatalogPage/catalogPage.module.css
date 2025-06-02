@@ -1,14 +1,7 @@
-.catalogWrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
-  transition: all 0.3s ease;
-}
-
 .mainContent {
   display: flex;
   gap: 30px;
-  margin-top: 20px;
+  margin:2rem 0;
   transition: all 0.3s ease;
 }
 
@@ -60,7 +53,6 @@
 
   .leftSidebar {
     position: static;
-    width: 100%;
     margin-bottom: 15px;
   }
 
@@ -69,17 +61,19 @@
   }
 
   .cardContainer {
-    grid-template-columns: 1fr;
     gap: 15px;
+  }
+}
+
+@media (width <= 600px) {
+  .cardContainer {
+    grid-template-columns: 1fr;
+    justify-self: center;
   }
 }
 
 /* Маленькие мобильные (до 480px) */
 @media (width <= 480px) {
-  .catalogWrapper {
-    padding: 0 10px;
-  }
-
   .sortRow {
     flex-direction: column;
     gap: 10px;

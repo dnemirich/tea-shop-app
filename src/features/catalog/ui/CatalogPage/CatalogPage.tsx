@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Компоненты
-import { TeaCards } from './TeaCards/TeaCards.tsx';
+import { TeaCard } from './TeaCard/TeaCard.tsx';
 import { Pagination } from './Pagination/Pagination.tsx';
 import { TeaFilter } from './TeaFilter/TeaFilter.tsx';
 import { SortBy } from './SortBy/SortBy.tsx';
@@ -18,6 +18,7 @@ import { Product } from '@/common/types/catalog-types.ts';
 import { fetchCategories, fetchProducts, searchProducts } from '../../api/catalog-api.ts';
 import { useSearchStore } from '@/common/store/search-store.ts';
 import { Skeleton } from './Skeleton/Skeleton.tsx';
+import { ROUTES } from '@/common/config/routes.ts';
 
 export const CatalogPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -173,7 +174,7 @@ export const CatalogPage = () => {
                   .map((_, index) => <Skeleton key={index} />)
               ) : error && sorted.length === 0 ? (
                 <OutOfStock
-                  navigateToHome={() => navigate('/')}
+                  navigateToHome={() => navigate(ROUTES.HOME)}
                   onResetFilters={() => {
                     setSelectedFlavors([]);
                     setSelectedOrigins([]);
@@ -181,7 +182,7 @@ export const CatalogPage = () => {
                   }}
                 />
               ) : (
-                currentProducts.map((product) => <TeaCards key={product.id} {...product} />)
+                currentProducts.map((product) => <TeaCard key={product.id} {...product} />)
               )}
             </div>
           </div>
