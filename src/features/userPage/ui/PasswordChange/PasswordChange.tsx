@@ -55,30 +55,30 @@ export const PasswordChange = () => {
       {isEditing ? (
         <>
           <div className={s.labelWrapper}>
+            <span>Current password</span>
             <InputField
               style={{ padding: '1.6rem 5.2rem 1.6rem 4.5rem' }}
               icon={<KeyRound size={14} />}
-              placeholder="Enter current password"
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
             />
           </div>
           <div className={s.labelWrapper}>
+            <span>New password</span>
             <InputField
               style={{ padding: '1.6rem 5.2rem 1.6rem 4.5rem' }}
               icon={<KeyRound size={14} />}
-              placeholder="Enter new password"
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
           </div>
           <div className={s.labelWrapper}>
+            <span>Confirm password</span>
             <InputField
               style={{ padding: '1.6rem 5.2rem 1.6rem 4.5rem' }}
               icon={<KeyRound size={14} />}
-              placeholder="Confirm password"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -96,6 +96,27 @@ export const PasswordChange = () => {
       ) : (
         <>
           <div className={s.labelWrapper}>
+            <span>Current password</span>
+            <InputField
+              disabled
+              style={{ padding: '1.6rem 5.2rem 1.6rem 4.5rem' }}
+              icon={<KeyRound size={14} />}
+              value="********"
+              type="password"
+            />
+          </div>
+          <div className={s.labelWrapper}>
+            <span>New password</span>
+            <InputField
+              disabled
+              style={{ padding: '1.6rem 5.2rem 1.6rem 4.5rem' }}
+              icon={<KeyRound size={14} />}
+              value="********"
+              type="password"
+            />
+          </div>
+          <div className={s.labelWrapper}>
+            <span>Confirm password</span>
             <InputField
               disabled
               style={{ padding: '1.6rem 5.2rem 1.6rem 4.5rem' }}
