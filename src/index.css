@@ -70,10 +70,3 @@ main {
   flex: 1;
   padding: 2rem;
 }
-
-.container {
-  max-width: 120rem;
-  height: 100%;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
