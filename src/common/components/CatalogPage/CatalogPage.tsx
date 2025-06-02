@@ -17,6 +17,7 @@ import styles from './catalogpage.module.css';
 import { Product } from './Types/catalogTypes';
 import { fetchCategories, fetchProducts, searchProducts } from './catalog-api';
 import { useSearchStore } from '@/common/store/search-store';
+import { Skeleton } from './Skeleton/Skeleton';
 
 export const CatalogPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -127,18 +128,7 @@ export const CatalogPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (!loading && !error && !filtered.length) {
-    return (
-      <OutOfStock
-        navigateToHome={() => navigate('/')}
-        onResetFilters={() => {
-          setSelectedFlavors([]);
-          setSelectedOrigins([]);
-          setSelectedTeaTypes([]);
-        }}
-      />
-    );
-  }
+
 
   return (
     <div className={styles.catalogWrapper}>
@@ -179,9 +169,22 @@ export const CatalogPage = () => {
             </div>
 
             <div className={styles.cardContainer}>
-              {currentProducts.map((product) => (
-                <TeaCards key={product.id} {...product} />
-              ))}
+              {loading ? (
+                Array(productsPerPage)
+                  .fill(0)
+                  .map((_, index) => <Skeleton key={index} />)
+              ) : error && sorted.length === 0 ? (
+                <OutOfStock
+                  navigateToHome={() => navigate('/')}
+                  onResetFilters={() => {
+                    setSelectedFlavors([]);
+                    setSelectedOrigins([]);
+                    setSelectedTeaTypes([]);
+                  }}
+                />
+              ) : (
+                currentProducts.map((product) => <TeaCards key={product.id} {...product} />)
+              )}
             </div>
           </div>
 
