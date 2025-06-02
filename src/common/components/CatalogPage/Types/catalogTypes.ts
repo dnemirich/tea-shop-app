@@ -62,7 +62,6 @@ export type DiscontPrice = {
   discountedPrice?: number;
 };
 
-
 export type LocalizedString = {
   [locale: string]: string;
 };
@@ -86,7 +85,7 @@ export type Price = {
   };
 };
 
-// API 
+// API
 export type Category = {
   id: string;
   name: {
