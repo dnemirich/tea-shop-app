@@ -13,7 +13,6 @@
 
 .modalContent {
   position: relative;
-  width: 40vw;
   padding: 2rem;
   background: var(--primary-light-color);
   border-radius: 0.8rem;
@@ -38,7 +37,7 @@
   }
 }
 
-@media (width <= 500px) {
+@media (width <= 550px) {
   .modalContent {
     padding: 1rem;
   }

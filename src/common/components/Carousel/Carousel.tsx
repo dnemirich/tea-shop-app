@@ -45,7 +45,7 @@ export const Carousel: React.FC<CarouselProps> = ({ images }) => {
             loop={true}
             pagination={{ clickable: true }}
             modules={[Pagination]}
-            className={s.carousel}
+            className={`${s.carousel} ${s.modalCarousel}`}
           >
             {images.map((image, index) => (
               <SwiperSlide key={index} className={s.slide}>
