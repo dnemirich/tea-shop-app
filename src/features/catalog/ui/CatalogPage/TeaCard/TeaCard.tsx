@@ -42,81 +42,81 @@ export const TeaCard: React.FC<TeaCardProps> = ({
   };
 
   return (
-      <div className={`${styles.card} ${className}`}>
-        <div className={styles.imageContainer}>
-          <img
-            src={images[currentImageIndex]}
-            alt={name}
-            className={styles.image}
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300';
-            }}
-          />
-
-          {images.length > 1 && (
-            <>
-              <button
-                className={`${styles.navButton} ${styles.prevButton}`}
-                onClick={prevImage}
-                aria-label="Previous image"
-              >
-                &lt;
-              </button>
-              <button
-                className={`${styles.navButton} ${styles.nextButton}`}
-                onClick={nextImage}
-                aria-label="Next image"
-              >
-                &gt;
-              </button>
-            </>
-          )}
-        </div>
+    <div className={`${styles.card} ${className}`}>
+      <div className={styles.imageContainer}>
+        <img
+          src={images[currentImageIndex]}
+          alt={name}
+          className={styles.image}
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300';
+          }}
+        />
 
         {images.length > 1 && (
-          <div className={styles.thumbnails}>
-            {images.map((img, index) => (
-              <button
-                key={index}
-                className={`${styles.thumbnail} ${index === currentImageIndex ? styles.active : ''}`}
-                onClick={() => setCurrentImageIndex(index)}
-              >
-                <img
-                  src={img}
-                  alt={`Thumbnail ${index + 1}`}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/50';
-                  }}
-                />
-              </button>
-            ))}
-          </div>
+          <>
+            <button
+              className={`${styles.navButton} ${styles.prevButton}`}
+              onClick={prevImage}
+              aria-label="Previous image"
+            >
+              &lt;
+            </button>
+            <button
+              className={`${styles.navButton} ${styles.nextButton}`}
+              onClick={nextImage}
+              aria-label="Next image"
+            >
+              &gt;
+            </button>
+          </>
         )}
+      </div>
 
-        <div className={styles.content}>
-          <h3 className={styles.name} title={name}>
-            {name}
-          </h3>
+      {images.length > 1 && (
+        <div className={styles.thumbnails}>
+          {images.map((img, index) => (
+            <button
+              key={index}
+              className={`${styles.thumbnail} ${index === currentImageIndex ? styles.active : ''}`}
+              onClick={() => setCurrentImageIndex(index)}
+            >
+              <img
+                src={img}
+                alt={`Thumbnail ${index + 1}`}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = 'https://via.placeholder.com/50';
+                }}
+              />
+            </button>
+          ))}
+        </div>
+      )}
 
-          <p
-            className={styles.description}
-            title={description}
-            style={{ cursor: description.length > maxLength ? 'pointer' : 'default' }}
-            onMouseEnter={() => {
-              if (description.length > maxLength) setExpanded(true);
-            }}
-            onMouseLeave={() => {
-              if (description.length > maxLength) setExpanded(false);
-            }}
-          >
-            {expanded ? description : shortDescription}
-          </p>
+      <div className={styles.content}>
+        <h3 className={styles.name} title={name}>
+          {name}
+        </h3>
 
-          <div className={styles.priceContainer}>
-            <span className={styles.price}>{formattedPrice}</span>
-            <span className={styles.weight}>/ {weight}</span>
-          </div>
+        <p
+          className={styles.description}
+          title={description}
+          style={{ cursor: description.length > maxLength ? 'pointer' : 'default' }}
+          onMouseEnter={() => {
+            if (description.length > maxLength) setExpanded(true);
+          }}
+          onMouseLeave={() => {
+            if (description.length > maxLength) setExpanded(false);
+          }}
+        >
+          {expanded ? description : shortDescription}
+        </p>
+
+        <div className={styles.priceContainer}>
+          <span className={styles.price}>{formattedPrice}</span>
+          <span className={styles.weight}>/ {weight}</span>
         </div>
       </div>
+    </div>
   );
 };
