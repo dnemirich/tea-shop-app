@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import styles from './teaCard.module.css';
+import React, { useEffect, useState } from 'react';
+import styles from './teaCard.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/common/config/routes.ts';
+import { useDiscountStore } from '@/common/store/discount-store.ts';
 
 export type TeaCardProps = {
   images?: string[];
@@ -26,6 +27,14 @@ export const TeaCard: React.FC<TeaCardProps> = ({
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
+  const [discountSize, setDiscountSize] = useState(0)
+  const {discount} = useDiscountStore()
+
+  useEffect(() => {
+    if (discount.isActive && discount.references.includes(productType.toLowerCase().split(' ').join('-'))) {
+      setDiscountSize(discount.value);
+    }
+  }, [discount, productType]);
 
   const formattedPrice = price.toLocaleString('en-US', {
     style: 'currency',
@@ -33,6 +42,14 @@ export const TeaCard: React.FC<TeaCardProps> = ({
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+
+  const discountedPrice = (price - (price * discountSize) / 100).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
 
   const category = productType.toLowerCase().split(' ').join('-');
 
@@ -56,6 +73,7 @@ export const TeaCard: React.FC<TeaCardProps> = ({
 
   return (
     <div className={`${styles.card} ${className}`}>
+      {discountSize > 0 && <div className={styles.discountBadge}>on sale</div>}
       <div className={styles.imageContainer}>
         <img
           src={images[currentImageIndex]}
@@ -126,8 +144,15 @@ export const TeaCard: React.FC<TeaCardProps> = ({
         </p>
 
         <div className={styles.priceContainer}>
-          <span className={styles.price}>{formattedPrice}</span>
-          <span className={styles.weight}>/ {weight}</span>
+          <div className={discountSize > 0 ? styles.discountedPrice : ''}>
+            <span className={styles.price}>{formattedPrice}</span>
+            <span className={styles.weight}> / {weight}</span>
+          </div>
+          {discountSize > 0 && <div className={styles.discount}>
+            <span className={styles.price}>{discountedPrice}</span>
+            <span className={styles.weight}> / {weight}</span>
+          </div>
+          }
         </div>
       </div>
     </div>

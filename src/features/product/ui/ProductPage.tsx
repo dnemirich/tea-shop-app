@@ -11,13 +11,14 @@ import { ROUTES } from '@/common/config/routes.ts';
 import { extractProductAttributes } from '@/common/utils/productHelpers.ts';
 import { VariantSelector } from '@/features/product/ui/VariantSelector/VariantSelector.tsx';
 import { ProductCounter } from '@/features/product/ui/ProductCounter/ProductCounter.tsx';
-import { getDiscountsInfo } from '@/common/utils/discountHelpers.ts';
+import { useDiscountStore } from '@/common/store/discount-store.ts';
 
 export const ProductPage = () => {
   const { categoryName, productSlug } = useParams();
   const [product, setProduct] = useState<ProductProjection>();
   const [calculatedPrice, setCalculatedPrice] = useState(0);
-  const [discount, setDiscount] = useState(0);
+  const [discountSize, setDiscountSize] = useState(0);
+  const {discount} = useDiscountStore()
 
   const category = categoryName?.split('-').join(' ');
   const productName = productSlug?.split('-').join(' ');
@@ -36,14 +37,12 @@ export const ProductPage = () => {
         setProduct(fetchedProduct);
       });
 
-    if (categoryName) {
-      getDiscountsInfo().then((discountsInfo) => {
-        if (discountsInfo.isActive && discountsInfo.references.includes(categoryName)) {
-          setDiscount(discountsInfo.value);
-        }
-      });
+    if (categoryName && discount) {
+      if (discount.isActive && discount.references.includes(categoryName)) {
+        setDiscountSize(discount.value);
+      }
     }
-  }, [categoryName, productSlug]);
+  }, [categoryName, productSlug, discount]);
 
   const productAttributes = product && extractProductAttributes(product);
 
@@ -59,23 +58,23 @@ export const ProductPage = () => {
           <div className={s.upperContent}>
             <Carousel images={productAttributes.images} />
             <div className={s.mainInfo}>
-              {discount > 0 && <p className={s.discountLabel}>summer sale</p>}
+              {discountSize > 0 && <p className={s.discountLabel}>summer sale</p>}
               <h2 className={s.name}>{productAttributes.name}</h2>
               <p className={s.description}>{productAttributes.description}</p>
               <p className={s.property}>
                 <img src={Globe} alt={'globe'} width={24} height={24} />
                 Origin: {productAttributes.origin}
               </p>
-              <p className={`${s.price} ${discount > 0 ? s.discount : ''}`}>
+              <p className={`${s.price} ${discountSize > 0 ? s.discount : ''}`}>
                 <span className={s.oldPrice}>
                   €{calculatedPrice === 0 ? productAttributes.price : calculatedPrice.toFixed(2)}
                 </span>
-                {discount > 0 && (
+                {discountSize > 0 && (
                   <span>
                     €
                     {calculatedPrice === 0
-                      ? ((productAttributes.price * (100 - discount)) / 100).toFixed(2)
-                      : ((calculatedPrice * (100 - discount)) / 100).toFixed(2)}
+                      ? ((productAttributes.price * (100 - discountSize)) / 100).toFixed(2)
+                      : ((calculatedPrice * (100 - discountSize)) / 100).toFixed(2)}
                   </span>
                 )}
               </p>

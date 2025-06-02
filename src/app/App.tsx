@@ -14,9 +14,21 @@ import { HomePage } from '@/features/home/ui/HomePage.tsx';
 import { ProductPage } from '@/features/product/ui/ProductPage.tsx';
 import { authService } from '@/features/login/api/authService';
 import { CatalogPage } from '@/features/catalog/ui/CatalogPage/CatalogPage';
+import { useDiscountStore } from '@/common/store/discount-store.ts';
+import { getDiscountsInfo } from '@/common/utils/discountHelpers.ts';
 
 function App() {
   const { error, clearError, success, clearSuccess } = useAppStore();
+  const { setHasActiveDiscount, setDiscount } = useDiscountStore();
+
+
+  useEffect(() => {
+    getDiscountsInfo().then((discountInfo) => {
+      setHasActiveDiscount(true);
+      setDiscount(discountInfo)
+    })}
+    , [setDiscount, setHasActiveDiscount]);
+
 
   useEffect(() => {
     authService.restoreSession();
