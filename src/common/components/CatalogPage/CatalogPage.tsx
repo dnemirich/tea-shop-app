@@ -55,6 +55,7 @@ export const CatalogPage = () => {
         const result = searchQuery
           ? await searchProducts(searchQuery, categories)
           : await fetchProducts(categories);
+
         setProducts(result);
         setFiltered(result);
         setSorted(result);
