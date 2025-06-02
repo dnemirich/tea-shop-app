@@ -11,7 +11,7 @@ export const PasswordChange = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isEditing, setIsEditing] = useState(false);
-  const [validationErrors, setValidationErrors] = useState<string[]>([])
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
   const setAppError = useAppStore((s) => s.setAppError);
   const clearError = useAppStore((s) => s.clearError);
@@ -37,7 +37,7 @@ export const PasswordChange = () => {
     clearError();
     const error = validatePassword(newPassword);
     if (error) {
-      setValidationErrors(prev => [...prev, error])
+      setValidationErrors((prev) => [...prev, error]);
       return;
     }
 
@@ -65,6 +65,7 @@ export const PasswordChange = () => {
     setConfirmPassword('');
     clearError();
     setIsEditing(false);
+    setValidationErrors([]);
   };
 
   return (
@@ -94,10 +95,17 @@ export const PasswordChange = () => {
               type="password"
               value={newPassword}
               onChange={(e) => {
-                setNewPassword(e.target.value)
-                if (e.target.value.length === 0) {setValidationErrors([])}}}
-                />
-            {validationErrors.map((error, index) => <p key={index} className={s.error}>{error}</p>)}
+                setNewPassword(e.target.value);
+                if (e.target.value.length === 0) {
+                  setValidationErrors([]);
+                }
+              }}
+            />
+            {validationErrors.map((error, index) => (
+              <p key={index} className={s.error}>
+                {error}
+              </p>
+            ))}
           </div>
           <div className={s.labelWrapper}>
             <span>Confirm password</span>
