@@ -128,8 +128,6 @@ export const CatalogPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-
-
   return (
     <div className={styles.catalogWrapper}>
       <PromoBanner />
