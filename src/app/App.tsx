@@ -60,7 +60,7 @@ function App() {
 
           {/* <Route path="about" element={<About />} /> */}
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
-          <Route path={ROUTES.CATALOG} element={<CatalogPage />} />
+          <Route path={ROUTES.SHOP} element={<CatalogPage />} />
         </Route>
       </Routes>
       <ToastContainer />
