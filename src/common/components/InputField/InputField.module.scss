@@ -28,6 +28,10 @@
   &:focus {
     outline: none;
   }
+
+  &:disabled {
+    background-color: var(--secondary-light-color);
+  }
 }
 
 .input[type='number']::-webkit-outer-spin-button,

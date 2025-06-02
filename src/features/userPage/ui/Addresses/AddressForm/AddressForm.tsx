@@ -41,7 +41,11 @@ export const AddressForm: React.FC<Props> = ({ initialData = {}, onSubmit, onCan
     const stringRegex = /^[a-zA-Zа-яА-ЯёЁ\s'-]+$/;
 
     if (!form.country) newErrors.country = 'Country is required';
-    if (!form.city) newErrors.city = 'City is required';
+    if (!form.city) {
+      newErrors.city = 'City is required';
+    } else if (!stringRegex.test(form.city.trim())) {
+      newErrors.city = 'City can only contain letters and spaces';
+    }
 
     if (!form.streetName) {
       newErrors.streetName = 'Street name is required';
@@ -59,6 +63,8 @@ export const AddressForm: React.FC<Props> = ({ initialData = {}, onSubmit, onCan
       newErrors.postalCode = 'Postal code is required';
     } else if (!numberRegex.test(form.postalCode)) {
       newErrors.postalCode = 'Postal code must be a number';
+    } else if (form.postalCode.length < 5) {
+      newErrors.postalCode = 'Postal code length must be at least 5';
     }
 
     return newErrors;

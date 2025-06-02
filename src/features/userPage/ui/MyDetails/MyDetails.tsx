@@ -11,8 +11,14 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const userDetailsSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
+  firstName: z
+    .string()
+    .min(1, 'First name is required')
+    .refine((val) => /^[a-zA-Zа-яА-ЯёЁ\s'-]+$/.test(val), 'First name can only contain letters'),
+  lastName: z
+    .string()
+    .min(1, 'Last name is required')
+    .refine((val) => /^[a-zA-Zа-яА-ЯёЁ\s'-]+$/.test(val), 'Last name can only contain letters'),
   dateOfBirth: z
     .string()
     .min(1, 'Date of birth is required')
@@ -146,8 +152,10 @@ export const MyDetails = () => {
             {errors.email && <p className={s.errorMessage}>{errors.email.message}</p>}
           </div>
           <div className={s.buttonGroup}>
-            <Button type="submit">Save changes</Button>
-            <Button type="button" onClick={() => setIsEditing(false)}>
+            <Button className={s.button} type="submit">
+              Save changes
+            </Button>
+            <Button className={s.button} type="button" onClick={() => setIsEditing(false)}>
               Cancel
             </Button>
           </div>
