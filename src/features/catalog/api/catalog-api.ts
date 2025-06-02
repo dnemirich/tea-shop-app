@@ -1,5 +1,5 @@
 import { apiRoot } from '@/common/config/api-client.ts';
-import { Product, Category, ProductProjection } from './Types/catalogTypes';
+import { Product, Category, ProductProjection } from '@/common/types/catalog-types.ts';
 
 export const fetchCategories = async (): Promise<Record<string, string>> => {
   const response = await apiRoot.categories().get().execute();
@@ -30,7 +30,7 @@ const mapProduct = (product: ProductProjection, categories: Record<string, strin
     images: product.masterVariant.images?.map((img: { url: string }) => img.url) || [
       'https://via.placeholder.com/150',
     ],
-    weight: 100,
+    weight: 'ounce',
     flavor: getList('flavor'),
     origin: getVal('origin')?.['en-US'] || '',
     hasCaffeine: !getVal('caffeine-free'),
@@ -64,7 +64,7 @@ export const searchProducts = async (
       .search()
       .get({
         queryArgs: {
-          fuzzy: true,
+          // fuzzy: true,
           limit: 20,
           [`text.en-US`]: `*${query}*`,
           expand: ['masterVariant', 'categories[*]', 'name'],

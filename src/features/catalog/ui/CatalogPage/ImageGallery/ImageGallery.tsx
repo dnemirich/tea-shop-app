@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './ImageGallery.module.css';
+import styles from './imageGallery.module.css';
 
 export const ImageGallery = ({ images }: { images: string[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);

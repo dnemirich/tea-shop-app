@@ -1,6 +1,9 @@
-import styles from './outofstock.module.css';
-import { OutOfStockProps } from '../Types/catalogTypes';
+import styles from './outOfStock.module.css';
 
+type OutOfStockProps = {
+  navigateToHome: () => void;
+  onResetFilters: () => void;
+};
 export const OutOfStock: React.FC<OutOfStockProps> = ({ navigateToHome, onResetFilters }) => (
   <div className={styles.outOfStockContainer}>
     <div className={styles.outOfStockContent}>

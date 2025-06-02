@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { Plus, Minus, X } from 'lucide-react';
-import styles from './teafilter.module.css';
-import { TeaFilterProps } from '../Types/catalogTypes';
+import styles from './teaFilter.module.css';
+
+type TeaFilterProps = {
+  selectedFlavors: string[];
+  selectedOrigins: string[];
+  selectedCaffeine: boolean | null;
+  selectedTeaTypes: string[];
+  onFlavorToggle: (name: string) => void;
+  onOriginToggle: (name: string) => void;
+  onCaffeineToggle: (checked: boolean) => void;
+  onTeaTypeToggle: (name: string) => void;
+};
 
 const FILTERS = [
   {
@@ -16,7 +26,7 @@ const FILTERS = [
       'Puer',
       'Oolong',
       'Rooibos',
-      'Fruit',
+      'Fruit tea',
     ],
   },
   {

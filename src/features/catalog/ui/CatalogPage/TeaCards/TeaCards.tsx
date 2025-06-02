@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import styles from './teacards.module.css';
-import { TeaCardProps } from '../Types/catalogTypes';
+import styles from './teaCards.module.css';
+
+export type TeaCardProps = {
+  images?: string[];
+  name?: string;
+  description?: string;
+  price?: number;
+  weight?: string;
+  className?: string;
+};
 
 export const TeaCards: React.FC<TeaCardProps> = ({
   images = ['https://via.placeholder.com/300'],
   name = 'Product Name',
   description = 'No description available',
   price = 0,
-  weight = 100,
+  weight = '',
   className = '',
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -107,7 +115,7 @@ export const TeaCards: React.FC<TeaCardProps> = ({
 
           <div className={styles.priceContainer}>
             <span className={styles.price}>{formattedPrice}</span>
-            <span className={styles.weight}>/ {weight}g</span>
+            <span className={styles.weight}>/ {weight}</span>
           </div>
         </div>
       </div>

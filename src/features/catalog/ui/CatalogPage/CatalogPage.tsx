@@ -3,21 +3,21 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Компоненты
-import { TeaCards } from './TeaCards/TeaCards';
-import { Pagination } from './Pagination/Pagination';
-import { TeaFilter } from './TeaFilter/TeaFilter';
-import { SortBy } from './SortBy/SortBy';
-import { PromoBanner } from './PromoBanner/PromoBanner';
-import { OutOfStock } from './OutOfStock/OutOfStock';
+import { TeaCards } from './TeaCards/TeaCards.tsx';
+import { Pagination } from './Pagination/Pagination.tsx';
+import { TeaFilter } from './TeaFilter/TeaFilter.tsx';
+import { SortBy } from './SortBy/SortBy.tsx';
+import { PromoBanner } from './PromoBanner/PromoBanner.tsx';
+import { OutOfStock } from './OutOfStock/OutOfStock.tsx';
 
 // Стили
-import styles from './catalogpage.module.css';
+import styles from './catalogPage.module.css';
 
 // Типы и API
-import { Product } from './Types/catalogTypes';
-import { fetchCategories, fetchProducts, searchProducts } from './catalog-api';
-import { useSearchStore } from '@/common/store/search-store';
-import { Skeleton } from './Skeleton/Skeleton';
+import { Product } from '@/common/types/catalog-types.ts';
+import { fetchCategories, fetchProducts, searchProducts } from '../../api/catalog-api.ts';
+import { useSearchStore } from '@/common/store/search-store.ts';
+import { Skeleton } from './Skeleton/Skeleton.tsx';
 
 export const CatalogPage = () => {
   const [products, setProducts] = useState<Product[]>([]);

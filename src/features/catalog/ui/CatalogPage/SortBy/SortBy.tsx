@@ -1,7 +1,15 @@
 import { useState } from 'react';
-import styles from './sortby.module.css';
+import styles from './sortBy.module.scss';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { SortOption, SortByProps } from '../Types/catalogTypes';
+
+type SortOption = {
+  value: string;
+  label: string;
+};
+
+type SortByProps = {
+  onSortChange?: (value: string) => void;
+};
 
 const sortOptions: SortOption[] = [
   { value: 'price-asc', label: 'By price: lower' },

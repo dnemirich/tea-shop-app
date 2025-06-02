@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 import styles from './pagination.module.css';
-import { PaginationProps } from '../Types/catalogTypes';
+
+type PaginationProps = {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  maxVisiblePages?: number;
+};
 
 export const Pagination: React.FC<PaginationProps> = ({
   currentPage = 1,

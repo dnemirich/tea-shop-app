@@ -1,5 +1,4 @@
-import React from 'react';
-import styles from './promobanner.module.css';
+import styles from './promoBanner.module.css';
 
 export const PromoBanner = () => {
   return (
