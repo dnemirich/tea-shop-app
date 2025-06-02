@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import { Search, User, LogOut, ShoppingBasket } from 'lucide-react';
 import LeafLogo from '@/assets/img/leafLogo.svg';
 import { useUserStore } from '@/common/store/user-store.ts';
 import { ROUTES } from '@/common/config/routes.ts';
 import { authService } from '@/features/login/api/authService.ts';
+import { Popover } from '@/common/components/Popover/Popover.tsx';
 import { useSearchStore } from '@/common/store/search-store';
 import { useDebouncedSearch } from '@/common/hooks/useDebouncedSearch';
 
@@ -14,6 +15,7 @@ export const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const setSearchQuery = useSearchStore((state) => state.setSearchQuery);
 
@@ -50,11 +52,40 @@ export const Header = () => {
 
   const handleLogout = () => {
     authService.logout();
+    navigate(ROUTES.HOME);
   };
 
   const handleToggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
+
+  const navItems = isLoggedIn
+    ? [
+        {
+          label: 'Logout',
+          icon: <LogOut size={18} />,
+          classname: styles.authButton,
+          action: handleLogout,
+        },
+        {
+          label: 'My account',
+          classname: styles.registerButton,
+          action: () => navigate(ROUTES.USER),
+        },
+      ]
+    : [
+        {
+          label: 'Login',
+          icon: <User size={18} />,
+          classname: styles.authButton,
+          action: () => navigate(ROUTES.LOGIN),
+        },
+        {
+          label: 'Register',
+          classname: styles.registerButton,
+          action: () => navigate(ROUTES.REGISTER),
+        },
+      ];
 
   return (
     <header className={styles.header}>
@@ -99,23 +130,10 @@ export const Header = () => {
                 onChange={(e) => setInputValue(e.target.value)}
               />
             </div>
-
-            {isLoggedIn ? (
-              <button onClick={handleLogout} className={styles.authButton}>
-                <LogOut size={18} />
-                <span>Logout</span>
-              </button>
-            ) : (
-              <>
-                <Link to={ROUTES.LOGIN} className={styles.authButton}>
-                  <User size={18} />
-                  <span>Login</span>
-                </Link>
-                <Link to={ROUTES.REGISTER} className={styles.registerButton}>
-                  <span>Register</span>
-                </Link>
-              </>
-            )}
+            <Popover
+              trigger={<User size={24} className={isLoggedIn ? `${styles.loggedTrigger}` : ''} />}
+              items={navItems}
+            />
             <Link to="/cart" aria-label="Go to cart? ">
               <button className={styles.iconButton} aria-label="Shopping basket">
                 <ShoppingBasket size={24} />

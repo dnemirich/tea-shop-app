@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
     'Puer',
     'Oolong',
     'Rooibos',
-    'Teaware',
+    'Fruit tea',
   ] as const;
 
   const contactInfo = [

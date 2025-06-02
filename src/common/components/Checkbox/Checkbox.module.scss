@@ -1,0 +1,18 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.6rem;
+}
+
+.input {
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--primary-dark-color);
+  cursor: pointer;
+
+  &:checked {
+    background-color: var(--primary-dark-color);
+  }
+}
