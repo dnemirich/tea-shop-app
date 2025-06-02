@@ -8,9 +8,7 @@
   display: flex;
   align-items: center;
   gap: 18px;
-  width: 100%;
   padding: 8px 12px;
-  box-sizing: border-box;
   font-size: large;
   color: #1c1c1c;
   text-transform: uppercase;
@@ -21,14 +19,33 @@
 
 .dropdownMenu {
   position: absolute;
-  top: 100%;
   left: 0;
   z-index: 10;
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
-  font-size: large;
+  font-size: medium;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+.dropdownMenu li {
+  padding: 4px 0;
+}
+
+.dropdownMenu li button {
+  width: 100%;
+  text-align: start;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
   text-transform: uppercase;
-  background-color: white;
-  margin-top: 4px;
+}
+
+.dropdownMenu li button:hover {
+  background-color: #f5f5f5;
+  color: #000;
 }

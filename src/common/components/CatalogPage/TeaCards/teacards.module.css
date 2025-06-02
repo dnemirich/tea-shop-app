@@ -1,6 +1,14 @@
 .card {
   position: relative;
   text-align: start;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .imageContainer {
@@ -120,13 +128,10 @@
 }
 
 .price {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: medium;
   color: #1f2937;
 }
 
 .weight {
-  font-size: 0.875rem;
-  font-weight: 400;
   color: #6b7280;
 }
