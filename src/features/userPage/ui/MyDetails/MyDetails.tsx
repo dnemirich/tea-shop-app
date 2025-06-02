@@ -11,8 +11,14 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const userDetailsSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
+  firstName: z
+    .string()
+    .min(1, 'First name is required')
+    .refine((val) => /^[a-zA-Zа-яА-ЯёЁ\s'-]+$/.test(val), 'First name can only contain letters'),
+  lastName: z
+    .string()
+    .min(1, 'Last name is required')
+    .refine((val) => /^[a-zA-Zа-яА-ЯёЁ\s'-]+$/.test(val), 'Last name can only contain letters'),
   dateOfBirth: z
     .string()
     .min(1, 'Date of birth is required')
