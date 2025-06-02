@@ -6,7 +6,6 @@
   height: fit-content;
   font-size: large;
   border-radius: 8px;
-  margin-top: clamp(2rem, 5vw, 5rem);
 }
 
 .filterCategory {

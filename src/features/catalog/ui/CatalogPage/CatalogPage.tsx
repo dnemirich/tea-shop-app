@@ -1,5 +1,5 @@
 // React и хуки
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Компоненты
@@ -19,6 +19,8 @@ import { fetchCategories, fetchProducts, searchProducts } from '../../api/catalo
 import { useSearchStore } from '@/common/store/search-store.ts';
 import { Skeleton } from './Skeleton/Skeleton.tsx';
 import { ROUTES } from '@/common/config/routes.ts';
+import { BreadcrumbMenu } from '@/common/components/Breadcrumbs/Breadcrumbs.tsx';
+import { useParams } from 'react-router';
 
 export const CatalogPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -35,6 +37,13 @@ export const CatalogPage = () => {
   const searchQuery = useSearchStore((state) => state.searchQuery);
   const navigate = useNavigate();
   const productsPerPage = 9;
+
+  const { categoryName } = useParams();
+
+  useEffect(() => {
+    const selectedCategory = categoryName ? [categoryName.split('-').join(' ')] : [];
+    setSelectedTeaTypes(selectedCategory);
+  }, [categoryName]);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -129,10 +138,16 @@ export const CatalogPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const breadcrumbs = [
+    { name: 'Home', path: ROUTES.HOME },
+    { name: 'Shop', path: ROUTES.SHOP },
+    ...(selectedTeaTypes.length === 1 ? [{ name: selectedTeaTypes[0], path: '' }] : []),
+  ];
+
   return (
     <div className={styles.catalogWrapper}>
       <PromoBanner />
-
+      <BreadcrumbMenu links={breadcrumbs} />
       <div className={styles.mainContent}>
         <div className={styles.leftSidebar}>
           <TeaFilter

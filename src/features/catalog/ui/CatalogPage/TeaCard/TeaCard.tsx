@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styles from './teaCard.module.css';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/common/config/routes.ts';
 
 export type TeaCardProps = {
   images?: string[];
@@ -8,6 +10,8 @@ export type TeaCardProps = {
   price?: number;
   weight?: string;
   className?: string;
+  slug: string;
+  productType: string;
 };
 
 export const TeaCard: React.FC<TeaCardProps> = ({
@@ -17,6 +21,8 @@ export const TeaCard: React.FC<TeaCardProps> = ({
   price = 0,
   weight = '',
   className = '',
+  slug = '',
+  productType = '',
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
@@ -28,7 +34,10 @@ export const TeaCard: React.FC<TeaCardProps> = ({
     maximumFractionDigits: 2,
   });
 
+  const category = productType.toLowerCase().split(' ').join('-');
+
   const maxLength = 100;
+  const navigate = useNavigate();
 
   const shortDescription =
     description.length > maxLength ? description.slice(0, maxLength) + '...' : description;
@@ -39,6 +48,10 @@ export const TeaCard: React.FC<TeaCardProps> = ({
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const onClick = () => {
+    navigate(`${ROUTES.SHOP}/${category}/${slug}`);
   };
 
   return (
@@ -94,9 +107,9 @@ export const TeaCard: React.FC<TeaCardProps> = ({
       )}
 
       <div className={styles.content}>
-        <h3 className={styles.name} title={name}>
+        <button className={styles.name} title={name} onClick={onClick}>
           {name}
-        </h3>
+        </button>
 
         <p
           className={styles.description}

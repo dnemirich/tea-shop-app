@@ -11,6 +11,7 @@ export type Product = {
   origin?: string;
   hasCaffeine?: boolean;
   ingredients?: string[];
+  slug: string;
 };
 
 export type DiscontPrice = {
@@ -62,5 +63,8 @@ export type ProductProjection = {
     attributes?: { name: string; value: any }[];
     prices?: { value: { currencyCode: string } }[];
     images?: { url: string }[];
+  };
+  slug: {
+    [locale: string]: string;
   };
 };

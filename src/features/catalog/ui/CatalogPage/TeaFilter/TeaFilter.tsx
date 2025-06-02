@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Plus, Minus, X } from 'lucide-react';
 import styles from './teaFilter.module.css';
+import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/common/config/routes.ts';
 
 type TeaFilterProps = {
   selectedFlavors: string[];
@@ -75,6 +78,24 @@ export const TeaFilter: React.FC<TeaFilterProps> = ({
 }) => {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
+  const { categoryName } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!categoryName) return;
+    const normalized = categoryName.replace(/-/g, ' ').toLowerCase();
+
+    const matchingOption = FILTERS[0].options.find((opt) => opt.toLowerCase() === normalized);
+
+    if (matchingOption) {
+      setExpanded((prev) => ({ ...prev, [FILTERS[0].title]: true }));
+
+      if (!selectedTeaTypes.includes(matchingOption)) {
+        onTeaTypeToggle(matchingOption);
+      }
+    }
+  }, [categoryName, onTeaTypeToggle, selectedTeaTypes]);
+
   const toggleExpanded = (title: string) => {
     setExpanded((prev) => ({ ...prev, [title]: !prev[title] }));
   };
@@ -123,6 +144,8 @@ export const TeaFilter: React.FC<TeaFilterProps> = ({
     if (selectedCaffeine) {
       onCaffeineToggle(false);
     }
+
+    navigate(ROUTES.SHOP);
   };
 
   return (

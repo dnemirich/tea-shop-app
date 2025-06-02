@@ -38,8 +38,6 @@ export const ProductPage = () => {
 
     if (categoryName) {
       getDiscountsInfo().then((discountsInfo) => {
-        console.log(discountsInfo.references, categoryName);
-
         if (discountsInfo.isActive && discountsInfo.references.includes(categoryName)) {
           setDiscount(discountsInfo.value);
         }

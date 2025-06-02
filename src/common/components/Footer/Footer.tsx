@@ -1,19 +1,21 @@
 import React from 'react';
 import styles from './Footer.module.scss';
 import { MapPin, Mail, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/common/config/routes.ts';
 
 export const Footer: React.FC = () => {
   const teaArray = [
-    'Black tea',
-    'Green tea',
-    'White tea',
-    'Herbal tea',
-    'Matcha',
-    'Puer',
-    'Oolong',
-    'Rooibos',
-    'Fruit tea',
-  ] as const;
+    { label: 'Black tea', link: 'black-tea' },
+    { label: 'Green tea', link: 'green-tea' },
+    { label: 'White tea', link: 'white-tea' },
+    { label: 'Herbal tea', link: 'herbal-tea' },
+    { label: 'Matcha', link: 'matcha' },
+    { label: 'Puer', link: 'puer' },
+    { label: 'Oolong', link: 'oolong' },
+    { label: 'Rooibos', link: 'rooibos' },
+    { label: 'Fruit tea', link: 'fruit-tea' },
+  ];
 
   const contactInfo = [
     {
@@ -41,7 +43,7 @@ export const Footer: React.FC = () => {
             <ul className={styles.sectionList}>
               {teaArray.map((item, index) => (
                 <li className={styles.sectionItem} key={index}>
-                  {item}
+                  <Link to={`${ROUTES.SHOP}/${item.link}`}>{item.label}</Link>
                 </li>
               ))}
             </ul>

@@ -11,7 +11,6 @@ export const fetchCategories = async (): Promise<Record<string, string>> => {
 
 const mapProduct = (product: ProductProjection, categories: Record<string, string>): Product => {
   const attrs = product.masterVariant.attributes || [];
-
   const getVal = (name: string) => attrs.find((a) => a.name === name)?.value;
   const getList = (name: string): string[] => {
     const val = getVal(name);
@@ -20,6 +19,8 @@ const mapProduct = (product: ProductProjection, categories: Record<string, strin
   };
 
   const catId = product.categories?.[0]?.id;
+  const slug = product.slug?.['en-US'] || '';
+
   return {
     id: product.id,
     productType: catId && categories[catId] ? categories[catId] : 'Unknown',
@@ -35,6 +36,7 @@ const mapProduct = (product: ProductProjection, categories: Record<string, strin
     origin: getVal('origin')?.['en-US'] || '',
     hasCaffeine: !getVal('caffeine-free'),
     ingredients: getList('ingredients'),
+    slug,
   };
 };
 
