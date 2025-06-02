@@ -10,6 +10,7 @@ export const PasswordChange = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
 
   const setAppError = useAppStore((s) => s.setAppError);
   const clearError = useAppStore((s) => s.clearError);
@@ -29,54 +30,82 @@ export const PasswordChange = () => {
         setCurrentPassword('');
         setNewPassword('');
         setConfirmPassword('');
+        setIsEditing(false);
       })
       .catch((e) => {
         setAppError(e.message || 'Password change failed');
       });
   };
 
+  const handleCancel = () => {
+    setCurrentPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+    clearError();
+    setIsEditing(false);
+  };
+
   return (
     <div className={s.passwordWrapper}>
       <div className={s.titleWrapper}>
         <h2>Password</h2>
-        <Pencil size={18} className={s.icon} />
+        <Pencil size={18} className={s.icon} onClick={() => setIsEditing(true)} />
       </div>
-      <div className={s.labelWrapper}>
-        <InputField
-          style={{
-            padding: '1.6rem 5.2rem 1.6rem 4.5rem',
-          }}
-          icon={<KeyRound size={14} />}
-          placeholder="Enter current password"
-          type="password"
-          onChange={(e) => setCurrentPassword(e.target.value)}
-        />
-      </div>
-      <div className={s.labelWrapper}>
-        <InputField
-          style={{
-            padding: '1.6rem 5.2rem 1.6rem 4.5rem',
-          }}
-          icon={<KeyRound size={14} />}
-          placeholder="Enter new password password"
-          type="text"
-          onChange={(e) => setNewPassword(e.target.value)}
-        />
-      </div>
-      <div className={s.labelWrapper}>
-        <InputField
-          style={{
-            padding: '1.6rem 5.2rem 1.6rem 4.5rem',
-          }}
-          icon={<KeyRound size={14} />}
-          placeholder="Confirm password"
-          type="text"
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-      </div>
-      <Button type="button" onClick={handleSave}>
-        Save Changes
-      </Button>
+
+      {isEditing ? (
+        <>
+          <div className={s.labelWrapper}>
+            <InputField
+              style={{ padding: '1.6rem 5.2rem 1.6rem 4.5rem' }}
+              icon={<KeyRound size={14} />}
+              placeholder="Enter current password"
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+          </div>
+          <div className={s.labelWrapper}>
+            <InputField
+              style={{ padding: '1.6rem 5.2rem 1.6rem 4.5rem' }}
+              icon={<KeyRound size={14} />}
+              placeholder="Enter new password"
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </div>
+          <div className={s.labelWrapper}>
+            <InputField
+              style={{ padding: '1.6rem 5.2rem 1.6rem 4.5rem' }}
+              icon={<KeyRound size={14} />}
+              placeholder="Confirm password"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          <div className={s.actions}>
+            <Button className={s.button} onClick={handleSave}>
+              Save Changes
+            </Button>
+            <Button className={s.button} onClick={handleCancel}>
+              Cancel
+            </Button>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={s.labelWrapper}>
+            <InputField
+              disabled
+              style={{ padding: '1.6rem 5.2rem 1.6rem 4.5rem' }}
+              icon={<KeyRound size={14} />}
+              value="********"
+              type="password"
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

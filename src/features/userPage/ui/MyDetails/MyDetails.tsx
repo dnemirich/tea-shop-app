@@ -146,8 +146,10 @@ export const MyDetails = () => {
             {errors.email && <p className={s.errorMessage}>{errors.email.message}</p>}
           </div>
           <div className={s.buttonGroup}>
-            <Button type="submit">Save changes</Button>
-            <Button type="button" onClick={() => setIsEditing(false)}>
+            <Button className={s.button} type="submit">
+              Save changes
+            </Button>
+            <Button className={s.button} type="button" onClick={() => setIsEditing(false)}>
               Cancel
             </Button>
           </div>
