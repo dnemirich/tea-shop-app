@@ -11,13 +11,35 @@ export const PasswordChange = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<string[]>([])
 
   const setAppError = useAppStore((s) => s.setAppError);
   const clearError = useAppStore((s) => s.clearError);
   const setSuccess = useAppStore((s) => s.setSuccess);
 
+  const validatePassword = (password: string): string | null => {
+    if (password.length < 8) {
+      return 'Password must be at least 8 characters';
+    }
+    if (!/[a-z]/.test(password)) {
+      return 'Password must contain at least one lowercase letter';
+    }
+    if (!/[A-Z]/.test(password)) {
+      return 'Password must contain at least one uppercase letter';
+    }
+    if (!/\d/.test(password)) {
+      return 'Password must contain at least one number';
+    }
+    return null;
+  };
+
   const handleSave = () => {
     clearError();
+    const error = validatePassword(newPassword);
+    if (error) {
+      setValidationErrors(prev => [...prev, error])
+      return;
+    }
 
     if (newPassword !== confirmPassword) {
       setAppError('New password do not match');
@@ -71,8 +93,11 @@ export const PasswordChange = () => {
               icon={<KeyRound size={14} />}
               type="password"
               value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
+              onChange={(e) => {
+                setNewPassword(e.target.value)
+                if (e.target.value.length === 0) {setValidationErrors([])}}}
+                />
+            {validationErrors.map((error, index) => <p key={index} className={s.error}>{error}</p>)}
           </div>
           <div className={s.labelWrapper}>
             <span>Confirm password</span>
