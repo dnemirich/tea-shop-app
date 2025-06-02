@@ -13,6 +13,7 @@ import { UserPage } from '@/features/userPage/ui/UserPage.tsx';
 import { HomePage } from '@/features/home/ui/HomePage.tsx';
 import { ProductPage } from '@/features/product/ui/ProductPage.tsx';
 import { authService } from '@/features/login/api/authService';
+import { CatalogPage } from '@/features/catalog/ui/CatalogPage/CatalogPage';
 
 function App() {
   const { error, clearError, success, clearSuccess } = useAppStore();
@@ -59,6 +60,7 @@ function App() {
 
           {/* <Route path="about" element={<About />} /> */}
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
+          <Route path={ROUTES.SHOP} element={<CatalogPage />} />
         </Route>
       </Routes>
       <ToastContainer />

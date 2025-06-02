@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import { Search, User, LogOut, ShoppingBasket } from 'lucide-react';
@@ -7,6 +7,8 @@ import { useUserStore } from '@/common/store/user-store.ts';
 import { ROUTES } from '@/common/config/routes.ts';
 import { authService } from '@/features/login/api/authService.ts';
 import { Popover } from '@/common/components/Popover/Popover.tsx';
+import { useSearchStore } from '@/common/store/search-store';
+import { useDebouncedSearch } from '@/common/hooks/useDebouncedSearch';
 
 export const Header = () => {
   const { isLoggedIn } = useUserStore();
@@ -15,15 +17,38 @@ export const Header = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
+  const setSearchQuery = useSearchStore((state) => state.setSearchQuery);
+
+  const [inputValue, debouncedValue, setInputValue] = useDebouncedSearch('');
+
+  const handleToggleSearch = useCallback(() => {
+    setShowSearch((prev) => !prev);
+    setInputValue('');
+  }, [setInputValue]);
+
   useEffect(() => {
     if (showSearch) {
       inputRef.current?.focus();
     }
   }, [showSearch]);
 
-  const handleToggleSearch = () => {
-    setShowSearch((prev) => !prev);
-  };
+  useEffect(() => {
+    if (debouncedValue.length >= 2) {
+      setSearchQuery(debouncedValue);
+    } else {
+      setSearchQuery('');
+    }
+  }, [debouncedValue, setSearchQuery]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showSearch) {
+        handleToggleSearch();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showSearch, handleToggleSearch]);
 
   const handleLogout = () => {
     authService.logout();
@@ -101,6 +126,8 @@ export const Header = () => {
                 type="text"
                 placeholder="Search..."
                 className={`${styles.searchInput} ${showSearch ? styles.visible : ''}`}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
               />
             </div>
             <Popover

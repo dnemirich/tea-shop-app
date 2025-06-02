@@ -34,6 +34,7 @@
     "lucide-react": "^0.509.0",
     "node-fetch": "^3.3.2",
     "react": "^19.0.0",
+    "react-content-loader": "^7.0.2",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.2",
     "react-router": "^7.5.3",
@@ -41,7 +42,7 @@
     "react-toastify": "^11.0.5",
     "swiper": "^11.2.8",
     "zod": "^3.24.4",
-    "zustand": "^5.0.4"
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
