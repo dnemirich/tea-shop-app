@@ -1,0 +1,27 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.8rem;
+
+  .titleWrapper {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    .icon {
+      cursor: pointer;
+    }
+
+    h2 {
+      font-size: var(--font-lg-size);
+      text-transform: uppercase;
+    }
+  }
+}
+
+.addressesWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
