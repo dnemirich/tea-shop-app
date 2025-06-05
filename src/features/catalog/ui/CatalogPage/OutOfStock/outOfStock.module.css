@@ -1,0 +1,32 @@
+.outOfStockContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 20px;
+}
+
+.outOfStockContent {
+  max-width: 500px;
+  text-align: center;
+}
+
+.primaryButton {
+  margin: 10px;
+  padding: 12px 24px;
+  color: white;
+  background: #4caf50;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.secondaryButton {
+  margin: 10px;
+  padding: 12px 24px;
+  color: #4caf50;
+  background: transparent;
+  border: 1px solid #4caf50;
+  border-radius: 4px;
+  cursor: pointer;
+}

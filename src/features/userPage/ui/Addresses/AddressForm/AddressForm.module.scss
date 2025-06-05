@@ -1,0 +1,53 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: 60rem;
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 45rem;
+
+    select {
+      height: 5rem;
+      font-family: var(--primary-font-family), sans-serif;
+      font-size: var(--font-main-size);
+      border: 0.1rem solid var(--outline-color);
+    }
+
+    .error {
+      font-size: var(--font-error-size);
+      color: var(--error-color);
+    }
+
+    label {
+      font-size: var(--font-error-size);
+      color: var(--item-color);
+    }
+
+    input {
+      width: 100%;
+      max-width: 45rem;
+      padding: 1.6rem 1.2rem;
+      font-family: var(--primary-font-family), sans-serif;
+      font-size: var(--font-main-size);
+      font-weight: 400;
+      border: 0.1rem solid var(--outline-color);
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+    max-width: 45rem;
+
+    .button {
+      flex: 1;
+    }
+  }
+}
