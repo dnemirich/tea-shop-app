@@ -14,7 +14,7 @@
 
 .card:hover {
   background-color: var(--secondary-light-color);
-  box-shadow: 0 10px 20px rgb(0 0 0 / 10%);
+  box-shadow: 0 10px 20px var(--box-shadow-hover-color);
 }
 
 .imageContainer {
@@ -84,8 +84,8 @@
 .thumbnails {
   display: flex;
   justify-content: flex-start;
-  gap: 6px;
-  margin-bottom: 1rem;
+  gap: var(--gap);
+  margin-bottom: var(--gap);
   overflow-x: auto;
   padding-bottom: 4px;
 }
@@ -108,7 +108,7 @@
 }
 
 .thumbnail.active {
-  border: 2px solid #1f2937;
+  border: 2px solid var(--primary-dark-color);
   opacity: 1;
 }
 

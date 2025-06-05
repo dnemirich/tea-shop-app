@@ -7,10 +7,10 @@
 .toggleButton {
   display: flex;
   align-items: center;
-  gap: 18px;
-  padding: 8px 12px;
-  font-size: large;
-  color: #1c1c1c;
+  gap: var(--gap);
+  padding: 0.8rem 1.2rem;
+  font-size: var(--title-font);
+  color: var(--primary-dark-color);
   text-transform: uppercase;
   background: none;
   border: none;
@@ -25,10 +25,10 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  padding: 1rem;
-  font-size: medium;
+  padding: var(--gap);
+  font-size: var(--card-font);
   background: rgb(255 255 255 / 70%);
-  box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+  box-shadow: 0 4px 30px var(--box-shadow-color);
   backdrop-filter: blur(12px);
 
   & > li {
@@ -39,7 +39,7 @@
 .menuButton {
   width: 100%;
   padding: 0.5rem;
-  color: #333;
+  color: var(--item-color);
   text-transform: uppercase;
   background: none;
   border: none;
@@ -48,6 +48,6 @@
 }
 
 .menuButton:hover {
-  color: #000;
-  background-color: #f5f5f5;
+  color: var(--primary-dark-color);
+  background-color: var(--secondary-light-color);
 }
