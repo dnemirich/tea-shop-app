@@ -1,11 +1,24 @@
-import { apiRoot } from '@/common/config/api-client.ts';
+import { authService } from '@/features/login/api/authService';
+import { useUserStore } from '../store/user-store';
+
+const getUserApiRoot = () => {
+  const apiRoot = authService.getApiRoot();
+  if (!apiRoot) {
+    throw new Error('User is not authenticated');
+  }
+  return apiRoot;
+};
 
 export const getCart = () => {
+  const apiRoot = useUserStore.getState().getApiRoot();
+  if (!apiRoot) throw new Error('API root is not set');
   return apiRoot.me().activeCart().get().execute();
 };
 
-export const createCart = async () => {
-  return await apiRoot
+export const createCart = () => {
+  const apiRoot = getUserApiRoot();
+  return apiRoot
+    .me()
     .carts()
     .post({
       body: {
@@ -15,17 +28,20 @@ export const createCart = async () => {
     .execute();
 };
 
-export const getCartById = async (cartId: string) => {
-  return await apiRoot.carts().withId({ ID: cartId }).get().execute();
+export const getCartById = (cartId: string) => {
+  const apiRoot = getUserApiRoot();
+  return apiRoot.me().carts().withId({ ID: cartId }).get().execute();
 };
 
-export const addLineItem = async (
+export const addLineItem = (
   cartId: string,
   version: number,
   productId: string,
   quantity: number,
 ) => {
-  return await apiRoot
+  const apiRoot = getUserApiRoot();
+  return apiRoot
+    .me()
     .carts()
     .withId({ ID: cartId })
     .post({
@@ -36,6 +52,26 @@ export const addLineItem = async (
             action: 'addLineItem',
             productId,
             quantity,
+          },
+        ],
+      },
+    })
+    .execute();
+};
+
+export const removeLineItem = (cartId: string, version: number, lineItemId: string) => {
+  const apiRoot = getUserApiRoot();
+  return apiRoot
+    .me()
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: {
+        version,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId,
           },
         ],
       },
