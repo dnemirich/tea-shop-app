@@ -181,13 +181,13 @@
 }
 
 .addToCartButton {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0 0.5rem;
   color: #1f2937;
   background: none;
-  padding: 0 0.5rem;
   cursor: pointer;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
 
   &:hover {
     color: var(--accent-color);
