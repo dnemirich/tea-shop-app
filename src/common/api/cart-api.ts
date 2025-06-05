@@ -11,6 +11,15 @@ export const getSafeApiRoot = () => {
   return apiRoot;
 };
 
+//расчет итоговой стоимости
+export const getCartTotal = (cart: Cart): number => {
+  if (cart.totalPrice?.centAmount != null) {
+    return cart.totalPrice.centAmount / 100;
+  }
+
+  return 0;
+};
+
 //получить корзину по customerId
 export const getCartByCustomerId = async (customerId: string) => {
   const apiRoot = authService.getApiRoot();
@@ -203,74 +212,86 @@ export const getActiveCart = async (): Promise<Cart | null> => {
   }
 };
 
-//обновить корзину
-/*export const updateLineItemQuantity = async (
-  lineItemId: string,
-  quantity: number,
-  cartId?: string,
-): Promise<ClientResponse<Cart>> => {
-  try {
-    const apiRoot = getSafeApiRoot();
-    const targetCartId = cartId || (await getActiveCart()).body.id;
-    const { body: cart } = await getCartById(targetCartId);
+//применение скидок
+//добавить скидку
+export const addDiscountCode = async (
+  cartId: string,
+  cartVersion: number,
+  discountCode: string,
+): Promise<Cart> => {
+  const apiRoot = getSafeApiRoot();
 
-    return await apiRoot
-      .me()
-      .carts()
-      .withId({ ID: targetCartId })
-      .post({
-        body: {
-          version: cart.version,
-          actions: [
-            {
-              action: 'changeLineItemQuantity',
-              lineItemId,
-              quantity,
+  const response = await apiRoot
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: {
+        version: cartVersion,
+        actions: [
+          {
+            action: 'addDiscountCode',
+            code: discountCode,
+          },
+        ],
+      },
+    })
+    .execute();
+
+  return response.body;
+};
+
+//удалить скидку
+export const removeDiscountCode = async (
+  cartId: string,
+  cartVersion: number,
+  discountCode: string,
+): Promise<Cart> => {
+  const apiRoot = getSafeApiRoot();
+
+  const response = await apiRoot
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: {
+        version: cartVersion,
+        actions: [
+          {
+            action: 'removeDiscountCode',
+            discountCode: {
+              typeId: 'discount-code',
+              id: discountCode,
             },
-          ],
-        },
-      })
-      .execute();
-  } catch (error: any) {
-    console.error('Failed to update item quantity:', error);
-    if (error?.statusCode === 409) {
-      return updateLineItemQuantity(lineItemId, quantity, cartId);
-    }
-    if (error instanceof Error) throw new Error(error.message);
-    throw new Error('Failed to update item quantity');
-  }
+          },
+        ],
+      },
+    })
+    .execute();
+
+  return response.body;
 };
 
-//очистить корзину
-export const clearCart = async (cartId?: string): Promise<ClientResponse<Cart>> => {
-  try {
-    const apiRoot = getSafeApiRoot();
-    const targetCartId = cartId || (await getActiveCart()).body.id;
-    const { body: cart } = await getCartById(targetCartId);
-
-    const actions = cart.lineItems.map((item) => ({
-      action: 'removeLineItem' as const,
-      lineItemId: item.id,
-    }));
-
-    return await apiRoot
-      .me()
-      .carts()
-      .withId({ ID: targetCartId })
-      .post({
-        body: {
-          version: cart.version,
-          actions,
-        },
-      })
-      .execute();
-  } catch (error: any) {
-    console.error('Failed to clear cart:', error);
-    if (error?.statusCode === 409) {
-      return clearCart(cartId);
-    }
-    if (error instanceof Error) throw new Error(error.message);
-    throw new Error('Failed to clear cart');
+//удалить корзину
+export const deleteActiveCart = async (): Promise<void> => {
+  const apiRoot = getSafeApiRoot();
+  if (!apiRoot) {
+    throw new Error('API client not available');
   }
+
+  const activeCart = await getActiveCart(); //это активная корзина, текущая
+
+  if (!activeCart) {
+    console.log('No active cart to delete');
+    return;
+  }
+
+  const cartId = activeCart.id;
+  const cartVersion = activeCart.version;
+
+  await apiRoot
+    .carts()
+    .withId({ ID: cartId })
+    .delete({ queryArgs: { version: cartVersion } })
+    .execute();
+
+  console.log(`Cart deleted successfully`);
 };
-*/
