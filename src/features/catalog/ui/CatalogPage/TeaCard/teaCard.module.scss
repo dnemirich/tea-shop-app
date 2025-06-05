@@ -179,3 +179,17 @@
   color: var(--primary-light-color);
   background-color: var(--error-color);
 }
+
+.addToCartButton {
+  color: #1f2937;
+  background: none;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+
+  &:hover {
+    color: var(--accent-color);
+  }
+}

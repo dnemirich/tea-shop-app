@@ -3,6 +3,8 @@ import styles from './teaCard.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/common/config/routes.ts';
 import { useDiscountStore } from '@/common/store/discount-store.ts';
+import { ShoppingBag } from 'lucide-react';
+import { Button } from '@/common/components/Button/Button';
 
 export type TeaCardProps = {
   images?: string[];
@@ -156,6 +158,10 @@ export const TeaCard: React.FC<TeaCardProps> = ({
               <span className={styles.weight}> / {weight}</span>
             </div>
           )}
+          <Button className={styles.addToCartButton}>
+            {' '}
+            <ShoppingBag />
+          </Button>
         </div>
       </div>
     </div>
