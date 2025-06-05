@@ -3,16 +3,16 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  margin: 32px 0;
-  padding: 0 15px;
+  gap: var(--gap);
+  margin: calc(var(--gap-lg) * 0.75) 0;
+  padding: 0 1.5rem;
 }
 
 .pages {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 4px;
+  gap: 0.4rem;
 }
 
 .pageButton,
@@ -20,14 +20,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 36px;
-  height: 36px;
-  padding: 0 8px;
-  font-size: 14px;
+  min-width: 3.6rem;
+  height: 3.6rem;
+  padding: 0 0.8rem;
+  font-size: var(--font-button-size);
   font-weight: 400;
-  background-color: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
+  background-color: var(--primary-light-color);
+  border: 1px solid var(--outline-color);
+  border-radius: 0.6rem;
   transition: all 0.2s ease;
   cursor: pointer;
   user-select: none;
@@ -35,7 +35,7 @@
 
 .pageButton:hover:not(.active),
 .navButton:hover:not(.disabled) {
-  background-color: #f5f5f5;
+  background-color: var(--secondary-light-color);
   border-color: #d0d0d0;
   transform: translateY(-1px);
 }
@@ -47,9 +47,9 @@
 
 .pageButton.active {
   font-weight: 500;
-  color: white;
+  color: var(--primary-light-color);
   background-color: var(--primary-dark-color);
-  box-shadow: 0 2px 4px rgb(76 175 80 / 20%);
+  box-shadow: 0 2px 4px var(--box-shadow-hover-color);
 }
 
 .navButton.disabled {
@@ -62,59 +62,59 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 36px;
-  height: 36px;
-  font-size: 14px;
-  color: #888;
+  width: 3.6rem;
+  height: 3.6rem;
+  font-size: var(--font-button-size);
+  color: var(--item-color);
 }
 
 @media (width <= 768px) {
   .paginationContainer {
-    gap: 6px;
-    margin: 24px 0;
+    gap: 0.6rem;
+    margin: calc(var(--gap-lg) * 0.5) 0;
   }
 
   .pages {
-    gap: 3px;
+    gap: 0.3rem;
   }
 
   .pageButton,
   .navButton {
-    min-width: 32px;
-    height: 32px;
-    padding: 0 6px;
-    font-size: 13px;
-    border-radius: 5px;
+    min-width: 3.2rem;
+    height: 3.2rem;
+    padding: 0 0.6rem;
+    font-size: 1.3rem;
+    border-radius: 0.5rem;
   }
 
   .ellipsis {
-    width: 32px;
-    height: 32px;
-    font-size: 13px;
+    width: 3.2rem;
+    height: 3.2rem;
+    font-size: 1.3rem;
   }
 }
 
 @media (width <= 600px) {
   .paginationContainer {
-    gap: 4px;
-    margin: 20px 0;
+    gap: 0.4rem;
+    margin: 2rem 0;
   }
 
   .pageButton {
-    min-width: 28px;
-    height: 28px;
-    padding: 0 4px;
-    font-size: 12px;
+    min-width: 2.8rem;
+    height: 2.8rem;
+    padding: 0 0.4rem;
+    font-size: 1.2rem;
   }
 
   .navButton {
-    width: 28px;
-    height: 28px;
+    width: 2.8rem;
+    height: 2.8rem;
   }
 
   .ellipsis {
-    width: 28px;
-    height: 28px;
+    width: 2.8rem;
+    height: 2.8rem;
   }
 
   .pageButton:not(.active, :nth-child(-n + 2), :nth-last-child(-n + 2)) {
@@ -124,11 +124,11 @@
 
 @media (width <= 400px) {
   .paginationContainer {
-    gap: 8px;
+    gap: var(--gap);
   }
 
   .navButtonsContainer {
     display: flex;
-    gap: 8px;
+    gap: var(--gap);
   }
 }
