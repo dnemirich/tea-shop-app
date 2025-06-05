@@ -4,6 +4,13 @@ import { Cart } from '@commercetools/platform-sdk';
 import { ClientResponse } from '@commercetools/ts-client';
 import { useUserStore } from '../store/user-store';
 
+export const getSafeApiRoot = () => {
+  const isLoggedIn = useUserStore.getState().isLoggedIn;
+  const apiRoot = isLoggedIn ? authService.getApiRoot() : anonymousApiRoot;
+  if (!apiRoot) throw new Error('API root unavailable');
+  return apiRoot;
+};
+
 //получить корзину по customerId
 export const getCartByCustomerId = async (customerId: string) => {
   const apiRoot = authService.getApiRoot();
@@ -69,8 +76,7 @@ export const addLineItem = async (
   variantId: number,
   quantity = 1,
 ): Promise<Cart> => {
-  const isLoggedIn = useUserStore.getState().isLoggedIn;
-  const apiRoot = isLoggedIn ? authService.getApiRoot() : anonymousApiRoot;
+  const apiRoot = getSafeApiRoot();
 
   if (!apiRoot) {
     throw new Error('apiRoot is not initialized');
@@ -104,19 +110,22 @@ export const removeLineItem = async (
   lineItemId: string,
   quantity?: number,
 ): Promise<Cart> => {
-  const isLoggedIn = useUserStore.getState().isLoggedIn;
-  const apiRoot = isLoggedIn ? authService.getApiRoot() : anonymousApiRoot;
+  const apiRoot = getSafeApiRoot();
 
   if (!apiRoot) {
     throw new Error('apiRoot is not initialized');
   }
 
-  const action: any = {
+  const action: {
+    action: 'removeLineItem';
+    lineItemId: string;
+    quantity?: number;
+  } = {
     action: 'removeLineItem',
     lineItemId,
   };
 
-  if (quantity !== undefined) {
+  if (quantity !== undefined && quantity > 0) {
     action.quantity = quantity;
   }
 
@@ -134,22 +143,68 @@ export const removeLineItem = async (
   return response.body;
 };
 
-/*
-//Текущая активная корзина
-export const getActiveCart = async (): Promise<ClientResponse<Cart>> => {
+//изменить количество lineItem
+export const changeLineItemQuantity = async (
+  cartId: string,
+  cartVersion: number,
+  lineItemId: string,
+  quantity: number,
+): Promise<Cart> => {
+  const safeQuantity = quantity < 0 ? 0 : quantity;
+
+  const apiRoot = getSafeApiRoot();
+
+  if (!apiRoot) {
+    throw new Error('API client not available');
+  }
+
+  const response = await apiRoot
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: {
+        version: cartVersion,
+        actions: [
+          {
+            action: 'changeLineItemQuantity',
+            lineItemId,
+            quantity: safeQuantity,
+          },
+        ],
+      },
+    })
+    .execute();
+
+  return response.body;
+};
+
+//Текущая активная корзина для анонимной и залогиненной корзины кастомера
+export const getActiveCart = async (): Promise<Cart | null> => {
+  const isLoggedIn = useUserStore.getState().isLoggedIn;
+
+  const apiRoot = isLoggedIn ? authService.getApiRoot() : anonymousApiRoot;
+  if (!apiRoot) throw new Error('API client not available');
+
   try {
-    const apiRoot = getSafeApiRoot();
-    return await apiRoot.me().activeCart().get().execute();
+    if (isLoggedIn) {
+      const response = await apiRoot.me().activeCart().get().execute();
+      return response.body;
+    } else {
+      const anonymousId = localStorage.getItem('anonymousId');
+      if (!anonymousId) return null;
+
+      const response = await apiRoot.carts().get({ queryArgs: { anonymousId } }).execute();
+
+      return response.body.results[0] ?? null;
+    }
   } catch (error) {
     console.error('Failed to fetch active cart:', error);
-    if (error instanceof Error) throw new Error(error.message);
-    throw new Error('Failed to fetch cart');
+    return null;
   }
 };
 
-
 //обновить корзину
-export const updateLineItemQuantity = async (
+/*export const updateLineItemQuantity = async (
   lineItemId: string,
   quantity: number,
   cartId?: string,
