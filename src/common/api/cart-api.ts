@@ -1,12 +1,140 @@
+import { anonymousApiRoot } from '@/features/login/api/anonymous-client';
 import { authService } from '@/features/login/api/authService';
-import { Cart, ClientResponse } from '@commercetools/platform-sdk';
+import { Cart } from '@commercetools/platform-sdk';
+import { ClientResponse } from '@commercetools/ts-client';
+import { useUserStore } from '../store/user-store';
 
-const getSafeApiRoot = () => {
+//получить корзину по customerId
+export const getCartByCustomerId = async (customerId: string) => {
   const apiRoot = authService.getApiRoot();
-  if (!apiRoot) throw new Error('User not authenticated');
-  return apiRoot;
+  if (!apiRoot) {
+    throw new Error('User not authenticated');
+  }
+
+  return await apiRoot.carts().get({ queryArgs: { customerId } }).execute();
 };
 
+//создать анонимную корзину
+export const createAnonymousCart = async (currency = 'USD'): Promise<ClientResponse<Cart>> => {
+  let anonymousId = localStorage.getItem('anonymousId');
+  if (!anonymousId) {
+    anonymousId = crypto.randomUUID();
+    localStorage.setItem('anonymousId', anonymousId);
+  }
+
+  return await anonymousApiRoot
+    .carts()
+    .post({
+      body: {
+        currency,
+        anonymousId,
+      },
+    })
+    .execute();
+};
+
+//создать корзину залогиненного юзера
+export const createAuthenticatedCart = async (currency = 'USD'): Promise<ClientResponse<Cart>> => {
+  const apiRoot = authService.getApiRoot();
+  if (!apiRoot) {
+    throw new Error('User not authenticated');
+  }
+
+  return apiRoot
+    .me()
+    .carts()
+    .post({
+      body: {
+        currency,
+      },
+    })
+    .execute();
+};
+
+//общая обертка для создания корзины - либо анонимная, либо залогиненная
+export const createCart = async (currency = 'USD') => {
+  const isLoggedIn = useUserStore.getState().isLoggedIn;
+  if (isLoggedIn) {
+    return await createAuthenticatedCart(currency);
+  } else {
+    return await createAnonymousCart(currency);
+  }
+};
+
+//доабвление LineItem
+export const addLineItem = async (
+  cartId: string,
+  cartVersion: number,
+  productId: string,
+  variantId: number,
+  quantity = 1,
+): Promise<Cart> => {
+  const isLoggedIn = useUserStore.getState().isLoggedIn;
+  const apiRoot = isLoggedIn ? authService.getApiRoot() : anonymousApiRoot;
+
+  if (!apiRoot) {
+    throw new Error('apiRoot is not initialized');
+  }
+
+  const response = await apiRoot
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: {
+        version: cartVersion,
+        actions: [
+          {
+            action: 'addLineItem',
+            productId,
+            variantId,
+            quantity,
+          },
+        ],
+      },
+    })
+    .execute();
+
+  return response.body;
+};
+
+//удаление LineItem из корзины
+export const removeLineItem = async (
+  cartId: string,
+  cartVersion: number,
+  lineItemId: string,
+  quantity?: number,
+): Promise<Cart> => {
+  const isLoggedIn = useUserStore.getState().isLoggedIn;
+  const apiRoot = isLoggedIn ? authService.getApiRoot() : anonymousApiRoot;
+
+  if (!apiRoot) {
+    throw new Error('apiRoot is not initialized');
+  }
+
+  const action: any = {
+    action: 'removeLineItem',
+    lineItemId,
+  };
+
+  if (quantity !== undefined) {
+    action.quantity = quantity;
+  }
+
+  const response = await apiRoot
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: {
+        version: cartVersion,
+        actions: [action],
+      },
+    })
+    .execute();
+
+  return response.body;
+};
+
+/*
 //Текущая активная корзина
 export const getActiveCart = async (): Promise<ClientResponse<Cart>> => {
   try {
@@ -19,109 +147,6 @@ export const getActiveCart = async (): Promise<ClientResponse<Cart>> => {
   }
 };
 
-//создает новую корзину, валюта usd по умолчанию
-export const createCart = async (currency = 'USD'): Promise<ClientResponse<Cart>> => {
-  try {
-    const apiRoot = getSafeApiRoot();
-    return await apiRoot
-      .me()
-      .carts()
-      .post({
-        body: { currency },
-      })
-      .execute();
-  } catch (error) {
-    console.error('Failed to create cart:', error);
-    if (error instanceof Error) throw new Error(error.message);
-    throw new Error('Failed to create cart');
-  }
-};
-
-//корзина по id
-export const getCartById = async (cartId: string): Promise<ClientResponse<Cart>> => {
-  try {
-    const apiRoot = getSafeApiRoot();
-    return await apiRoot.me().carts().withId({ ID: cartId }).get().execute();
-  } catch (error) {
-    console.error(`Failed to fetch cart ${cartId}:`, error);
-    if (error instanceof Error) throw new Error(error.message);
-    throw new Error('Failed to fetch cart');
-  }
-};
-
-//добавить продукт в корзину
-export const addLineItem = async (
-  productId: string,
-  quantity = 1,
-  cartId?: string,
-): Promise<ClientResponse<Cart>> => {
-  try {
-    const apiRoot = getSafeApiRoot();
-    const targetCartId = cartId || (await getActiveCart()).body.id;
-    const { body: cart } = await getCartById(targetCartId);
-
-    return await apiRoot
-      .me()
-      .carts()
-      .withId({ ID: targetCartId })
-      .post({
-        body: {
-          version: cart.version,
-          actions: [
-            {
-              action: 'addLineItem',
-              productId,
-              quantity,
-            },
-          ],
-        },
-      })
-      .execute();
-  } catch (error: any) {
-    console.error('Failed to add line item:', error);
-    if (error?.statusCode === 409) {
-      return addLineItem(productId, quantity, cartId);
-    }
-    if (error instanceof Error) throw new Error(error.message);
-    throw new Error('Failed to add item to cart');
-  }
-};
-
-//удалить продукт
-export const removeLineItem = async (
-  lineItemId: string,
-  cartId?: string,
-): Promise<ClientResponse<Cart>> => {
-  try {
-    const apiRoot = getSafeApiRoot();
-    const targetCartId = cartId || (await getActiveCart()).body.id;
-    const { body: cart } = await getCartById(targetCartId);
-
-    return await apiRoot
-      .me()
-      .carts()
-      .withId({ ID: targetCartId })
-      .post({
-        body: {
-          version: cart.version,
-          actions: [
-            {
-              action: 'removeLineItem',
-              lineItemId,
-            },
-          ],
-        },
-      })
-      .execute();
-  } catch (error: any) {
-    console.error('Failed to remove line item:', error);
-    if (error?.statusCode === 409) {
-      return removeLineItem(lineItemId, cartId);
-    }
-    if (error instanceof Error) throw new Error(error.message);
-    throw new Error('Failed to remove item from cart');
-  }
-};
 
 //обновить корзину
 export const updateLineItemQuantity = async (
@@ -193,3 +218,4 @@ export const clearCart = async (cartId?: string): Promise<ClientResponse<Cart>> 
     throw new Error('Failed to clear cart');
   }
 };
+*/
