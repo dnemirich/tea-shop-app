@@ -45,11 +45,11 @@ export const createAnonymousCart = async (currency = 'USD'): Promise<ClientRespo
   }
 
   return await anonymousApiRoot
+    .me()
     .carts()
     .post({
       body: {
         currency,
-        anonymousId,
       },
     })
     .execute();
@@ -132,6 +132,7 @@ export const addLineItem = async (
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
       const response = await apiRoot
+        .me()
         .carts()
         .withId({ ID: cartId })
         .post({
@@ -192,6 +193,7 @@ export const removeLineItem = async (
   }
 
   const response = await apiRoot
+    .me()
     .carts()
     .withId({ ID: cartId })
     .post({
@@ -221,6 +223,7 @@ export const changeLineItemQuantity = async (
   }
 
   const response = await apiRoot
+    .me()
     .carts()
     .withId({ ID: cartId })
     .post({
@@ -338,6 +341,7 @@ export const deleteActiveCart = async (): Promise<void> => {
   const cartVersion = activeCart.version;
 
   await apiRoot
+    .me()
     .carts()
     .withId({ ID: cartId })
     .delete({ queryArgs: { version: cartVersion } })
