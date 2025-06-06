@@ -1,0 +1,77 @@
+.section {
+  padding: 2rem;
+
+  & > .sectionHeader {
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  &.authorsSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3.2rem 6.8rem 5.6rem;
+    background-color: var(--secondary-light-color);
+  }
+}
+
+.aboutText {
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+}
+
+.logo {
+  width: 6rem;
+  transition: opacity 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.text {
+  font-size: 1.6rem;
+}
+
+.authorsList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.authorCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 30rem;
+  min-height: 40rem;
+  padding: 2rem;
+  font-size: 1.4rem;
+  background-color: var(--primary-light-color);
+  border-radius: 0.8rem;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 10%);
+
+  .photo {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+    border-radius: 0.8rem;
+  }
+
+  .name {
+    font-size: 1.6rem;
+  }
+
+  .title {
+    font-weight: 500;
+  }
+
+  .accentText {
+    color: var(--accent-color);
+  }
+}
