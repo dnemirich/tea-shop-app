@@ -2,6 +2,7 @@ import { createCustomerApiRoot } from './password-flow-client';
 import { useUserStore } from '@/common/store/user-store';
 import { mapSdkAddresses } from '@/features/userPage/ui/Addresses/addresses-mapper';
 import { AuthService } from '@/common/types/auth-types';
+import { anonymousApiRoot } from './anonymous-client';
 
 export const changePassword = async (currentPassword: string, newPassword: string) => {
   const { email, getApiRoot } = useUserStore.getState();
@@ -38,35 +39,54 @@ export const changePassword = async (currentPassword: string, newPassword: strin
 
 export const createAuthService = (): AuthService => {
   return {
-    async login(email, password, rememberMe = false) {
-      const root = createCustomerApiRoot(email, password);
-      const res = await root.me().get().execute();
-      const customer = res.body;
+    async login(email: string, password: string, rememberMe = false) {
+      try {
+        //логин через анонимный клиент
+        const response = await anonymousApiRoot
+          .me()
+          .login()
+          .post({
+            body: {
+              email,
+              password,
+              activeCartSignInMode: 'MergeWithExistingCustomerCart',
+            },
+          })
+          .execute();
 
-      const user = {
-        email: customer.email,
-        password,
-        firstName: customer.firstName ?? '',
-        lastName: customer.lastName ?? '',
-        dateOfBirth: customer.dateOfBirth ?? '',
-        addresses: mapSdkAddresses(customer.addresses),
-        defaultShippingAddress: customer.defaultShippingAddressId ?? '',
-        defaultBillingAddress: customer.defaultBillingAddressId ?? '',
-      };
+        if (!response.body.customer) {
+          throw new Error('Login failed');
+        }
 
-      const store = useUserStore.getState();
-      store.setApiRoot(root);
-      store.setLoggedIn(user);
+        const customer = response.body.customer;
+        const user = {
+          email: customer.email,
+          password,
+          firstName: customer.firstName ?? '',
+          lastName: customer.lastName ?? '',
+          dateOfBirth: customer.dateOfBirth ?? '',
+          addresses: mapSdkAddresses(customer.addresses),
+          defaultShippingAddress: customer.defaultShippingAddressId ?? '',
+          defaultBillingAddress: customer.defaultBillingAddressId ?? '',
+        };
 
-      if (rememberMe) {
-        sessionStorage.setItem('authEmail', email);
-        sessionStorage.setItem('authPassword', password);
-      } else {
-        sessionStorage.removeItem('authEmail');
-        sessionStorage.removeItem('authPassword');
+        //оздаем авторизованный клиент
+        const root = createCustomerApiRoot(email, password);
+
+        const store = useUserStore.getState();
+        store.setApiRoot(root);
+        store.setLoggedIn(user);
+
+        if (rememberMe) {
+          sessionStorage.setItem('authEmail', email);
+          sessionStorage.setItem('authPassword', password);
+        }
+
+        return user;
+      } catch (error) {
+        console.error('Login error:', error);
+        throw new Error('Login failed. Please check your credentials.');
       }
-
-      return user;
     },
 
     logout() {
@@ -90,6 +110,8 @@ export const createAuthService = (): AuthService => {
         const root = createCustomerApiRoot(email, password);
         const res = await root.me().get().execute();
 
+        if (!res.body) throw new Error('Empty response');
+
         const customer = res.body;
         const user = {
           email: customer.email,
@@ -107,7 +129,8 @@ export const createAuthService = (): AuthService => {
         store.setLoggedIn(user);
 
         return root;
-      } catch {
+      } catch (error) {
+        console.error('Session restore failed:', error);
         this.logout();
         return null;
       }

@@ -16,10 +16,59 @@ import { authService } from '@/features/login/api/authService';
 import { CatalogPage } from '@/features/catalog/ui/CatalogPage/CatalogPage';
 import { useDiscountStore } from '@/common/store/discount-store.ts';
 import { getDiscountsInfo } from '@/common/utils/discountHelpers.ts';
+import { useUserStore } from '@/common/store/user-store';
+import { anonymousApiRoot } from '@/features/login/api/anonymous-client';
 
 function App() {
   const { error, clearError, success, clearSuccess } = useAppStore();
   const { setHasActiveDiscount, setDiscount } = useDiscountStore();
+
+  //корзина анонима
+  useEffect(() => {
+    if (!useUserStore.getState().isLoggedIn) {
+      let anonymousId = localStorage.getItem('anonymousId');
+      if (!anonymousId) {
+        anonymousId = crypto.randomUUID();
+        localStorage.setItem('anonymousId', anonymousId);
+      }
+
+      //корзина с anonymousId
+      anonymousApiRoot
+        .carts()
+        .get({
+          queryArgs: {
+            where: `anonymousId="${anonymousId}"`,
+          },
+        })
+        .execute()
+        .then((response) => {
+          console.log('Cart search results:', response.body.results);
+          if (response.body.results.length === 0) {
+            //попробуем с новым anonymousId, если ошибка дублирования
+            const newAnonymousId = crypto.randomUUID();
+            console.log('Creating new cart with anonymousId:', newAnonymousId);
+            localStorage.setItem('anonymousId', newAnonymousId);
+            return anonymousApiRoot
+              .carts()
+              .post({
+                body: {
+                  currency: 'USD',
+                  anonymousId: newAnonymousId,
+                },
+              })
+              .execute();
+          }
+        })
+        .catch((error) => {
+          if (error?.message?.includes('anonymousId is already in use')) {
+            localStorage.removeItem('anonymousId');
+            location.reload();
+          } else {
+            console.error('Ошибка получения или создания анонимной корзины:', error);
+          }
+        });
+    }
+  }, []);
 
   useEffect(() => {
     getDiscountsInfo().then((discountInfo) => {
@@ -30,7 +79,7 @@ function App() {
 
   useEffect(() => {
     authService.restoreSession();
-  });
+  }, []);
 
   useEffect(() => {
     if (error) {
