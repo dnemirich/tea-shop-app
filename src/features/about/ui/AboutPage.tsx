@@ -1,7 +1,7 @@
 import logo from '/icons/rss-logo.svg';
-import dashaPic from '/img/about-page/dasha.jpg'
-import alinaPic from '/img/about-page/alina.jpg'
-import evaPic from '/img/about-page/eva.jpg'
+import dashaPic from '/img/about-page/dasha.jpg';
+import alinaPic from '/img/about-page/alina.jpg';
+import evaPic from '/img/about-page/eva.jpg';
 import s from './AboutPage.module.scss';
 
 const AUTHORS = [
@@ -60,9 +60,7 @@ export const AboutPage = () => {
                 github: <span className={s.accentText}>{author.github}</span>
               </a>
               <h4>Contribution to the project </h4>
-              <p>
-                {author.implementedFeatures.join(', ')}
-              </p>
+              <p>{author.implementedFeatures.join(', ')}</p>
             </li>
           ))}
         </ul>
