@@ -1,5 +1,11 @@
 import { create } from 'zustand';
-import { getOrCreateCart, addLineItem, removeLineItem, getActiveCart } from '@/common/api/cart-api';
+import {
+  getOrCreateCart,
+  addLineItem,
+  removeLineItem,
+  getActiveCart,
+  deleteActiveCart,
+} from '@/common/api/cart-api';
 import { Cart } from '@commercetools/platform-sdk';
 
 interface CartState {
@@ -13,6 +19,7 @@ interface CartState {
   fetchActiveCart: () => Promise<void>;
   addItem: (productId: string, variantId: number, quantity?: number) => Promise<void>;
   removeItem: (lineItemId: string, quantity?: number) => Promise<void>;
+  deleteCart: () => Promise<void>;
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -29,33 +36,28 @@ export const useCartStore = create<CartState>((set, get) => ({
       const cart = await getActiveCart();
       set({ cart, isLoading: false });
     } catch (e: any) {
-      set({ error: e.message, isLoading: false });
+      set({ error: e.message || 'Failed to fetch cart', isLoading: false });
     }
   },
 
   addItem: async (productId, variantId, quantity = 1) => {
     set({ isLoading: true, error: null });
     try {
-      const cart = get().cart;
+      let cart = get().cart;
       if (!cart) {
-        // Если корзина пустая — создаем новую
-        const newCartResponse = await getOrCreateCart();
-        set({ cart: newCartResponse });
+        const newCart = await getOrCreateCart();
+        if (!newCart) throw new Error('Failed to create/fetch cart');
+        set({ cart: newCart });
+        cart = newCart;
       }
 
-      const currentCart = get().cart;
-      if (!currentCart) throw new Error('Cart is not available');
+      if (!cart) throw new Error('Cart is not available');
 
-      const updatedCart = await addLineItem(
-        currentCart.id,
-        currentCart.version,
-        productId,
-        variantId,
-        quantity,
-      );
+      const updatedCart = await addLineItem(cart.id, cart.version, productId, variantId, quantity);
+
       set({ cart: updatedCart, isLoading: false });
     } catch (e: any) {
-      set({ error: e.message, isLoading: false });
+      set({ error: e.message || 'Failed to add item', isLoading: false });
     }
   },
 
@@ -68,7 +70,17 @@ export const useCartStore = create<CartState>((set, get) => ({
       const updatedCart = await removeLineItem(cart.id, cart.version, lineItemId, quantity);
       set({ cart: updatedCart, isLoading: false });
     } catch (e: any) {
-      set({ error: e.message, isLoading: false });
+      set({ error: e.message || 'Failed to remove item', isLoading: false });
+    }
+  },
+
+  deleteCart: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      await deleteActiveCart();
+      set({ cart: null, isLoading: false });
+    } catch (e: any) {
+      set({ error: e.message || 'Failed to delete cart', isLoading: false });
     }
   },
 }));

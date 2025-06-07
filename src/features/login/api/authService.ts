@@ -41,6 +41,21 @@ export const createAuthService = (): AuthService => {
   return {
     async login(email: string, password: string, rememberMe = false) {
       try {
+        //корзина до мержа
+        const anonymousId = localStorage.getItem('anonymousId');
+        if (anonymousId) {
+          const anonymousCartResponse = await anonymousApiRoot
+            .carts()
+            .get({
+              queryArgs: {
+                where: `anonymousId="${anonymousId}"`,
+              },
+            })
+            .execute();
+          console.log('Anonymous cart before login:', anonymousCartResponse.body?.results[0]);
+        } else {
+          console.log('No anonymousId found before login');
+        }
         //логин через анонимный клиент
         const response = await anonymousApiRoot
           .me()
@@ -70,8 +85,11 @@ export const createAuthService = (): AuthService => {
           defaultBillingAddress: customer.defaultBillingAddressId ?? '',
         };
 
-        //оздаем авторизованный клиент
+        //создаем авторизованный клиент
         const root = createCustomerApiRoot(email, password);
+        const activeCartResponse = await root.me().activeCart().get().execute();
+        //корзина после авторизации
+        console.log('Active cart after login:', activeCartResponse.body);
 
         const store = useUserStore.getState();
         store.setApiRoot(root);

@@ -63,8 +63,13 @@ function App() {
           if (error?.message?.includes('anonymousId is already in use')) {
             localStorage.removeItem('anonymousId');
             location.reload();
+          } else if (error.statusCode === 400) {
+            console.error('Check client credentials and scopes:', error);
+            if (error.body?.errors) {
+              console.error(error.body.errors);
+            }
           } else {
-            console.error('Ошибка получения или создания анонимной корзины:', error);
+            console.error('Failed to create cart', error);
           }
         });
     }
