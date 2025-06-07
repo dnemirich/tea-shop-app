@@ -1,0 +1,38 @@
+.itemCardWrapper {
+  display: flex;
+  gap: 2.6rem;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  img {
+    width: 7.1rem;
+    object-fit: contain;
+  }
+
+  .teaInfo,
+  .cost,
+  span {
+    font-size: var(--font-error-size);
+  }
+
+  .cost,
+  span {
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .subWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .remove {
+      cursor: pointer;
+    }
+  }
+}
