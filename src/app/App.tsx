@@ -16,6 +16,7 @@ import { authService } from '@/features/login/api/authService';
 import { CatalogPage } from '@/features/catalog/ui/CatalogPage/CatalogPage';
 import { useDiscountStore } from '@/common/store/discount-store.ts';
 import { getDiscountsInfo } from '@/common/utils/discountHelpers.ts';
+import { BasketPage } from '@/features/basket/ui/BasketPage/BasketPage';
 
 function App() {
   const { error, clearError, success, clearSuccess } = useAppStore();
@@ -67,6 +68,7 @@ function App() {
           <Route path={ROUTES.USER} element={<UserPage />} />
           <Route path={`${ROUTES.SHOP}/:categoryName/:productSlug`} element={<ProductPage />} />
           <Route index element={<HomePage />} />
+          <Route path={ROUTES.BASKET} element={<BasketPage />} />
 
           {/* <Route path="about" element={<About />} /> */}
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
