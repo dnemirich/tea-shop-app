@@ -1,6 +1,8 @@
 import { Button } from '@/common/components/Button/Button';
 import { ItemCard } from '../ItemCard/ItemCard';
 import s from './itemsContainer.module.scss';
+import { CostInfo } from '../CostInfo/CostInfo';
+import { Line } from '../Line/Line';
 
 export const ItemsContainer = () => {
   return (
@@ -8,11 +10,8 @@ export const ItemsContainer = () => {
       <ItemCard />
       <ItemCard />
       <ItemCard />
-      <span className={s.line}></span>
-      <div className={s.subtotal}>
-        <p>subtotal</p>
-        <p>cost</p>
-      </div>
+      <Line />
+      <CostInfo text="Subtotal" />
       <Button className={s.button}>back to shopping</Button>
     </div>
   );

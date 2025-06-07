@@ -1,0 +1,25 @@
+.orderSummaryWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: var(--font-main-size);
+  background-color: var(--secondary-light-color);
+  padding: 4.4rem 2.5rem;
+  gap: 2.5rem;
+
+  h2 {
+    font-size: var(--font-lg-size);
+    font-weight: 400;
+    margin-bottom: 3.5rem;
+    align-self: flex-start;
+  }
+
+  .costTitle {
+    font-weight: 400;
+  }
+
+  .shippingInfo {
+    color: var(--outline-color);
+    align-self: flex-start;
+  }
+}

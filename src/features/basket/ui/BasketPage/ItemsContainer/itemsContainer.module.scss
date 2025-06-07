@@ -6,11 +6,6 @@
   gap: 3.8rem;
   align-items: center;
 
-  .line {
-    border: 0.1rem solid var(--outline-color);
-    width: 90%;
-  }
-
   .button {
     color: var(--primary-dark-color);
     background-color: var(--bg-color-light);
@@ -19,17 +14,5 @@
     font-weight: 500;
     max-width: 32rem;
     width: 100%;
-  }
-
-  .subtotal {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-
-    p {
-      font-weight: 500;
-      text-transform: uppercase;
-      font-size: var(--font-main-size);
-    }
   }
 }
