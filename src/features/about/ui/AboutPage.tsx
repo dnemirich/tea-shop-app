@@ -1,5 +1,7 @@
 import logo from '/icons/rss-logo.svg';
-import dashaPic from '/img/about-page/dasha.jpeg';
+import dashaPic from '/img/about-page/dasha.jpg'
+import alinaPic from '/img/about-page/alina.jpg'
+import evaPic from '/img/about-page/eva.jpg'
 import s from './AboutPage.module.scss';
 
 const AUTHORS = [
@@ -8,23 +10,23 @@ const AUTHORS = [
     title: 'developer',
     github: 'evalion8',
     implementedFeatures: ['home page', 'catalog page', 'routing'],
-    bio: '',
-    avatar: null,
+    bio: 'From teaching English to coding with passion — I bridge gaps between people and tech. A team player who believes in collaborative magic, clean solutions, and the power of lifelong learning. Turning complex into clear, one line at a time.',
+    avatar: evaPic,
   },
   {
     name: 'Alina Iulbaeva',
     title: 'developer',
     github: 'alinidi',
     implementedFeatures: ['login page', 'user profile page', 'cart page', 'project configuration'],
-    bio: '',
-    avatar: null,
+    bio: 'I spent over six years as a design engineer before shifting my focus to frontend development. Every project is an opportunity to grow, and I’m constantly learning to become a better developer and teammate.',
+    avatar: alinaPic,
   },
   {
     name: 'Daria Nemirich',
     title: 'team-lead',
     github: 'dnemirich',
     implementedFeatures: ['registration page', 'product page', 'about us page', 'routing'],
-    bio: '',
+    bio: 'Biologist turned frontend developer — I’m fascinated by how code becomes something users can interact with. Leading a team for the first time taught me how much I enjoy helping others grow while learning alongside them.',
     avatar: dashaPic,
   },
 ];
@@ -57,8 +59,9 @@ export const AboutPage = () => {
               <a href={`https://github.com/${author.github}`}>
                 github: <span className={s.accentText}>{author.github}</span>
               </a>
+              <h4>Contribution to the project </h4>
               <p>
-                <span>Contribution to the project:</span> {author.implementedFeatures.join(', ')}
+                {author.implementedFeatures.join(', ')}
               </p>
             </li>
           ))}
