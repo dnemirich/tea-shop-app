@@ -1,0 +1,16 @@
+.paymentTypeWrapper {
+  background: var(--secondary-light-color);
+  padding: 4.4rem 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem;
+
+  p {
+    font-size: var(--font-lg-size);
+  }
+
+  .images {
+    display: flex;
+    justify-content: space-between;
+  }
+}
