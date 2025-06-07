@@ -87,9 +87,19 @@ export const createAuthService = (): AuthService => {
 
         //создаем авторизованный клиент
         const root = createCustomerApiRoot(email, password);
-        const activeCartResponse = await root.me().activeCart().get().execute();
-        //корзина после авторизации
-        console.log('Active cart after login:', activeCartResponse.body);
+
+        let activeCartResponse;
+        try {
+          activeCartResponse = await root.me().activeCart().get().execute();
+          console.log('Active cart after login:', activeCartResponse.body);
+        } catch (error: any) {
+          if (error.statusCode === 404) {
+            console.warn('No active cart found, continuing login');
+          } else {
+            console.error('Error while fetching active cart:', error);
+            throw error;
+          }
+        }
 
         const store = useUserStore.getState();
         store.setApiRoot(root);
