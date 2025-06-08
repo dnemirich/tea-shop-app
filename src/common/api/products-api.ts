@@ -1,7 +1,8 @@
 import { apiRoot } from '@/common/config/api-client.ts';
 
 export const getProducts = () => {
-  return apiRoot.products().get().execute();
+  //return apiRoot.products().get().execute();
+  return apiRoot.productProjections().get().execute();
 };
 
 export const getProductBySlug = (slug: string) => {

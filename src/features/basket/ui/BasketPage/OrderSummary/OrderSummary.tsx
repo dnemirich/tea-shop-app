@@ -1,6 +1,6 @@
 import { Button } from '@/common/components/Button/Button';
-import { CostInfo } from '../../CostInfo/CostInfo';
-import { Line } from '../../Line/Line';
+import { CostInfo } from '../CostInfo/CostInfo';
+import { Line } from '../Line/Line';
 import s from './orderSummary.module.scss';
 
 export const OrderSummary = () => {

@@ -1,5 +1,13 @@
 .myBagWrapper {
   margin-top: 4.2rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 12rem;
+  margin-bottom: 10rem;
+
+  .subWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
