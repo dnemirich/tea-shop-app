@@ -1,9 +1,8 @@
 import { Button } from '@/common/components/Button/Button';
-
+import { ItemCard } from '../ItemCard/ItemCard';
 import s from './itemsContainer.module.scss';
-import { ItemCard } from '../MyBagPage/ItemCard/ItemCard';
-import { Line } from '../Line/Line';
-import { CostInfo } from '../CostInfo/CostInfo';
+import { CostInfo } from '../../CostInfo/CostInfo';
+import { Line } from '../../Line/Line';
 
 export const ItemsContainer = () => {
   return (

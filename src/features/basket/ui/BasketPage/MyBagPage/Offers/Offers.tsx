@@ -1,8 +1,8 @@
 import { getProducts } from '@/common/api/products-api';
 import { useEffect, useState } from 'react';
-import { OfferCard } from '../OfferCard/OfferCard';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import s from './offers.module.scss';
+import { OfferCard } from '../OfferCard/OfferCard';
 
 export const Offers = () => {
   const [randomTeas, setRandomTeas] = useState<ProductProjection[]>([]);

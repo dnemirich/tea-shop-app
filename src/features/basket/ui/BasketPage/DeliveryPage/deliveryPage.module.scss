@@ -1,0 +1,27 @@
+.deliveryPageWrapper {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  display: flex;
+  gap: 3.5rem;
+  margin-top: 6rem;
+  margin-bottom: 9rem;
+
+  .rightSide {
+    display: flex;
+    flex-direction: column;
+    gap: 7.7rem;
+    max-width: 31rem;
+    width: 100%;
+  }
+
+  .title {
+    font-size: var(--font-lg-size);
+    margin-bottom: 0.8rem;
+  }
+
+  .subTitle {
+    font-size: var(--font-error-size);
+    color: var(--outline-color);
+    margin-bottom: 1.3rem;
+  }
+}

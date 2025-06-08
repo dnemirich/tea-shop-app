@@ -1,9 +1,9 @@
-import { ItemsContainer } from '../ItemsContainer/ItemsContainer';
-import { PopularOffers } from '../PopularOffers/PopularOffers';
-import { RightSide } from '../RightSide/RightSide';
+import { ItemsContainer } from './ItemsContainer/ItemsContainer';
 import s from './myBag.module.scss';
+import { PopularOffers } from './PopularOffers/PopularOffers';
+import { RightSide } from './RightSide/RightSide';
 
-export const MyBag = () => {
+export const MyBagPage = () => {
   return (
     <div className={s.myBagWrapper}>
       <div className={s.subWrapper}>

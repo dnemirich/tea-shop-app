@@ -1,5 +1,5 @@
-import { PaymentType } from '../PaymentType/PaymentType';
 import { OrderSummary } from '../OrderSummary/OrderSummary';
+import { PaymentType } from '../PaymentType/PaymentType';
 import s from './rightSide.module.scss';
 
 export const RightSide = () => {
