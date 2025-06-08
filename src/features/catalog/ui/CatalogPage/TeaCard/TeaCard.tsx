@@ -83,6 +83,7 @@ export const TeaCard: React.FC<TeaCardProps> = ({
           src={images[currentImageIndex]}
           alt={name}
           className={styles.image}
+          loading="lazy"
           onError={(e) => {
             (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300';
           }}
