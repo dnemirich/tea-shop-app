@@ -1,0 +1,34 @@
+.paymentPageWrapper {
+  max-width: 36rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+  .cardInfo {
+    border: 1px solid var(--outline-color);
+    padding: 2rem;
+  }
+
+  .inputWrapper {
+    display: flex;
+    gap: 2rem;
+    margin-top: 4rem;
+  }
+
+  .title {
+    font-size: var(--font-lg-size);
+  }
+
+  .subTitle {
+    font-weight: 500;
+    font-size: var(--font-main-size);
+    margin-bottom: 3rem;
+  }
+
+  .inputTitle {
+    font-size: var(--font-main-size);
+    margin-bottom: 1rem;
+  }
+}

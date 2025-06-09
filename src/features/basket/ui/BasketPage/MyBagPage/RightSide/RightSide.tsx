@@ -5,7 +5,7 @@ import s from './rightSide.module.scss';
 export const RightSide = () => {
   return (
     <div className={s.rightSideWrapper}>
-      <OrderSummary />
+      <OrderSummary text="check out" className={s.summary} />
       <PaymentType />
     </div>
   );

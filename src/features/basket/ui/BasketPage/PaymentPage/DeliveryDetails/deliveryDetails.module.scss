@@ -1,0 +1,32 @@
+.deliveryWrapper {
+  max-width: 26rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+
+  p {
+    font-size: var(--font-main-size);
+  }
+
+  .address {
+    line-height: 150%;
+  }
+
+  .title {
+    font-size: var(--font-lg-size);
+  }
+
+  .detailsTitle {
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+  }
+
+  .link {
+    text-transform: uppercase;
+    color: var(--accent-color);
+    cursor: pointer;
+    font-size: var(--font-main-size);
+    align-self: center;
+  }
+}

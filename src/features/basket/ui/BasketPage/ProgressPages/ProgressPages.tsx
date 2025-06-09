@@ -1,5 +1,6 @@
 import { DeliveryPage } from '../DeliveryPage/DeliveryPage';
 import { MyBagPage } from '../MyBagPage/MyBagPage';
+import { PaymentPage } from '../PaymentPage/PaymentPage';
 
 type Props = {
   selectedOption: 'MyBagPage' | 'DeliveryPage' | 'PaymentPage' | null;
@@ -24,7 +25,7 @@ export const ProgressPages: React.FC<Props> = ({ selectedOption }: Props) => {
 
   return (
     <div>
-      <DeliveryPage />
+      <PaymentPage />
     </div>
   );
 };

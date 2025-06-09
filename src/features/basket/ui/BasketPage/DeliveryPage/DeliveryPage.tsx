@@ -19,7 +19,7 @@ export const DeliveryPage = () => {
           <InputField placeholder="Email Address" />
         </div>
       </div>
-      <OrderSummary />
+      <OrderSummary text="go to payment" className={s.summary} />
     </div>
   );
 };

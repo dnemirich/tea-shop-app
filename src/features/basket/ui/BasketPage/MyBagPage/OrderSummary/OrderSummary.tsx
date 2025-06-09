@@ -3,7 +3,12 @@ import s from './orderSummary.module.scss';
 import { CostInfo } from '../../CostInfo/CostInfo';
 import { Line } from '../../Line/Line';
 
-export const OrderSummary = () => {
+type Prop = {
+  text: string;
+  className?: string;
+};
+
+export const OrderSummary = ({ text }: Prop) => {
   return (
     <div className={s.orderSummaryWrapper}>
       <h2>Order summary</h2>
@@ -12,7 +17,7 @@ export const OrderSummary = () => {
       <Line />
       <CostInfo text="Total" className={s.costTitle} />
       <p className={s.shippingInfo}>Estimates shipping time: 2 days</p>
-      <Button>check out</Button>
+      <Button>{text}</Button>
     </div>
   );
 };
