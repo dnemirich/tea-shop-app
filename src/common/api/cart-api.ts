@@ -119,7 +119,10 @@ export const addLineItem = async (
   variantId: number,
   quantity = 1,
 ): Promise<Cart> => {
-  return await updateCart(cartId, cartVersion, [
+  console.log(
+    `Adding item to cart: cartId=${cartId}, productId=${productId}, variantId=${variantId}, quantity=${quantity}`,
+  );
+  const updatedCart = await updateCart(cartId, cartVersion, [
     {
       action: 'addLineItem',
       productId,
@@ -127,6 +130,8 @@ export const addLineItem = async (
       quantity,
     },
   ]);
+  console.log('Item added successfully', updatedCart);
+  return updatedCart;
 };
 
 //удаление LineItem из корзины

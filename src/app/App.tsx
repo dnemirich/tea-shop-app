@@ -27,6 +27,7 @@ function App() {
   useEffect(() => {
     if (!useUserStore.getState().isLoggedIn) {
       let anonymousId = localStorage.getItem('anonymousId');
+
       if (!anonymousId) {
         anonymousId = crypto.randomUUID();
         localStorage.setItem('anonymousId', anonymousId);
@@ -83,7 +84,10 @@ function App() {
   }, [setDiscount, setHasActiveDiscount]);
 
   useEffect(() => {
-    authService.restoreSession();
+    async function restore() {
+      await authService.restoreSession();
+    }
+    restore();
   }, []);
 
   useEffect(() => {
@@ -101,7 +105,7 @@ function App() {
 
   useEffect(() => {
     if (success) {
-      toast.error(success, {
+      toast.success(success, {
         className: s.success,
         autoClose: false,
         theme: 'colored',

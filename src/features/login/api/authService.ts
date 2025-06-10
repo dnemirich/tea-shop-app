@@ -52,6 +52,7 @@ export const createAuthService = (): AuthService => {
               },
             })
             .execute();
+
           console.log('Anonymous cart before login:', anonymousCartResponse.body?.results[0]);
         } else {
           console.log('No anonymousId found before login');
@@ -68,10 +69,13 @@ export const createAuthService = (): AuthService => {
             },
           })
           .execute();
+        console.log('Login response:', response.body);
 
         if (!response.body.customer) {
           throw new Error('Login failed');
         }
+
+        console.log('Merging anonymous cart to authenticated cart done');
 
         const customer = response.body.customer;
         const user = {
@@ -159,7 +163,7 @@ export const createAuthService = (): AuthService => {
         return root;
       } catch (error) {
         console.error('Session restore failed:', error);
-        this.logout();
+        authService.logout();
         return null;
       }
     },
