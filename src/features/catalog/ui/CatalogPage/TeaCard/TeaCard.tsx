@@ -3,7 +3,7 @@ import styles from './teaCard.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/common/config/routes.ts';
 import { useDiscountStore } from '@/common/store/discount-store.ts';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, Check } from 'lucide-react';
 import { Button } from '@/common/components/Button/Button';
 
 export type TeaCardProps = {
@@ -31,6 +31,7 @@ export const TeaCard: React.FC<TeaCardProps> = ({
   const [expanded, setExpanded] = useState(false);
   const [discountSize, setDiscountSize] = useState(0);
   const { discount } = useDiscountStore();
+  const [addedToCart, setAddedToCart] = useState(false);
 
   useEffect(() => {
     if (
@@ -73,6 +74,10 @@ export const TeaCard: React.FC<TeaCardProps> = ({
 
   const onClick = () => {
     navigate(`${ROUTES.SHOP}/${category}/${slug}`);
+  };
+
+  const handleAddtoCartButton = () => {
+    setAddedToCart(true);
   };
 
   return (
@@ -159,9 +164,9 @@ export const TeaCard: React.FC<TeaCardProps> = ({
               <span className={styles.weight}> / {weight}</span>
             </div>
           )}
-          <Button className={styles.addToCartButton}>
+          <Button className={styles.addToCartButton} onClick={handleAddtoCartButton}>
             {' '}
-            <ShoppingBag />
+            {addedToCart ? <Check /> : <ShoppingBag />}
           </Button>
         </div>
       </div>
