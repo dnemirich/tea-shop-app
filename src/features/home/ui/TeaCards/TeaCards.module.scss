@@ -11,6 +11,7 @@
 
 .card {
   display: flex;
+  flex-direction: column;
   height: 100%;
   overflow: hidden;
   background-color: var(--bg-color-light);
@@ -19,8 +20,6 @@
     transform 0.3s ease,
     box-shadow 0.3s ease;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
 
   & .image {
     position: absolute;

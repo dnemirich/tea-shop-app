@@ -7,7 +7,6 @@ import { useDiscountStore } from '@/common/store/discount-store.ts';
 // import { Button } from '@/common/components/Button/Button';
 // import { useCartStore } from '@/common/store/cart-store';
 
-
 export type TeaCardProps = {
   images?: string[];
   name?: string;
@@ -79,19 +78,17 @@ export const TeaCard: React.FC<TeaCardProps> = ({
     navigate(`${ROUTES.SHOP}/${category}/${slug}`);
   };
 
-
   // const { addItem, isLoading } = useCartStore();
 
   // const handleAddtoCartButton = async () => {
   //   try {
-  //     await addItem(productId, 0); 
+  //     await addItem(productId, 0);
   //     setAddedToCart(true);
   //     setTimeout(() => setAddedToCart(false), 1000);
   //   } catch (error) {
   //     console.error('Ошибка при добавлении в корзину:', error);
   //   }
   // };
-  
 
   return (
     <div className={`${styles.card} ${className}`}>
