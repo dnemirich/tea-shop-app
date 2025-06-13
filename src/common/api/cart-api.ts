@@ -1,12 +1,12 @@
 import { anonymousApiRoot } from '@/features/login/api/anonymous-client';
 import { authService } from '@/features/login/api/authService';
-import { Cart, CartUpdateAction } from '@commercetools/platform-sdk';
+import { Cart, CartUpdateAction, Order } from '@commercetools/platform-sdk';
 import { ClientResponse } from '@commercetools/ts-client';
 import { useUserStore } from '../store/user-store';
 
 const MAX_RETRIES = 3;
 
-export const getSafeApiRoot = () => {
+/*export const getSafeApiRoot = () => {
   const isLoggedIn = useUserStore.getState().isLoggedIn;
   console.log('Is logged in:', isLoggedIn);
   console.log('Auth API root:', authService.getApiRoot());
@@ -15,6 +15,23 @@ export const getSafeApiRoot = () => {
   const apiRoot = isLoggedIn ? authService.getApiRoot() : anonymousApiRoot;
   if (!apiRoot) throw new Error('API root unavailable');
   return apiRoot;
+};*/
+export const getSafeApiRoot = () => {
+  const isLoggedIn = useUserStore.getState().isLoggedIn;
+
+  if (isLoggedIn) {
+    const apiRoot = authService.getApiRoot();
+    if (!apiRoot) {
+      throw new Error('Authenticated API root unavailable');
+    }
+    return apiRoot;
+  }
+
+  if (!anonymousApiRoot) {
+    throw new Error('Anonymous API root unavailable');
+  }
+
+  return anonymousApiRoot;
 };
 
 //расчет итоговой стоимости
@@ -37,7 +54,7 @@ export const getCartByCustomerId = async (customerId: string) => {
 };
 
 //создать анонимную корзину
-export const createAnonymousCart = async (currency = 'USD'): Promise<ClientResponse<Cart>> => {
+export const createAnonymousCart = async (currency = 'EUR'): Promise<ClientResponse<Cart>> => {
   let anonymousId = localStorage.getItem('anonymousId');
   if (!anonymousId) {
     anonymousId = crypto.randomUUID();
@@ -50,13 +67,14 @@ export const createAnonymousCart = async (currency = 'USD'): Promise<ClientRespo
     .post({
       body: {
         currency,
-      },
+        priceMode: 'ExternalPrice',
+      } as any,
     })
     .execute();
 };
 
 //создать корзину залогиненного юзера
-export const createAuthenticatedCart = async (currency = 'USD'): Promise<ClientResponse<Cart>> => {
+export const createAuthenticatedCart = async (currency = 'EUR'): Promise<ClientResponse<Cart>> => {
   const apiRoot = authService.getApiRoot();
   if (!apiRoot) {
     throw new Error('User not authenticated');
@@ -68,41 +86,54 @@ export const createAuthenticatedCart = async (currency = 'USD'): Promise<ClientR
     .post({
       body: {
         currency,
-      },
+        priceMode: 'ExternalPrice',
+      } as any,
     })
     .execute();
 };
 
 //общая обертка для создания корзины - либо анонимная, либо залогиненная
-export const getOrCreateCart = async (currency = 'USD'): Promise<Cart | undefined> => {
+export const getOrCreateCart = async (currency = 'EUR'): Promise<Cart | undefined> => {
   const isLoggedIn = useUserStore.getState().isLoggedIn;
 
   try {
+    // Пытаемся получить существующую корзину
     const existingCart = await getActiveCart();
     if (existingCart) {
-      return existingCart as Cart;
+      console.log('Existing cart found:', {
+        id: existingCart.id,
+        items: existingCart.lineItems.length,
+      });
+      return existingCart;
     }
 
+    // Если корзины нет, создаём новую
     if (isLoggedIn) {
+      console.log('Creating new authenticated cart');
       const response = await createAuthenticatedCart(currency);
       return response.body;
     } else {
-      let anonymousId = localStorage.getItem('anonymousId');
-      if (!anonymousId) {
-        anonymousId = crypto.randomUUID();
-        localStorage.setItem('anonymousId', anonymousId);
+      console.log('Creating new anonymous cart');
+      const anonymousId = localStorage.getItem('anonymousId') || crypto.randomUUID();
+      localStorage.setItem('anonymousId', anonymousId);
+
+      // Проверяем, есть ли уже корзина для этого anonymousId
+      try {
+        const response = await anonymousApiRoot.me().activeCart().get().execute();
+        if (response.body) {
+          console.log('Found existing anonymous cart');
+          return response.body;
+        }
+      } catch (error) {
+        console.log('No existing anonymous cart, creating new one');
       }
 
-      const response = await anonymousApiRoot.carts().get({ queryArgs: { anonymousId } }).execute();
-
-      if (response.body.results.length > 0) {
-        return response.body.results[0];
-      }
-
+      // Создаём новую анонимную корзину
       const createdCart = await createAnonymousCart(currency);
       return createdCart.body;
     }
   } catch (error: any) {
+    console.log('Error in getOrCreateCart:', error);
     if (error.message?.includes('anonymousId is already in use')) {
       localStorage.removeItem('anonymousId');
       location.reload();
@@ -112,26 +143,54 @@ export const getOrCreateCart = async (currency = 'USD'): Promise<Cart | undefine
 };
 
 //добавление LineItem
+
 export const addLineItem = async (
   cartId: string,
   cartVersion: number,
   productId: string,
   variantId: number,
   quantity = 1,
+  selectedWeightVariant?: string,
+  externalPrice?: { currencyCode: string; centAmount: number },
 ): Promise<Cart> => {
-  console.log(
-    `Adding item to cart: cartId=${cartId}, productId=${productId}, variantId=${variantId}, quantity=${quantity}`,
-  );
-  const updatedCart = await updateCart(cartId, cartVersion, [
+  let weightInOunces: number | undefined;
+
+  if (selectedWeightVariant) {
+    const grams = parseInt(selectedWeightVariant.replace('g', ''));
+    if (!isNaN(grams)) {
+      weightInOunces = +(grams / 28.3495).toFixed(2);
+    }
+  }
+
+  const customFields: Record<string, any> = {
+    selectedWeightVariant,
+  };
+  if (weightInOunces !== undefined) {
+    customFields.weightInOunces = weightInOunces;
+  }
+
+  const actions: CartUpdateAction[] = [
     {
       action: 'addLineItem',
       productId,
       variantId,
       quantity,
+      ...(externalPrice ? { externalPrice } : {}),
+      ...(selectedWeightVariant
+        ? {
+            custom: {
+              type: {
+                typeId: 'type',
+                key: 'lineItemWeightType',
+              },
+              fields: customFields,
+            },
+          }
+        : {}),
     },
-  ]);
-  console.log('Item added successfully', updatedCart);
-  return updatedCart;
+  ];
+
+  return await updateCart(cartId, cartVersion, actions);
 };
 
 //удаление LineItem из корзины
@@ -169,7 +228,7 @@ export const changeLineItemQuantity = async (
 };
 
 //Текущая активная корзина для анонимной и залогиненной корзины кастомера
-export const getActiveCart = async (): Promise<Cart | null> => {
+/*export const getActiveCart = async (): Promise<Cart | null> => {
   try {
     const apiRoot = getSafeApiRoot();
     if (!apiRoot) return null;
@@ -181,16 +240,60 @@ export const getActiveCart = async (): Promise<Cart | null> => {
       const anonymousId = localStorage.getItem('anonymousId');
       if (!anonymousId) return null;
 
-      const response = await apiRoot.carts().get({ queryArgs: { anonymousId } }).execute();
-      return response.body.results[0] ?? null;
+      //const response = await apiRoot.carts().get({ queryArgs: { anonymousId } }).execute();
+      //return response.body.results[0] ?? null;
+      try {
+        const response = await anonymousApiRoot.me().activeCart().get().execute();
+        return response.body ?? null;
+      } catch (error) {
+        console.log('Failed to fetch anonymous active cart:', error);
+        return null;
+      }
     }
   } catch (error) {
-    console.error('Failed to fetch active cart:', error);
+    console.log('Failed to fetch active cart:', error);
+    return null;
+  }
+};*/
+export const getActiveCart = async (): Promise<Cart | null> => {
+  try {
+    const apiRoot = getSafeApiRoot();
+    if (!apiRoot) return null;
+
+    if (useUserStore.getState().isLoggedIn) {
+      try {
+        const response = await apiRoot.me().activeCart().get().execute();
+        return response.body;
+      } catch (error: any) {
+        if (error.statusCode === 404) return null;
+        throw error;
+      }
+    } else {
+      const anonymousId = localStorage.getItem('anonymousId');
+      if (!anonymousId) return null;
+
+      try {
+        const response = await anonymousApiRoot
+          .carts()
+          .get({
+            queryArgs: {
+              where: `anonymousId="${anonymousId}"`,
+              limit: 1,
+            },
+          })
+          .execute();
+        return response.body.results[0] || null;
+      } catch (error) {
+        console.log('Error fetching anonymous cart:', error);
+        return null;
+      }
+    }
+  } catch (error) {
+    console.log('Failed to get active cart:', error);
     return null;
   }
 };
 
-//применение скидок
 //добавить скидку
 export const addDiscountCode = async (
   cartId: string,
@@ -229,8 +332,7 @@ export const deleteActiveCart = async (): Promise<void> => {
     throw new Error('API client not available');
   }
 
-  const activeCart = await getActiveCart(); //это активная корзина, текущая
-
+  const activeCart = await getActiveCart();
   if (!activeCart) {
     console.log('No active cart to delete');
     return;
@@ -239,14 +341,27 @@ export const deleteActiveCart = async (): Promise<void> => {
   const cartId = activeCart.id;
   const cartVersion = activeCart.version;
 
-  await apiRoot
-    .me()
-    .carts()
-    .withId({ ID: cartId })
-    .delete({ queryArgs: { version: cartVersion } })
-    .execute();
+  if (useUserStore.getState().isLoggedIn) {
+    await apiRoot
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .delete({ queryArgs: { version: cartVersion } })
+      .execute();
+  } else {
+    const anonymousId = localStorage.getItem('anonymousId');
+    if (!anonymousId) {
+      console.log('No anonymousId found');
+      return;
+    }
+    await apiRoot
+      .carts()
+      .withId({ ID: cartId })
+      .delete({ queryArgs: { version: cartVersion, anonymousId } })
+      .execute();
+  }
 
-  console.log(`Cart deleted successfully`);
+  console.log('Cart deleted successfully');
 };
 
 //обновить корзину
@@ -277,11 +392,29 @@ export const updateCart = async (
         if (!freshCart) throw new Error('Cart not found during retry');
         cartVersion = freshCart.version;
       } else {
-        console.error('Cart update failed:', error);
+        console.log('Cart update failed:', error);
         throw error;
       }
     }
   }
 
   throw new Error('Failed to update cart after retries');
+};
+
+//создать заказ из корзины
+export const createOrderFromCart = async (cartId: string, cartVersion: number): Promise<Order> => {
+  const apiRoot = getSafeApiRoot();
+
+  const response = await apiRoot
+    .me()
+    .orders()
+    .post({
+      body: {
+        id: cartId,
+        version: cartVersion,
+      },
+    })
+    .execute();
+
+  return response.body;
 };

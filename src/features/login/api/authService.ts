@@ -3,6 +3,7 @@ import { useUserStore } from '@/common/store/user-store';
 import { mapSdkAddresses } from '@/features/userPage/ui/Addresses/addresses-mapper';
 import { AuthService } from '@/common/types/auth-types';
 import { anonymousApiRoot } from './anonymous-client';
+import { cleanUpAnonymousCart } from '@/common/api/cleanUpAnonymousCart';
 
 export const changePassword = async (currentPassword: string, newPassword: string) => {
   const { email, getApiRoot } = useUserStore.getState();
@@ -54,6 +55,10 @@ export const createAuthService = (): AuthService => {
             .execute();
 
           console.log('Anonymous cart before login:', anonymousCartResponse.body?.results[0]);
+          console.log(
+            'Anonymous cart currency:',
+            anonymousCartResponse.body?.results[0]?.totalPrice?.currencyCode,
+          );
         } else {
           console.log('No anonymousId found before login');
         }
@@ -70,12 +75,15 @@ export const createAuthService = (): AuthService => {
           })
           .execute();
         console.log('Login response:', response.body);
+        console.log('User cart after login:', response.body.cart?.totalPrice?.currencyCode);
 
         if (!response.body.customer) {
           throw new Error('Login failed');
         }
 
         console.log('Merging anonymous cart to authenticated cart done');
+        //localStorage.removeItem('anonymousId');
+        await cleanUpAnonymousCart();
 
         const customer = response.body.customer;
         const user = {
@@ -95,12 +103,14 @@ export const createAuthService = (): AuthService => {
         let activeCartResponse;
         try {
           activeCartResponse = await root.me().activeCart().get().execute();
-          console.log('Active cart after login:', activeCartResponse.body);
+          console.log('Cart after login:', {
+            id: activeCartResponse.body.id,
+            currency: activeCartResponse.body.totalPrice?.currencyCode,
+            lineItems: activeCartResponse.body.lineItems,
+          });
         } catch (error: any) {
-          if (error.statusCode === 404) {
-            console.warn('No active cart found, continuing login');
-          } else {
-            console.error('Error while fetching active cart:', error);
+          if (error.statusCode !== 404) {
+            console.log('Error while fetching active cart:', error);
             throw error;
           }
         }
@@ -116,7 +126,7 @@ export const createAuthService = (): AuthService => {
 
         return user;
       } catch (error) {
-        console.error('Login error:', error);
+        console.log('Login error:', error);
         throw new Error('Login failed. Please check your credentials.');
       }
     },
@@ -162,7 +172,7 @@ export const createAuthService = (): AuthService => {
 
         return root;
       } catch (error) {
-        console.error('Session restore failed:', error);
+        console.log('Session restore failed:', error);
         authService.logout();
         return null;
       }

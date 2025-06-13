@@ -53,9 +53,10 @@ function App() {
               .carts()
               .post({
                 body: {
-                  currency: 'USD',
+                  currency: 'EUR',
                   anonymousId: newAnonymousId,
-                },
+                  priceMode: 'ExternalPrice',
+                } as any,
               })
               .execute();
           }
@@ -65,12 +66,12 @@ function App() {
             localStorage.removeItem('anonymousId');
             location.reload();
           } else if (error.statusCode === 400) {
-            console.error('Check client credentials and scopes:', error);
+            console.log('Check client credentials and scopes:', error);
             if (error.body?.errors) {
-              console.error(error.body.errors);
+              console.log(error.body.errors);
             }
           } else {
-            console.error('Failed to create cart', error);
+            console.log('Failed to create cart', error);
           }
         });
     }
