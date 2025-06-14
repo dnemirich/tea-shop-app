@@ -3,7 +3,7 @@ import { useUserStore } from '@/common/store/user-store';
 import { mapSdkAddresses } from '@/features/userPage/ui/Addresses/addresses-mapper';
 import { AuthService } from '@/common/types/auth-types';
 import { anonymousApiRoot } from './anonymous-client';
-import { cleanUpAnonymousCart } from '@/common/api/cleanUpAnonymousCart';
+import { addLineItem } from '@/common/api/cart-api';
 
 export const changePassword = async (currentPassword: string, newPassword: string) => {
   const { email, getApiRoot } = useUserStore.getState();
@@ -42,28 +42,24 @@ export const createAuthService = (): AuthService => {
   return {
     async login(email: string, password: string, rememberMe = false) {
       try {
-        //корзина до мержа
         const anonymousId = localStorage.getItem('anonymousId');
-        if (anonymousId) {
-          const anonymousCartResponse = await anonymousApiRoot
-            .carts()
-            .get({
-              queryArgs: {
-                where: `anonymousId="${anonymousId}"`,
-              },
-            })
-            .execute();
+        let anonymousCart = null;
 
-          console.log('Anonymous cart before login:', anonymousCartResponse.body?.results[0]);
-          console.log(
-            'Anonymous cart currency:',
-            anonymousCartResponse.body?.results[0]?.totalPrice?.currencyCode,
-          );
-        } else {
-          console.log('No anonymousId found before login');
+        //получаем анонимную корзину перед логином
+        if (anonymousId) {
+          try {
+            const response = await anonymousApiRoot
+              .carts()
+              .get({ queryArgs: { where: `anonymousId="${anonymousId}"`, limit: 1 } })
+              .execute();
+            anonymousCart = response.body.results[0] ?? null;
+          } catch (error) {
+            console.error('Error fetching anonymous cart:', error);
+          }
         }
-        //логин через анонимный клиент
-        const response = await anonymousApiRoot
+
+        //выполняем логин с указанием стратегии мержа
+        const loginResponse = await anonymousApiRoot
           .me()
           .login()
           .post({
@@ -71,21 +67,115 @@ export const createAuthService = (): AuthService => {
               email,
               password,
               activeCartSignInMode: 'MergeWithExistingCustomerCart',
+              updateProductData: true,
             },
           })
           .execute();
-        console.log('Login response:', response.body);
-        console.log('User cart after login:', response.body.cart?.totalPrice?.currencyCode);
 
-        if (!response.body.customer) {
+        if (!loginResponse.body.customer) {
           throw new Error('Login failed');
         }
 
-        console.log('Merging anonymous cart to authenticated cart done');
-        //localStorage.removeItem('anonymousId');
-        await cleanUpAnonymousCart();
+        const customer = loginResponse.body.customer;
+        const apiRoot = createCustomerApiRoot(email, password);
 
-        const customer = response.body.customer;
+        //получаем текущую корзину пользователя
+        let customerCart = null;
+        try {
+          customerCart = await apiRoot
+            .me()
+            .activeCart()
+            .get()
+            .execute()
+            .then((res) => res.body);
+        } catch (error: any) {
+          if (error.statusCode !== 404) {
+            console.error('Error fetching customer cart:', error);
+          }
+        }
+
+        //мерж корзин
+        if (anonymousCart && anonymousCart?.lineItems?.length > 0) {
+          //если у кастомера нет корзины присваиваем ему анонимную корзину
+          if (!customerCart) {
+            console.log('No customer cart found, converting anonymous cart');
+            try {
+              //обновляем корзину, устанавливаем customerId
+              const updatedCart = await apiRoot
+                .carts()
+                .withId({ ID: anonymousCart.id })
+                .post({
+                  body: {
+                    version: anonymousCart.version,
+                    actions: [
+                      {
+                        action: 'setCustomerId',
+                        customerId: customer.id,
+                      },
+                    ],
+                  },
+                })
+                .execute();
+              customerCart = updatedCart.body;
+            } catch (error) {
+              console.error('Failed to convert anonymous cart:', error);
+            }
+          }
+          //если у пользователя есть корзина делаем мерж
+          else {
+            console.log('Starting cart merge');
+            try {
+              //добавляем товары из анонимной корзины
+              for (const item of anonymousCart.lineItems) {
+                const existingItem = customerCart.lineItems.find(
+                  (li) => li.productId === item.productId && li.variant.id === item.variant.id,
+                );
+
+                if (!existingItem) {
+                  try {
+                    await addLineItem(
+                      customerCart.id,
+                      customerCart.version,
+                      item.productId,
+                      item.variant.id,
+                      item.quantity,
+                      item.custom?.fields?.selectedWeightVariant,
+                      item.price?.value,
+                    );
+                    //обновляем версию корзины
+                    customerCart = await apiRoot
+                      .me()
+                      .activeCart()
+                      .get()
+                      .execute()
+                      .then((res) => res.body);
+                  } catch (error) {
+                    console.error(`Failed to merge item ${item.productId}:`, error);
+                  }
+                }
+              }
+            } catch (error) {
+              console.error('Cart merge failed:', error);
+            }
+
+            //удаляем анонимную корзину после мержа
+            try {
+              await anonymousApiRoot
+                .carts()
+                .withId({ ID: anonymousCart.id })
+                .delete({
+                  queryArgs: {
+                    version: anonymousCart.version,
+                  },
+                })
+                .execute();
+            } catch (error) {
+              console.error('Failed to delete anonymous cart:', error);
+            }
+          }
+        }
+
+        //сохраняем сессию кастомера
         const user = {
           email: customer.email,
           password,
@@ -97,26 +187,8 @@ export const createAuthService = (): AuthService => {
           defaultBillingAddress: customer.defaultBillingAddressId ?? '',
         };
 
-        //создаем авторизованный клиент
-        const root = createCustomerApiRoot(email, password);
-
-        let activeCartResponse;
-        try {
-          activeCartResponse = await root.me().activeCart().get().execute();
-          console.log('Cart after login:', {
-            id: activeCartResponse.body.id,
-            currency: activeCartResponse.body.totalPrice?.currencyCode,
-            lineItems: activeCartResponse.body.lineItems,
-          });
-        } catch (error: any) {
-          if (error.statusCode !== 404) {
-            console.log('Error while fetching active cart:', error);
-            throw error;
-          }
-        }
-
         const store = useUserStore.getState();
-        store.setApiRoot(root);
+        store.setApiRoot(apiRoot);
         store.setLoggedIn(user);
 
         if (rememberMe) {
@@ -126,12 +198,13 @@ export const createAuthService = (): AuthService => {
 
         return user;
       } catch (error) {
-        console.log('Login error:', error);
+        console.error('Login error:', error);
         throw new Error('Login failed. Please check your credentials.');
       }
     },
 
     logout() {
+      console.log('Logout');
       const store = useUserStore.getState();
       store.setApiRoot(null);
       store.setLoggedOut();
@@ -146,13 +219,17 @@ export const createAuthService = (): AuthService => {
     async restoreSession() {
       const email = sessionStorage.getItem('authEmail');
       const password = sessionStorage.getItem('authPassword');
-      if (!email || !password) return null;
+      if (!email || !password) {
+        return null;
+      }
 
       try {
         const root = createCustomerApiRoot(email, password);
         const res = await root.me().get().execute();
 
-        if (!res.body) throw new Error('Empty response');
+        if (!res.body) {
+          throw new Error('Empty response');
+        }
 
         const customer = res.body;
         const user = {
@@ -172,7 +249,7 @@ export const createAuthService = (): AuthService => {
 
         return root;
       } catch (error) {
-        console.log('Session restore failed:', error);
+        console.error('Session restore failed:', error);
         authService.logout();
         return null;
       }

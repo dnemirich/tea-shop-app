@@ -137,5 +137,4 @@ export const VariantSelector = ({ onPriceChange, price }: Props) => {
       </div>
     </>
   );
-};
-*/
+};*/

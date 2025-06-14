@@ -96,11 +96,13 @@ export const ProductPage = () => {
     </>
   );
 };
+
+//мои попытки
 /*import { BreadcrumbMenu } from '@/common/components/Breadcrumbs/Breadcrumbs.tsx';
 import { useParams } from 'react-router';
 import { getProductBySlug } from '@/common/api/products-api.ts';
 import { useEffect, useState } from 'react';
-import type { ProductProjection } from '@commercetools/platform-sdk';
+import type { Cart, ProductProjection } from '@commercetools/platform-sdk';
 import Globe from '@/assets/icons/globe-icon.svg';
 import s from './ProductPage.module.scss';
 import { Carousel } from '@/common/components/Carousel/Carousel.tsx';
@@ -110,7 +112,6 @@ import { extractProductAttributes } from '@/common/utils/productHelpers.ts';
 import { VariantSelector } from '@/features/product/ui/VariantSelector/VariantSelector.tsx';
 import { ProductCounter } from '@/features/product/ui/ProductCounter/ProductCounter.tsx';
 import { useDiscountStore } from '@/common/store/discount-store.ts';
-import { useUserStore } from '@/common/store/user-store.ts';
 import { addLineItem, getOrCreateCart } from '@/common/api/cart-api.ts';
 import { Button } from '@/common/components/Button/Button.tsx';
 
@@ -121,9 +122,8 @@ export const ProductPage = () => {
   const [discountSize, setDiscountSize] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState<string | undefined>('sample');
   const [quantity, setQuantity] = useState(1);
-  const [cart, setCart] = useState<any>(null); // Cart type
+  const [cart, setCart] = useState<Cart | null>(null);
   const { discount } = useDiscountStore();
-  const isLoggedIn = useUserStore((state) => state.isLoggedIn);
 
   const category = categoryName?.split('-').join(' ');
   const productName = productSlug?.split('-').join(' ');
@@ -136,34 +136,34 @@ export const ProductPage = () => {
   ];
 
   useEffect(() => {
-    productSlug &&
-      getProductBySlug(productSlug).then((res) => {
-        const fetchedProduct = res.body.results[0];
-        setProduct(fetchedProduct);
-        //устанавливаем начальную цену
-        if (
-          fetchedProduct &&
-          fetchedProduct.masterVariant &&
-          fetchedProduct.masterVariant.prices?.length
-        ) {
-          const priceInCents = fetchedProduct.masterVariant.prices[0].value.centAmount;
-          setCalculatedPrice(priceInCents / 100); //переводим в основную валюту
-        }
-      });
+    if (productSlug) {
+      getProductBySlug(productSlug)
+        .then((res) => {
+          const fetchedProduct = res.body.results[0];
+          setProduct(fetchedProduct);
+
+          if (
+            fetchedProduct &&
+            fetchedProduct.masterVariant &&
+            fetchedProduct.masterVariant.prices?.length
+          ) {
+            const priceInCents = fetchedProduct.masterVariant.prices[0].value.centAmount;
+            setCalculatedPrice(priceInCents / 100);
+            console.log('Product price set to:', priceInCents / 100);
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching product:', error);
+        });
+    }
 
     if (categoryName && discount) {
       if (discount.isActive && discount.references.includes(categoryName)) {
         setDiscountSize(discount.value);
+        console.log('Discount applied:', discount.value);
       }
     }
   }, [categoryName, productSlug, discount]);
-
-  //получаем или создаём корзину при загрузке страницы
-  useEffect(() => {
-    getOrCreateCart()
-      .then((cart) => setCart(cart))
-      .catch((e) => console.log('Failed to get or create cart', e));
-  }, [isLoggedIn]);
 
   const productAttributes = product && extractProductAttributes(product);
 
@@ -172,46 +172,68 @@ export const ProductPage = () => {
     setSelectedVariant(selectedWeightVariant);
   };
 
-  //обработчик добавления в корзину
   const handleAddToCart = async () => {
-    if (!cart || !product) {
-      console.log('Cart or product not ready');
+    if (!product) {
+      console.log('Cannot add to cart - product not loaded');
       return;
     }
 
     try {
-      const variantId = product.masterVariant?.id || 1;
+      let currentCart = cart;
+      if (!currentCart) {
+        console.log('No cart in state, getting or creating cart');
+        const newCart = await getOrCreateCart();
+        if (!newCart) {
+          throw new Error('Failed to get or create cart');
+        }
+        currentCart = newCart;
+        setCart(currentCart);
+        console.log('Cart initialized:', {
+          id: currentCart.id,
+          items: currentCart.lineItems.map((item) => ({
+            productId: item.productId,
+            name: item.name?.['en'] || 'No name',
+            quantity: item.quantity,
+          })),
+        });
+      }
 
+      const variantId = product.masterVariant?.id || 1;
       const externalPrice = {
         currencyCode: 'EUR',
         centAmount: Math.round(calculatedPrice * 100),
       };
 
+      console.log('Adding item to cart:', {
+        productId: product.id,
+        variantId,
+        quantity,
+        selectedVariant,
+        price: externalPrice.centAmount / 100,
+      });
+
       const updatedCart = await addLineItem(
-        cart.id,
-        cart.version,
+        currentCart.id,
+        currentCart.version,
         product.id,
         variantId,
         quantity,
         selectedVariant,
         externalPrice,
       );
-      setCart(updatedCart);
-      console.log(
-        'Cart:',
-        updatedCart.lineItems.map((item) => ({
-          name: item.name?.en || Object.values(item.name || {})[0] || 'No name',
-          quantity: item.quantity,
-          variantId: item.variant.id,
-          selectedWeight: item.custom?.fields?.selectedWeightVariant || 'n/a',
-          price: item.price.value.centAmount / 100 + ' EUR',
-        })),
-      );
 
-      console.log('Added to cart!');
+      setCart(updatedCart);
+      console.log('Cart after adding item:', {
+        id: updatedCart.id,
+        items: updatedCart.lineItems.map((item) => ({
+          productId: item.productId,
+          name: item.name?.['en'] || 'No name',
+          quantity: item.quantity,
+          price: item.price?.value.centAmount ? item.price.value.centAmount / 100 : 'N/A',
+        })),
+      });
     } catch (error) {
-      console.log('Failed to add item to cart', error);
-      console.log('Failed to add item to cart');
+      console.error('Failed to add item to cart:', error);
     }
   };
 

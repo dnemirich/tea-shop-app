@@ -127,7 +127,6 @@ function App() {
           <Route path={`${ROUTES.SHOP}/:categoryName/:productSlug`} element={<ProductPage />} />
           <Route index element={<HomePage />} />
 
-          {/* <Route path="about" element={<About />} /> */}
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
           <Route path={ROUTES.SHOP} element={<CatalogPage />} />
           <Route path={`${ROUTES.SHOP}/:categoryName`} element={<CatalogPage />} />
