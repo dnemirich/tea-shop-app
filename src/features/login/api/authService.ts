@@ -126,6 +126,7 @@ import { mapSdkAddresses } from '@/features/userPage/ui/Addresses/addresses-mapp
 import { AuthService } from '@/common/types/auth-types';
 import { anonymousApiRoot } from './anonymous-client';
 import { addLineItem } from '@/common/config/cart-api';
+import { useCartStore } from '@/common/store/cart-store';
 
 export const changePassword = async (currentPassword: string, newPassword: string) => {
   const { email, getApiRoot } = useUserStore.getState();
@@ -316,6 +317,12 @@ export const createAuthService = (): AuthService => {
         if (rememberMe) {
           sessionStorage.setItem('authEmail', email);
           sessionStorage.setItem('authPassword', password);
+        }
+
+        try {
+          await useCartStore.getState().fetchActiveCart();
+        } catch (error) {
+          console.log('Failed to fetch cart after login', error);
         }
 
         return user;

@@ -8,19 +8,12 @@ const MAX_RETRIES = 3;
 
 export const getSafeApiRoot = () => {
   const isLoggedIn = useUserStore.getState().isLoggedIn;
-
   if (isLoggedIn) {
     const apiRoot = authService.getApiRoot();
-    if (!apiRoot) {
-      throw new Error('Authenticated API root unavailable');
-    }
+    if (!apiRoot) throw new Error('API root unavailable');
     return apiRoot;
   }
-
-  if (!anonymousApiRoot) {
-    throw new Error('Anonymous API root unavailable');
-  }
-
+  if (!anonymousApiRoot) throw new Error('Anonymous API root unavailable');
   return anonymousApiRoot;
 };
 
@@ -80,100 +73,21 @@ export const createAuthenticatedCart = async (currency = 'EUR'): Promise<ClientR
     .execute();
 };
 
-export const getOrCreateCart = async (currency = 'EUR'): Promise<Cart | null> => {
-  const isLoggedIn = useUserStore.getState().isLoggedIn;
-  const anonymousId = localStorage.getItem('anonymousId') || crypto.randomUUID();
-
-  if (!isLoggedIn) {
-    localStorage.setItem('anonymousId', anonymousId);
-  }
-
+export const getOrCreateCart = async (currency = 'EUR'): Promise<Cart> => {
+  const apiRoot = getSafeApiRoot();
   try {
-    const existingCart = await getActiveCart();
-    if (existingCart) {
-      console.log('Existing cart found:', {
-        id: existingCart.id,
-        version: existingCart.version,
-        items: existingCart.lineItems.map((item) => ({
-          id: item.id,
-          productId: item.productId,
-          name: item.name?.['en'] || 'No name',
-          quantity: item.quantity,
-        })),
-      });
-      return existingCart;
+    const existing = await apiRoot.me().activeCart().get().execute();
+    return existing.body;
+  } catch (e: any) {
+    if (e.statusCode === 404) {
+      const created = await apiRoot
+        .me()
+        .carts()
+        .post({ body: { currency, priceMode: 'ExternalPrice' } as any })
+        .execute();
+      return created.body;
     }
-
-    if (isLoggedIn) {
-      try {
-        const response = await createAuthenticatedCart(currency);
-
-        if (!response.body) {
-          throw new Error('Failed to create cart - empty response');
-        }
-
-        console.log('Authenticated cart created successfully:', {
-          id: response.body.id,
-          version: response.body.version,
-          items: response.body.lineItems?.length || 0,
-        });
-
-        return response.body;
-      } catch (error) {
-        throw new Error('Failed to create cart. Please try again.');
-      }
-    } else {
-      const anonymousId = localStorage.getItem('anonymousId') || crypto.randomUUID();
-      localStorage.setItem('anonymousId', anonymousId);
-
-      try {
-        const response = await anonymousApiRoot
-          .carts()
-          .get({ queryArgs: { where: `anonymousId="${anonymousId}"`, limit: 1 } })
-          .execute();
-
-        if (response.body.results.length > 0) {
-          console.log('Existing anonymous cart found:', {
-            id: response.body.results[0].id,
-            version: response.body.results[0].version,
-            items: response.body.results[0].lineItems.map((item) => ({
-              id: item.id,
-              productId: item.productId,
-              name: item.name?.['en'] || 'No name',
-              quantity: item.quantity,
-            })),
-          });
-          return response.body.results[0];
-        }
-      } catch (error) {
-        console.log('No existing anonymous cart, creating new one');
-      }
-
-      try {
-        const createdCart = await createAnonymousCart(currency);
-
-        if (!createdCart.body) {
-          throw new Error('Failed to create cart - empty response');
-        }
-
-        console.log('New anonymous cart created successfully:', {
-          id: createdCart.body.id,
-          version: createdCart.body.version,
-          items: createdCart.body.lineItems?.length || 0,
-        });
-
-        return createdCart.body;
-      } catch (error) {
-        throw new Error('Failed to create cart. Please try again.');
-      }
-    }
-  } catch (error: any) {
-    console.log('Error getOrCreateCart:', error);
-    if (error.message?.includes('anonymousId is already in use')) {
-      localStorage.removeItem('anonymousId');
-      location.reload();
-    }
-    return null;
+    throw e;
   }
 };
 
@@ -265,47 +179,14 @@ export const changeLineItemQuantity = async (
   return await updateCart(cartId, cartVersion, actions);
 };
 
-export const getActiveCart = async (): Promise<Cart | null> => {
-  try {
-    const apiRoot = getSafeApiRoot();
-    if (!apiRoot) {
-      return null;
-    }
-
-    if (useUserStore.getState().isLoggedIn) {
-      try {
-        const response = await apiRoot.me().activeCart().get().execute();
-        return response.body;
-      } catch (error: any) {
-        if (error.statusCode === 404) {
-          console.log('No active cart found for logged in user');
-          return null;
-        }
-        console.log('Error fetching active cart:', error);
-        throw error;
-      }
-    } else {
-      const anonymousId = localStorage.getItem('anonymousId');
-      if (!anonymousId) {
-        console.log('No anonymousId found');
-        return null;
-      }
-
-      try {
-        const response = await anonymousApiRoot
-          .carts()
-          .get({ queryArgs: { where: `anonymousId="${anonymousId}"`, limit: 1 } })
-          .execute();
-        return response.body.results[0] || null;
-      } catch (error) {
-        console.error('Error fetching anonymous cart:', error);
-        return null;
-      }
-    }
-  } catch (error) {
-    console.error('Failed to get active cart:', error);
-    return null;
-  }
+export const getActiveCart = async (): Promise<Cart> => {
+  const apiRoot = getSafeApiRoot();
+  return await apiRoot
+    .me()
+    .activeCart()
+    .get()
+    .execute()
+    .then((res) => res.body);
 };
 
 export const addDiscountCode = async (
