@@ -10,13 +10,13 @@ export const usePromoCode = () => {
     if (wasShown) {
       return;
     }
-    getDiscountCodes().then(codes => {
+    getDiscountCodes().then((codes) => {
       const randomCode = getRandomDiscountCode(codes);
       if (randomCode) {
         setCode(randomCode.code);
       }
-    })
-  }, [])
+    });
+  }, []);
 
   return code;
 };

@@ -3,6 +3,7 @@ import { authService } from '@/features/login/api/authService';
 import { Cart, CartUpdateAction, Order } from '@commercetools/platform-sdk';
 import { ClientResponse } from '@commercetools/ts-client';
 import { useUserStore } from '../store/user-store';
+import { OUNCE_SIZE } from '@/common/config/constants.ts';
 
 const MAX_RETRIES = 3;
 
@@ -109,7 +110,7 @@ export const addLineItem = async (
   if (selectedWeightVariant) {
     const grams = parseInt(selectedWeightVariant.replace('g', ''));
     if (!isNaN(grams)) {
-      weightInOunces = +(grams / 28.3495).toFixed(2);
+      weightInOunces = +(grams / OUNCE_SIZE).toFixed(2);
     }
   }
 

@@ -37,4 +37,4 @@ export const getRandomDiscountCode = (codes: DiscountCode[]): DiscountCode | nul
   if (codes.length === 0) return null;
   const index = Math.floor(Math.random() * codes.length);
   return codes[index];
-}
+};

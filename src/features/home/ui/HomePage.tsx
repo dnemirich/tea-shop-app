@@ -6,6 +6,7 @@ import { Blog } from '@/features/home/ui/Blog/Blog.tsx';
 import { Subscribe } from '@/features/home/ui/Subscribe/Subscribe.tsx';
 import { Marquee } from '@/features/home/ui/Marquee/Marquee.tsx';
 import { useDiscountStore } from '@/common/store/discount-store.ts';
+import { DiscountPopup } from '@/features/home/ui/DiscountPopup/DiscountPopup.tsx';
 
 export const HomePage: React.FC = () => {
   const { discount, hasActiveDiscount } = useDiscountStore();
@@ -18,6 +19,7 @@ export const HomePage: React.FC = () => {
       <TeaCards />
       <Blog />
       <Subscribe />
+      <DiscountPopup />
     </div>
   );
 };

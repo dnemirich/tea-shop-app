@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Button } from '@/common/components/Button/Button';
 import { ItemCard } from '../ItemCard/ItemCard';
 import s from './itemsContainer.module.scss';
@@ -11,19 +11,16 @@ import { LineItem } from '@commercetools/platform-sdk';
 
 export const ItemsContainer = () => {
   const navigate = useNavigate();
-  const { cart, isLoading } = useCartStore();
+  const { cart } = useCartStore();
 
-  const handleBackShopping = useCallback(() => {
-    navigate(ROUTES.SHOP);
-  }, [navigate]);
+  const handleBackShopping = () => navigate(ROUTES.SHOP);
 
-  const getName = useCallback((item: LineItem): string => {
-    if (typeof item.name === 'string') return item.name;
-    if (item.name?.en) return item.name.en;
+  const getName = (item: LineItem): string => {
+    if (item.name) return item.name['en-US'];
     const firstLangKey = item.name && Object.keys(item.name)[0];
     if (firstLangKey) return item.name[firstLangKey];
     return item.productId;
-  }, []);
+  };
 
   const itemsList = useMemo(() => {
     if (!cart) return [];
@@ -36,9 +33,8 @@ export const ItemsContainer = () => {
       variant: item.custom?.fields?.selectedWeightVariant,
       currencyCode: item.price?.value.currencyCode,
     }));
-  }, [cart, getName]);
+  }, [cart]);
 
-  if (isLoading) return <div>Loading...</div>;
   if (!cart || cart.lineItems.length === 0) {
     return (
       <div className={s.emptyWrapper}>
