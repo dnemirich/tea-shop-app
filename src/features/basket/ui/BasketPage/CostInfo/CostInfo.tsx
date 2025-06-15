@@ -1,16 +1,17 @@
 import s from './costInfo.module.scss';
 import clsx from 'clsx';
 
-type CostInfoProps = {
+interface CostInfoProps {
   text: string;
+  value: string;
   className?: string;
-};
+}
 
-export const CostInfo = ({ text, className }: CostInfoProps) => {
+export const CostInfo = ({ text, value, className }: CostInfoProps) => {
   return (
     <div className={clsx(s.costWrapper, className)}>
-      <p>{text}</p>
-      <p className={s.cost}>cost</p>
+      <p className={s.text}>{text}</p>
+      <p className={s.cost}>{value}</p>
     </div>
   );
 };

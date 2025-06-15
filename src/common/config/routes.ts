@@ -5,5 +5,5 @@ export const ROUTES = {
   NOT_FOUND: '*',
   USER: '/my-account',
   SHOP: '/shop',
-  BASKET: '/cart',
+  CART: '/cart',
 } as const;

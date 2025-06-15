@@ -5,6 +5,7 @@
   flex-direction: column;
   gap: 3.8rem;
   align-items: center;
+  align-self: center;
 
   .button {
     color: var(--primary-dark-color);
@@ -15,4 +16,15 @@
     max-width: 32rem;
     width: 100%;
   }
+}
+
+.emptyWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.empty {
+  font-size: var(--font-lg-size);
 }
