@@ -18,20 +18,17 @@ import { useDiscountStore } from '@/common/store/discount-store.ts';
 import { getDiscountsInfo } from '@/common/utils/discountHelpers.ts';
 import { useUserStore } from '@/common/store/user-store';
 import { anonymousApiRoot } from '@/features/login/api/anonymous-client';
+import { getOrCreateAnonymousId } from '@/common/utils/userHelpers.ts';
 
 function App() {
   const { error, clearError, success, clearSuccess } = useAppStore();
   const { setHasActiveDiscount, setDiscount } = useDiscountStore();
+  const { isLoggedIn } = useUserStore();
 
   //корзина анонима
   useEffect(() => {
-    if (!useUserStore.getState().isLoggedIn) {
-      let anonymousId = localStorage.getItem('anonymousId');
-
-      if (!anonymousId) {
-        anonymousId = crypto.randomUUID();
-        localStorage.setItem('anonymousId', anonymousId);
-      }
+    if (!isLoggedIn) {
+      const anonymousId = getOrCreateAnonymousId()
 
       //корзина с anonymousId
       anonymousApiRoot
@@ -75,7 +72,7 @@ function App() {
           }
         });
     }
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     getDiscountsInfo().then((discountInfo) => {
