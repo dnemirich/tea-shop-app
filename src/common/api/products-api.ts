@@ -23,3 +23,18 @@ export const getCategoryById = (ID: string) => {
 export const getDiscounts = () => {
   return apiRoot.productDiscounts().get().execute();
 };
+
+export const getCartDiscounts = () => {
+  return apiRoot.cartDiscounts().get().execute();
+}
+
+export const getDiscountCodes = async () => {
+  const response = await apiRoot.discountCodes().get({
+    queryArgs: {
+      where: 'isActive=true',
+      limit: 100,
+    },
+  }).execute();
+
+  return response.body.results;
+}

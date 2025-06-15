@@ -1,4 +1,5 @@
 import { getCategoryById, getDiscounts } from '@/common/api/products-api.ts';
+import type { DiscountCode } from '@commercetools/platform-sdk';
 
 export const getDiscountsInfo = async () => {
   const discountInfo = {
@@ -31,3 +32,9 @@ export const getDiscountsInfo = async () => {
 
   return discountInfo;
 };
+
+export const getRandomDiscountCode = (codes: DiscountCode[]): DiscountCode | null => {
+  if (codes.length === 0) return null;
+  const index = Math.floor(Math.random() * codes.length);
+  return codes[index];
+}
