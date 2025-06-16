@@ -1,14 +1,14 @@
 .mainContent {
   display: flex;
-  gap: 30px;
-  margin: 2rem 0;
+  gap: var(--gap-xl, 30px);
+  margin: var(--section-margin, 2rem 0);
   transition: all 0.3s ease;
 }
 
 .leftSidebar {
   position: sticky;
-  top: 20px;
-  flex: 0 0 250px;
+  top: var(--sticky-top, 20px);
+  flex: 0 0 var(--sidebar-width, 250px);
   height: fit-content;
   transition: all 0.3s ease;
 }
@@ -19,7 +19,7 @@
 }
 
 .sortRow {
-  margin-bottom: 20px;
+  margin-bottom: var(--gap-lg, 20px);
   display: flex;
   justify-content: flex-end;
 }
@@ -27,33 +27,33 @@
 .cardContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  gap: var(--gap-xl, 30px);
 }
 
 @media (width <= 1024px) {
   .cardContainer {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: var(--gap-lg, 20px);
   }
 
   .leftSidebar {
-    flex: 0 0 220px;
+    flex: 0 0 var(--sidebar-width-tablet, 220px);
   }
 
   .mainContent {
-    gap: 20px;
+    gap: var(--gap-lg, 20px);
   }
 }
 
 @media (width <= 768px) {
   .mainContent {
     flex-direction: column;
-    gap: 15px;
+    gap: var(--gap-md, 15px);
   }
 
   .leftSidebar {
     position: static;
-    margin-bottom: 15px;
+    margin-bottom: var(--gap-md, 15px);
   }
 
   .sortRow {
@@ -61,7 +61,7 @@
   }
 
   .cardContainer {
-    gap: 15px;
+    gap: var(--gap-md, 15px);
   }
 }
 
@@ -72,10 +72,9 @@
   }
 }
 
-/* Маленькие мобильные (до 480px) */
 @media (width <= 480px) {
   .sortRow {
     flex-direction: column;
-    gap: 10px;
+    gap: var(--gap-sm, 10px);
   }
 }

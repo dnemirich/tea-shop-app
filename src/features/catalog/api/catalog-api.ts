@@ -28,9 +28,9 @@ const mapProduct = (product: ProductProjection, categories: Record<string, strin
     description: product.description?.['en-US'] || '',
     price: getVal('price-per-ounce') || 0,
     currency: product.masterVariant.prices?.[0]?.value?.currencyCode || 'USD',
-    images: product.masterVariant.images?.map((img: { url: string }) => img.url) || [
-      'https://via.placeholder.com/150',
-    ],
+    images: product.masterVariant.images?.map(
+      (img: { url: string }) => `${img.url}?w=800&h=800&fit=crop&format=webp&q=80`,
+    ) || ['https://via.placeholder.com/150'],
     weight: 'ounce',
     flavor: getList('flavor'),
     origin: getVal('origin')?.['en-US'] || '',

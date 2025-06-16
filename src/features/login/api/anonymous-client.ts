@@ -4,12 +4,12 @@ import {
   type HttpMiddlewareOptions,
 } from '@commercetools/ts-client';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { getOrCreateAnonymousId } from '@/common/utils/userHelpers.ts';
 
 const projectKey: string = import.meta.env.VITE_CTP_PROJECT_KEY;
 const scopes = import.meta.env.VITE_CTP_SCOPES?.split(' ') ?? [];
 
-const anonymousId = localStorage.getItem('anonymousId') || crypto.randomUUID();
-localStorage.setItem('anonymousId', anonymousId);
+const anonymousId = getOrCreateAnonymousId();
 
 const anonymousAuthMiddlewareOptions: AuthMiddlewareOptions = {
   host: import.meta.env.VITE_CTP_AUTH_URL,
@@ -17,9 +17,9 @@ const anonymousAuthMiddlewareOptions: AuthMiddlewareOptions = {
   credentials: {
     clientId: import.meta.env.VITE_CTP_CLIENT_ID,
     clientSecret: import.meta.env.VITE_CTP_CLIENT_SECRET,
-    anonymousId: anonymousId,
+    anonymousId,
   },
-  scopes: scopes,
+  scopes,
   httpClient: fetch,
 };
 

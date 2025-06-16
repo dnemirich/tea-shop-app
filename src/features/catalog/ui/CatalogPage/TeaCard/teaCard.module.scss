@@ -14,7 +14,7 @@
 
 .card:hover {
   background-color: var(--secondary-light-color);
-  box-shadow: 0 10px 20px rgb(0 0 0 / 10%);
+  box-shadow: 0 10px 20px var(--box-shadow-hover-color);
 }
 
 .imageContainer {
@@ -84,8 +84,8 @@
 .thumbnails {
   display: flex;
   justify-content: flex-start;
-  gap: 6px;
-  margin-bottom: 1rem;
+  gap: var(--gap);
+  margin-bottom: var(--gap);
   overflow-x: auto;
   padding-bottom: 4px;
 }
@@ -108,7 +108,7 @@
 }
 
 .thumbnail.active {
-  border: 2px solid #1f2937;
+  border: 2px solid var(--primary-dark-color);
   opacity: 1;
 }
 
@@ -178,4 +178,43 @@
   font-size: 1.4rem;
   color: var(--primary-light-color);
   background-color: var(--error-color);
+}
+
+.addToCartButton {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 4rem;
+  height: 4rem;
+  padding: 0 0.5rem;
+  color: var(--primary-dark-color);
+  background: none;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--accent-color);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.isAddedBtn {
+  color: var(--accent-color);
 }
