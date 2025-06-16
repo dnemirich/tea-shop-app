@@ -1,0 +1,48 @@
+.popup {
+  position: fixed;
+  right: 3rem;
+  bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 30rem;
+  padding: 2rem;
+  background-color: var(--accent-color);
+  border-radius: 0.8rem;
+}
+
+.btn {
+  position: absolute;
+  top: -3rem;
+  right: -3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4rem;
+  height: 4rem;
+  background-color: unset;
+}
+
+.text {
+  font-size: 1.2rem;
+}
+
+.copied {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.header {
+  font-size: 1.4rem;
+}
+
+.code {
+  font-size: 1.6rem;
+  font-weight: 600;
+  background-color: unset;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

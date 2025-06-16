@@ -1,0 +1,11 @@
+.popularOffersWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.popularTitle {
+  font-family: var(--secondary-font-family), sans-serif;
+  font-size: clamp(2.4rem, 2.5vw, 3.2rem);
+  text-align: center;
+}

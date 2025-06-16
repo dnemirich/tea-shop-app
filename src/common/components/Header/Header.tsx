@@ -9,13 +9,28 @@ import { authService } from '@/features/login/api/authService.ts';
 import { Popover } from '@/common/components/Popover/Popover.tsx';
 import { useSearchStore } from '@/common/store/search-store';
 import { useDebouncedSearch } from '@/common/hooks/useDebouncedSearch';
+import { useCartStore } from '@/common/store/cart-store.ts';
 
 export const Header = () => {
   const { isLoggedIn } = useUserStore();
   const [showSearch, setShowSearch] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [itemsCount, setItemsCount] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const cartItems = useCartStore().cart?.lineItems;
+
+  useEffect(() => {
+    if (cartItems && cartItems.length > 0) {
+      const count = cartItems.reduce((counter, item) => {
+        counter += item.quantity;
+        return counter;
+      }, 0);
+      setItemsCount(count);
+    } else {
+      setItemsCount(0);
+    }
+  }, [cartItems]);
 
   const setSearchQuery = useSearchStore((state) => state.setSearchQuery);
 
@@ -138,10 +153,11 @@ export const Header = () => {
               trigger={<User size={24} className={isLoggedIn ? `${styles.loggedTrigger}` : ''} />}
               items={navItems}
             />
-            <Link to="/cart" aria-label="Go to cart? ">
+            <Link to="/cart" aria-label="Go to cart?" className={styles.cartLink}>
               <button className={styles.iconButton} aria-label="Shopping basket">
                 <ShoppingBasket size={24} />
               </button>
+              {itemsCount > 0 && <span className={styles.itemsCount}>{itemsCount}</span>}
             </Link>
           </div>
         </div>

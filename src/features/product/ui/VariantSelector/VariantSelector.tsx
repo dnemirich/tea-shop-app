@@ -4,8 +4,8 @@ import Bag100 from '@/assets/icons/bag-100-icon.svg';
 import Bag250 from '@/assets/icons/bag-250-icon.svg';
 import s from './VariantSelector.module.scss';
 import { useState } from 'react';
+import { OUNCE_SIZE } from '@/common/config/constants.ts';
 
-const OUNCE_SIZE = 28.35;
 const VARIANTS = [
   {
     title: 'Sample',
@@ -31,7 +31,7 @@ const VARIANTS = [
 
 type Props = {
   price: number;
-  onPriceChange: (price: number) => void;
+  onPriceChange: (price: number, selectedWeightVariant?: string) => void;
 };
 
 export const VariantSelector = ({ onPriceChange, price }: Props) => {
@@ -53,9 +53,9 @@ export const VariantSelector = ({ onPriceChange, price }: Props) => {
               hidden
               onChange={() => {
                 if (variant.value === 'sample') {
-                  onPriceChange(price);
+                  onPriceChange(price, 'sample');
                 } else {
-                  onPriceChange((price / OUNCE_SIZE) * Number(variant.value));
+                  onPriceChange((price / OUNCE_SIZE) * Number(variant.value), variant.value + 'g');
                 }
                 setSelectedValue(variant.value);
               }}
