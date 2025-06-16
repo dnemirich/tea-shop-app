@@ -111,7 +111,9 @@ export const Header = () => {
               <Link to={ROUTES.SHOP}>SHOP</Link>
             </li>
             <li className={styles.menuItem}>BLOG</li>
-            <li className={styles.menuItem}>ABOUT US</li>
+            <li className={styles.menuItem}>
+              <Link to={ROUTES.ABOUT}>ABOUT US</Link>
+            </li>
           </ul>
 
           <div className={styles.iconsBox}>
