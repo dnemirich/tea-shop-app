@@ -6,7 +6,7 @@ import { useDiscountStore } from '@/common/store/discount-store.ts';
 import { ShoppingBag, Loader2 } from 'lucide-react';
 import { Button } from '@/common/components/Button/Button';
 import { useCartStore } from '@/common/store/cart-store';
-import { toast } from 'react-toastify';
+import { useAppStore } from '@/common/store/app-store.ts';
 
 export type TeaCardProps = {
   images?: string[];
@@ -36,9 +36,11 @@ export const TeaCard: React.FC<TeaCardProps> = ({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const [discountSize, setDiscountSize] = useState(0);
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
   const { discount } = useDiscountStore();
   const { addItem, isLoading } = useCartStore();
   const navigate = useNavigate();
+  const {setAppError, setSuccess} = useAppStore();
 
   useEffect(() => {
     if (
@@ -62,6 +64,9 @@ export const TeaCard: React.FC<TeaCardProps> = ({
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+  const isDiscounted = discountSize > 0;
+  const centAmount = isDiscounted ? (price - (price * discountSize) / 100): price;
+
 
   const category = productType.toLowerCase().split(' ').join('-');
 
@@ -84,10 +89,11 @@ export const TeaCard: React.FC<TeaCardProps> = ({
 
   const handleAddToCart = async () => {
     try {
-      await addItem(id, variantId, 1);
-      toast.success(`${name} added to cart`);
+      await addItem(id, variantId, 1, 'sample', {currencyCode: 'EUR', centAmount: Math.round(centAmount * 100) });
+      setIsAddedToCart(true);
+      setSuccess(`${name} sample was added to your cart.`)
     } catch (error) {
-      toast.error('Failed to add item to cart. Please try again.');
+      setAppError('Failed to add item to cart. Please try again.');
     }
   };
   return (
@@ -164,17 +170,17 @@ export const TeaCard: React.FC<TeaCardProps> = ({
         </p>
 
         <div className={styles.priceContainer}>
-          <div className={discountSize > 0 ? styles.discountedPrice : ''}>
+          <div className={isDiscounted ? styles.discountedPrice : ''}>
             <span className={styles.price}>{formattedPrice}</span>
             <span className={styles.weight}> / {weight}</span>
           </div>
-          {discountSize > 0 && (
+          {isDiscounted && (
             <div className={styles.discount}>
               <span className={styles.price}>{discountedPrice}</span>
               <span className={styles.weight}> / {weight}</span>
             </div>
           )}
-          <Button className={styles.addToCartButton} onClick={handleAddToCart} disabled={isLoading}>
+          <Button className={`${styles.addToCartButton} ${isAddedToCart ? styles.isAddedBtn : ''}`} onClick={handleAddToCart} disabled={isLoading || isAddedToCart}>
             {isLoading ? <Loader2 className="animate-spin" size={18} /> : <ShoppingBag size={18} />}
           </Button>
         </div>

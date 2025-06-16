@@ -89,6 +89,7 @@ export const ProductPage = () => {
     const discountedPrice =
       discountSize > 0 ? (calculatedPrice * (100 - discountSize)) / 100 : calculatedPrice;
 
+    console.log(discountedPrice)
     try {
       await addItem(product.id, product.masterVariant?.id || 1, quantity, selectedVariant, {
         currencyCode: 'EUR',
