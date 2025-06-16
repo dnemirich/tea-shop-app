@@ -28,7 +28,7 @@ function App() {
   //корзина анонима
   useEffect(() => {
     if (!isLoggedIn) {
-      const anonymousId = getOrCreateAnonymousId()
+      const anonymousId = getOrCreateAnonymousId();
 
       //корзина с anonymousId
       anonymousApiRoot

@@ -9,7 +9,7 @@ import { getOrCreateAnonymousId } from '@/common/utils/userHelpers.ts';
 const projectKey: string = import.meta.env.VITE_CTP_PROJECT_KEY;
 const scopes = import.meta.env.VITE_CTP_SCOPES?.split(' ') ?? [];
 
-const anonymousId = getOrCreateAnonymousId()
+const anonymousId = getOrCreateAnonymousId();
 
 const anonymousAuthMiddlewareOptions: AuthMiddlewareOptions = {
   host: import.meta.env.VITE_CTP_AUTH_URL,

@@ -3,8 +3,8 @@ import styles from './teaCard.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/common/config/routes.ts';
 import { useDiscountStore } from '@/common/store/discount-store.ts';
-// import { ShoppingBag, Check } from 'lucide-react';
-// import { Button } from '@/common/components/Button/Button';
+import { ShoppingBag, Check } from 'lucide-react';
+import { Button } from '@/common/components/Button/Button';
 // import { useCartStore } from '@/common/store/cart-store';
 
 export type TeaCardProps = {
@@ -33,7 +33,7 @@ export const TeaCard: React.FC<TeaCardProps> = ({
   const [expanded, setExpanded] = useState(false);
   const [discountSize, setDiscountSize] = useState(0);
   const { discount } = useDiscountStore();
-  // const [addedToCart, setAddedToCart] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
 
   useEffect(() => {
     if (
@@ -78,17 +78,17 @@ export const TeaCard: React.FC<TeaCardProps> = ({
     navigate(`${ROUTES.SHOP}/${category}/${slug}`);
   };
 
-  // const { addItem, isLoading } = useCartStore();
+  const { addItem, isLoading } = useCartStore();
 
-  // const handleAddtoCartButton = async () => {
-  //   try {
-  //     await addItem(productId, 0);
-  //     setAddedToCart(true);
-  //     setTimeout(() => setAddedToCart(false), 1000);
-  //   } catch (error) {
-  //     console.error('Ошибка при добавлении в корзину:', error);
-  //   }
-  // };
+  const handleAddtoCartButton = async () => {
+    try {
+      await addItem(productId, 0);
+      setAddedToCart(true);
+      setTimeout(() => setAddedToCart(false), 1000);
+    } catch (error) {
+      console.error('Ошибка при добавлении в корзину:', error);
+    }
+  };
 
   return (
     <div className={`${styles.card} ${className}`}>
@@ -174,10 +174,10 @@ export const TeaCard: React.FC<TeaCardProps> = ({
               <span className={styles.weight}> / {weight}</span>
             </div>
           )}
-          {/* <Button className={styles.addToCartButton} onClick={handleAddtoCartButton}>
+          <Button className={styles.addToCartButton} onClick={handleAddtoCartButton}>
             {' '}
             {addedToCart ? <Check /> : <ShoppingBag />}
-          </Button> */}
+          </Button>
         </div>
       </div>
     </div>
