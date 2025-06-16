@@ -10,6 +10,7 @@ import { useCartStore } from '@/common/store/cart-store';
 import { LineItem } from '@commercetools/platform-sdk';
 import { PromocodeBox } from '@/features/basket/ui/BasketPage/MyBagPage/PromocodeBox/PromocodeBox.tsx';
 import { addDiscountCode } from '@/common/config/cart-api.ts';
+import { ClearCartButton } from '../../ClearButton/ClearButton';
 
 export const ItemsContainer = () => {
   const navigate = useNavigate();
@@ -53,7 +54,6 @@ export const ItemsContainer = () => {
         <Button className={s.button} onClick={handleBackShopping}>
           back to shopping
         </Button>
-        ;
       </div>
     );
   }
@@ -88,9 +88,12 @@ export const ItemsContainer = () => {
           discountPrice={discountedPrice ? `€${discountedPrice.toFixed(2)}` : ''}
         />
         <PromocodeBox onPromoCodeSuccess={handlePromoCodeSuccess} />
-        <Button className={s.button} onClick={handleBackShopping}>
-          back to shopping
-        </Button>
+        <div className={s.buttonsWrapper}>
+          <Button className={s.button} onClick={handleBackShopping}>
+            back to shopping
+          </Button>
+          <ClearCartButton />
+        </div>
       </div>
     </div>
   );

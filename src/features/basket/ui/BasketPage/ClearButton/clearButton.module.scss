@@ -1,0 +1,11 @@
+.clearCartButton {
+  display: flex;
+  width: 100%;
+  max-width: 32rem;
+  font-size: var(--font-main-size);
+  font-weight: 500;
+  color: var(--primary-dark-color);
+  background-color: var(--bg-color-light);
+  border: 0.1rem solid var(--primary-dark-color);
+  align-self: center;
+}

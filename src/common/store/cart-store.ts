@@ -34,6 +34,7 @@ interface CartState {
   removeItem: (lineItemId: string, quantity?: number) => Promise<void>;
   deleteCart: () => Promise<void>;
   initializeCart: () => Promise<void>;
+  clearCartItems: () => Promise<void>;
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -169,6 +170,42 @@ export const useCartStore = create<CartState>((set, get) => ({
       set({ cart: null, isLoading: false });
     } catch (e: any) {
       set({ error: e.message || 'Failed to delete cart', isLoading: false });
+    }
+  },
+
+  clearCartItems: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const cart = get().cart;
+      if (!cart) {
+        throw new Error('Cart is not available');
+      }
+
+      const actions = cart.lineItems.map((item) => ({
+        action: 'removeLineItem' as const,
+        lineItemId: item.id,
+        quantity: item.quantity,
+      }));
+
+      const apiRoot = getSafeApiRoot();
+      const updatedCart = await apiRoot
+        .carts()
+        .withId({ ID: cart.id })
+        .post({
+          body: {
+            version: cart.version,
+            actions,
+          },
+        })
+        .execute();
+
+      set({ cart: updatedCart.body, isLoading: false });
+    } catch (error) {
+      set({
+        error: error instanceof Error ? error.message : 'Failed to clear cart items',
+        isLoading: false,
+      });
+      throw error;
     }
   },
 }));
