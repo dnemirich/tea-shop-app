@@ -18,6 +18,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, Props>(
         ref={ref}
         error={error}
         type={show ? 'text' : 'password'}
+        autoComplete="off"
         rightSlot={
           <button type="button" onClick={() => setShow(!show)} className={s.toggleButton}>
             {show ? 'Hide' : 'Show'}
