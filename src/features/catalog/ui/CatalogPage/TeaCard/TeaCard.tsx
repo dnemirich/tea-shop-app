@@ -3,9 +3,10 @@ import styles from './teaCard.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/common/config/routes.ts';
 import { useDiscountStore } from '@/common/store/discount-store.ts';
-import { ShoppingBag, Check } from 'lucide-react';
+import { ShoppingBag, Loader2 } from 'lucide-react';
 import { Button } from '@/common/components/Button/Button';
-// import { useCartStore } from '@/common/store/cart-store';
+import { useCartStore } from '@/common/store/cart-store';
+import { toast } from 'react-toastify';
 
 export type TeaCardProps = {
   images?: string[];
@@ -16,7 +17,8 @@ export type TeaCardProps = {
   className?: string;
   slug: string;
   productType: string;
-  productId: string;
+  id: string;
+  variantId?: number;
 };
 
 export const TeaCard: React.FC<TeaCardProps> = ({
@@ -28,12 +30,15 @@ export const TeaCard: React.FC<TeaCardProps> = ({
   className = '',
   slug = '',
   productType = '',
+  id = '',
+  variantId = 1,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const [discountSize, setDiscountSize] = useState(0);
   const { discount } = useDiscountStore();
-  const [addedToCart, setAddedToCart] = useState(false);
+  const { addItem, isLoading } = useCartStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -61,7 +66,6 @@ export const TeaCard: React.FC<TeaCardProps> = ({
   const category = productType.toLowerCase().split(' ').join('-');
 
   const maxLength = 100;
-  const navigate = useNavigate();
 
   const shortDescription =
     description.length > maxLength ? description.slice(0, maxLength) + '...' : description;
@@ -78,18 +82,14 @@ export const TeaCard: React.FC<TeaCardProps> = ({
     navigate(`${ROUTES.SHOP}/${category}/${slug}`);
   };
 
-  const { addItem, isLoading } = useCartStore();
-
-  const handleAddtoCartButton = async () => {
+  const handleAddToCart = async () => {
     try {
-      await addItem(productId, 0);
-      setAddedToCart(true);
-      setTimeout(() => setAddedToCart(false), 1000);
+      await addItem(id, variantId, 1);
+      toast.success(`${name} added to cart`);
     } catch (error) {
-      console.error('Ошибка при добавлении в корзину:', error);
+      toast.error('Failed to add item to cart. Please try again.');
     }
   };
-
   return (
     <div className={`${styles.card} ${className}`}>
       {discountSize > 0 && <div className={styles.discountBadge}>on sale</div>}
@@ -174,9 +174,8 @@ export const TeaCard: React.FC<TeaCardProps> = ({
               <span className={styles.weight}> / {weight}</span>
             </div>
           )}
-          <Button className={styles.addToCartButton} onClick={handleAddtoCartButton}>
-            {' '}
-            {addedToCart ? <Check /> : <ShoppingBag />}
+          <Button className={styles.addToCartButton} onClick={handleAddToCart} disabled={isLoading}>
+            {isLoading ? <Loader2 className="animate-spin" size={18} /> : <ShoppingBag size={18} />}
           </Button>
         </div>
       </div>
