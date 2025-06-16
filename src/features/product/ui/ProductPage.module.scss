@@ -87,3 +87,9 @@
   display: flex;
   gap: 2.3rem;
 }
+
+.removeBtn {
+  color: var(--primary-dark-color);
+  background-color: unset;
+  border: 0.1rem solid var(--primary-dark-color);
+}

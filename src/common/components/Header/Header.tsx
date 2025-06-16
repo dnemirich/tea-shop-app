@@ -20,14 +20,15 @@ export const Header = () => {
   const navigate = useNavigate();
   const cartItems = useCartStore().cart?.lineItems;
 
-  console.log('cartItems', cartItems);
   useEffect(() => {
-    if (cartItems && cartItems?.length > 0) {
+    if (cartItems && cartItems.length > 0) {
       const count = cartItems.reduce((counter, item) => {
         counter += item.quantity;
         return counter;
       }, 0);
       setItemsCount(count);
+    } else {
+      setItemsCount(0);
     }
   }, [cartItems]);
 

@@ -24,7 +24,15 @@ export const ProductPage = () => {
   const [selectedVariant, setSelectedVariant] = useState<string | undefined>('sample');
   const [quantity, setQuantity] = useState(1);
   const { discount } = useDiscountStore();
-  const { addItem } = useCartStore();
+  const { addItem, removeItem, cart } = useCartStore();
+  const cartItems = cart?.lineItems || [];
+
+  const isInCart = cartItems.some((item) => {
+    return (
+      item.productId === product?.id &&
+      item.custom?.fields.selectedWeightVariant === selectedVariant
+    );
+  });
 
   const category = categoryName?.split('-').join(' ');
   const productName = productSlug?.split('-').join(' ');
@@ -71,6 +79,7 @@ export const ProductPage = () => {
   const onVariantChange = (price: number, selectedWeightVariant?: string) => {
     setCalculatedPrice(price);
     setSelectedVariant(selectedWeightVariant);
+    setQuantity(1);
   };
 
   const handleAddToCart = async () => {
@@ -89,6 +98,29 @@ export const ProductPage = () => {
       });
     } catch (error) {
       console.error('Failed to add item to cart:', error);
+    }
+  };
+
+  const handleRemoveFromCart = async () => {
+    if (!product) {
+      console.log('Cannot add to cart - product not loaded');
+      return;
+    }
+
+    const item = cartItems.find((item) => {
+      return (
+        item.productId === product?.id &&
+        item.custom?.fields.selectedWeightVariant === selectedVariant
+      );
+    });
+
+    if (!item) return;
+
+    try {
+      await removeItem(item?.id, item?.quantity);
+      setQuantity(1);
+    } catch (error) {
+      console.error('Failed to remove item from cart:', error);
     }
   };
 
@@ -129,9 +161,12 @@ export const ProductPage = () => {
               />
               <div className={s.counterContainer}>
                 <ProductCounter quantity={quantity} setQuantity={setQuantity} />
-                <Button className={s.btn} onClick={handleAddToCart}>
+                <Button
+                  className={`${s.btn} ${isInCart ? s.removeBtn : ''}`}
+                  onClick={isInCart ? handleRemoveFromCart : handleAddToCart}
+                >
                   <ShoppingBasket />
-                  Add to Cart
+                  {isInCart ? 'Remove from cart' : 'Add to cart'}
                 </Button>
               </div>
             </div>
