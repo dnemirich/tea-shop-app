@@ -12,7 +12,6 @@ export type Product = {
   hasCaffeine?: boolean;
   ingredients?: string[];
   slug: string;
-  productId: string;
 };
 
 export type DiscontPrice = {
