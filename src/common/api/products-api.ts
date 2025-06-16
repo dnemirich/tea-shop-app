@@ -41,3 +41,14 @@ export const getDiscountCodes = async () => {
 
   return response.body.results;
 };
+
+export const checkDiscountCode = (code: string) => {
+  return apiRoot
+    .discountCodes()
+    .get({
+      queryArgs: {
+        where: `code="${code}"`,
+      },
+    })
+    .execute();
+};

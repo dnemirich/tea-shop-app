@@ -5,13 +5,13 @@
 
 .counter {
   display: flex;
+  justify-content: end;
   align-items: center;
   gap: 0.8rem;
   width: 100%;
   max-width: 9.6rem;
-  margin-left: 7rem;
   transition: all 0.3s ease;
-  justify-content: end;
+  margin-left: 7rem;
 }
 
 .counterBtn {

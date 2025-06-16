@@ -1,11 +1,21 @@
 .costWrapper {
-  width: 100%;
   display: flex;
   justify-content: space-between;
-  font-weight: 500;
+  width: 100%;
   font-size: 1.8rem;
+  font-weight: 500;
+}
 
-  .cost {
-    text-transform: uppercase;
-  }
+.cost {
+  text-transform: uppercase;
+}
+
+.costDiscounted {
+  text-decoration: line-through;
+  color: var(--outline-color);
+}
+
+.prices {
+  display: flex;
+  gap: 1rem;
 }
