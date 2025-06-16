@@ -21,8 +21,6 @@ export const Footer: React.FC = () => {
     },
   ];
 
-  //TO_DO все li станут кликабельными ссылками , когда будет готова main-page
-
   return (
     <footer className={styles.footer}>
       <div className="container">
@@ -41,7 +39,9 @@ export const Footer: React.FC = () => {
           <div className={styles.section}>
             <h4 className={styles.sectionTitle}>LEARN</h4>
             <ul className={styles.sectionList}>
-              <li className={styles.sectionItem}>About us</li>
+              <li className={styles.sectionItem}>
+                <Link to={ROUTES.ABOUT}>About us</Link>
+              </li>
               <li className={styles.sectionItem}>Blog</li>
             </ul>
           </div>

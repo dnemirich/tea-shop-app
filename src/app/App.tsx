@@ -16,6 +16,7 @@ import { authService } from '@/features/login/api/authService';
 import { CatalogPage } from '@/features/catalog/ui/CatalogPage/CatalogPage';
 import { useDiscountStore } from '@/common/store/discount-store.ts';
 import { getDiscountsInfo } from '@/common/utils/discountHelpers.ts';
+import { AboutPage } from '@/features/about/ui/AboutPage.tsx';
 import { useUserStore } from '@/common/store/user-store';
 import { anonymousApiRoot } from '@/features/login/api/anonymous-client';
 import { BasketPage } from '@/features/basket/ui/BasketPage/BasketPage';
@@ -130,13 +131,13 @@ function App() {
     <>
       <Routes>
         <Route path={ROUTES.HOME} element={<Layout />}>
+          <Route index element={<HomePage />} />
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<RegistrationPage />} />
           <Route path={ROUTES.USER} element={<UserPage />} />
           <Route path={`${ROUTES.SHOP}/:categoryName/:productSlug`} element={<ProductPage />} />
-          <Route index element={<HomePage />} />
+          <Route path={ROUTES.ABOUT} element={<AboutPage />} />
           <Route path={ROUTES.CART} element={<BasketPage />} />
-
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
           <Route path={ROUTES.SHOP} element={<CatalogPage />} />
           <Route path={`${ROUTES.SHOP}/:categoryName`} element={<CatalogPage />} />
