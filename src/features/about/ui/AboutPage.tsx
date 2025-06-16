@@ -1,4 +1,4 @@
-import logo from '/icons/rss-logo.svg';
+import logo from '/icons/rs_school.svg';
 import dashaPic from '/img/about-page/dasha.jpg';
 import alinaPic from '/img/about-page/alina.jpg';
 import evaPic from '/img/about-page/eva.jpg';
@@ -39,15 +39,12 @@ export const AboutPage = () => {
         <div className={s.aboutText}>
           <p>
             This tea store project was created as a final assignment for the JavaScript/Front-end
-            2024Q4 course at Rolling Scope School. The main task was to create an online store based
+            2024Q4 course at Rolling Scope School <a href={'https://rs.school'}><img src={logo} alt={'Rolling scopes school logo'} className={s.logo} /></a>. The main task was to create an online store based
             on the commercetools platform. Our team built the store using a lightweight tech stack:
             React, Zustand, React Router, Swiper, React Hook Form, and Zod. With no final UI
             mockups, we relied on open communication, shared ideas, and each teammate’s creative
             input to shape the product collaboratively.
           </p>
-          <a href={'https://rs.school'}>
-            <img src={logo} alt={'Rolling scopes school logo'} className={s.logo} />
-          </a>
         </div>
       </section>
       <section className={`${s.section} ${s.authorsSection}`}>
