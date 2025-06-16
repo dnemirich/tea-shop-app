@@ -52,10 +52,8 @@ export const ProductPage = () => {
         .then((res) => {
           const fetchedProduct = res.body.results[0];
           setProduct(fetchedProduct);
-          if (
-            fetchedProduct
-          ) {
-            const attrs = extractProductAttributes(fetchedProduct)
+          if (fetchedProduct) {
+            const attrs = extractProductAttributes(fetchedProduct);
             setProductAttributes(attrs);
             setCalculatedPrice(attrs.price);
           }

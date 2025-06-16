@@ -113,7 +113,7 @@ export const addLineItem = async (
     if (!isNaN(grams)) {
       weightInOunces = +(grams / OUNCE_SIZE).toFixed(2);
     } else {
-      weightInOunces = OUNCE_SIZE
+      weightInOunces = OUNCE_SIZE;
     }
   }
 
