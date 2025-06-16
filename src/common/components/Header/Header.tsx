@@ -32,7 +32,6 @@ export const Header = () => {
     }
   }, [cartItems]);
 
-
   const setSearchQuery = useSearchStore((state) => state.setSearchQuery);
 
   const [inputValue, debouncedValue, setInputValue] = useDebouncedSearch('');
