@@ -40,7 +40,7 @@ export const TeaCard: React.FC<TeaCardProps> = ({
   const { discount } = useDiscountStore();
   const { addItem, isLoading } = useCartStore();
   const navigate = useNavigate();
-  const {setAppError, setSuccess} = useAppStore();
+  const { setAppError, setSuccess } = useAppStore();
 
   useEffect(() => {
     if (
@@ -65,8 +65,7 @@ export const TeaCard: React.FC<TeaCardProps> = ({
     maximumFractionDigits: 2,
   });
   const isDiscounted = discountSize > 0;
-  const centAmount = isDiscounted ? (price - (price * discountSize) / 100): price;
-
+  const centAmount = isDiscounted ? price - (price * discountSize) / 100 : price;
 
   const category = productType.toLowerCase().split(' ').join('-');
 
@@ -89,9 +88,12 @@ export const TeaCard: React.FC<TeaCardProps> = ({
 
   const handleAddToCart = async () => {
     try {
-      await addItem(id, variantId, 1, 'sample', {currencyCode: 'EUR', centAmount: Math.round(centAmount * 100) });
+      await addItem(id, variantId, 1, 'sample', {
+        currencyCode: 'EUR',
+        centAmount: Math.round(centAmount * 100),
+      });
       setIsAddedToCart(true);
-      setSuccess(`${name} sample was added to your cart.`)
+      setSuccess(`${name} sample was added to your cart.`);
     } catch (error) {
       setAppError('Failed to add item to cart. Please try again.');
     }
@@ -180,7 +182,11 @@ export const TeaCard: React.FC<TeaCardProps> = ({
               <span className={styles.weight}> / {weight}</span>
             </div>
           )}
-          <Button className={`${styles.addToCartButton} ${isAddedToCart ? styles.isAddedBtn : ''}`} onClick={handleAddToCart} disabled={isLoading || isAddedToCart}>
+          <Button
+            className={`${styles.addToCartButton} ${isAddedToCart ? styles.isAddedBtn : ''}`}
+            onClick={handleAddToCart}
+            disabled={isLoading || isAddedToCart}
+          >
             {isLoading ? <Loader2 className="animate-spin" size={18} /> : <ShoppingBag size={18} />}
           </Button>
         </div>
