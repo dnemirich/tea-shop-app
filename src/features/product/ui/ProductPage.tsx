@@ -15,6 +15,7 @@ import { useDiscountStore } from '@/common/store/discount-store.ts';
 import { Button } from '@/common/components/Button/Button.tsx';
 import { useCartStore } from '@/common/store/cart-store.ts';
 import { ShoppingBasket } from 'lucide-react';
+import type { TeaAttributes } from '@/common/types/product-types.ts';
 
 export const ProductPage = () => {
   const { categoryName, productSlug } = useParams();
@@ -23,6 +24,7 @@ export const ProductPage = () => {
   const [discountSize, setDiscountSize] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState<string | undefined>('sample');
   const [quantity, setQuantity] = useState(1);
+  const [productAttributes, setProductAttributes] = useState<TeaAttributes | null>(null);
   const { discount } = useDiscountStore();
   const { addItem, removeItem, cart } = useCartStore();
   const cartItems = cart?.lineItems || [];
@@ -50,15 +52,12 @@ export const ProductPage = () => {
         .then((res) => {
           const fetchedProduct = res.body.results[0];
           setProduct(fetchedProduct);
-
           if (
-            fetchedProduct &&
-            fetchedProduct.masterVariant &&
-            fetchedProduct.masterVariant.prices?.length
+            fetchedProduct
           ) {
-            const priceInCents = fetchedProduct.masterVariant.prices[0].value.centAmount;
-            setCalculatedPrice(priceInCents / 100);
-            console.log('Product price set to:', priceInCents / 100);
+            const attrs = extractProductAttributes(fetchedProduct)
+            setProductAttributes(attrs);
+            setCalculatedPrice(attrs.price);
           }
         })
         .catch((error) => {
@@ -69,15 +68,16 @@ export const ProductPage = () => {
     if (categoryName && discount) {
       if (discount.isActive && discount.references.includes(categoryName)) {
         setDiscountSize(discount.value);
-        console.log('Discount applied:', discount.value);
+        // console.log('Discount applied:', discount.value);
       }
     }
   }, [categoryName, productSlug, discount]);
 
-  const productAttributes = product && extractProductAttributes(product);
+  // const productAttributes = product && extractProductAttributes(product);
 
   const onVariantChange = (price: number, selectedWeightVariant?: string) => {
     setCalculatedPrice(price);
+    if (!selectedWeightVariant) return;
     setSelectedVariant(selectedWeightVariant);
     setQuantity(1);
   };

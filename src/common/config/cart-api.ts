@@ -109,8 +109,11 @@ export const addLineItem = async (
 
   if (selectedWeightVariant) {
     const grams = parseInt(selectedWeightVariant.replace('g', ''));
+    // console.log('Selected weight variant:', selectedWeightVariant, 'grams:', grams);
     if (!isNaN(grams)) {
       weightInOunces = +(grams / OUNCE_SIZE).toFixed(2);
+    } else {
+      weightInOunces = OUNCE_SIZE
     }
   }
 

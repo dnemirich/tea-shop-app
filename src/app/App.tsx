@@ -51,11 +51,11 @@ function App() {
         })
         .execute()
         .then((response) => {
-          console.log('Cart search results:', response.body.results);
+          // console.log('Cart search results:', response.body.results);
           if (response.body.results.length === 0) {
             //попробуем с новым anonymousId, если ошибка дублирования
             const newAnonymousId = crypto.randomUUID();
-            console.log('Creating new cart with anonymousId:', newAnonymousId);
+            // console.log('Creating new cart with anonymousId:', newAnonymousId);
             localStorage.setItem('anonymousId', newAnonymousId);
             return anonymousApiRoot
               .carts()

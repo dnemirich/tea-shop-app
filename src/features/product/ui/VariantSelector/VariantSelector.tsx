@@ -53,7 +53,7 @@ export const VariantSelector = ({ onPriceChange, price }: Props) => {
               hidden
               onChange={() => {
                 if (variant.value === 'sample') {
-                  onPriceChange(price, undefined);
+                  onPriceChange(price, 'sample');
                 } else {
                   onPriceChange((price / OUNCE_SIZE) * Number(variant.value), variant.value + 'g');
                 }
