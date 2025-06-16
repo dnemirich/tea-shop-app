@@ -53,7 +53,6 @@ export const ItemsContainer = () => {
         <Button className={s.button} onClick={handleBackShopping}>
           back to shopping
         </Button>
-        ;
       </div>
     );
   }
