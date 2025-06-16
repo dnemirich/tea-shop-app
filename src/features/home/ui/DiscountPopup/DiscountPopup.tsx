@@ -2,7 +2,7 @@ import { usePromoCode } from '@/features/home/hooks/usePromoCode.ts';
 import { useState } from 'react';
 import { Button } from '@/common/components/Button/Button.tsx';
 import { CircleX } from 'lucide-react';
-import s from './DiscountPopup.module.scss';
+import s from './discountPopup.module.scss';
 
 export const DiscountPopup = () => {
   const code = usePromoCode();
