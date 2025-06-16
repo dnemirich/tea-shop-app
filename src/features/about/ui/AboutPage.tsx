@@ -60,7 +60,7 @@ export const AboutPage = () => {
               <h3 className={s.name}>{author.name}</h3>
               <p className={s.title}>{author.title}</p>
               <p className={s.bio}>{author.bio}</p>
-              <a href={`https://github.com/${author.github}`}>
+              <a href={`https://github.com/${author.github}`} target={'_blank'}>
                 github: <span className={s.accentText}>{author.github}</span>
               </a>
               <h4>Contribution to the project </h4>
