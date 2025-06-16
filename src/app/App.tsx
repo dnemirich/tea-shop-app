@@ -16,19 +16,31 @@ import { authService } from '@/features/login/api/authService';
 import { CatalogPage } from '@/features/catalog/ui/CatalogPage/CatalogPage';
 import { useDiscountStore } from '@/common/store/discount-store.ts';
 import { getDiscountsInfo } from '@/common/utils/discountHelpers.ts';
+import { AboutPage } from '@/features/about/ui/AboutPage.tsx';
 import { useUserStore } from '@/common/store/user-store';
 import { anonymousApiRoot } from '@/features/login/api/anonymous-client';
-import { getOrCreateAnonymousId } from '@/common/utils/userHelpers.ts';
+import { BasketPage } from '@/features/basket/ui/BasketPage/BasketPage';
+import { useCartStore } from '@/common/store/cart-store';
 
 function App() {
   const { error, clearError, success, clearSuccess } = useAppStore();
   const { setHasActiveDiscount, setDiscount } = useDiscountStore();
+  const { initializeCart } = useCartStore();
   const { isLoggedIn } = useUserStore();
+
+  useEffect(() => {
+    initializeCart();
+  }, [initializeCart]);
 
   //корзина анонима
   useEffect(() => {
     if (!isLoggedIn) {
-      const anonymousId = getOrCreateAnonymousId();
+      let anonymousId = localStorage.getItem('anonymousId');
+
+      if (!anonymousId) {
+        anonymousId = crypto.randomUUID();
+        localStorage.setItem('anonymousId', anonymousId);
+      }
 
       //корзина с anonymousId
       anonymousApiRoot
@@ -40,11 +52,11 @@ function App() {
         })
         .execute()
         .then((response) => {
-          console.log('Cart search results:', response.body.results);
+          // console.log('Cart search results:', response.body.results);
           if (response.body.results.length === 0) {
             //попробуем с новым anonymousId, если ошибка дублирования
             const newAnonymousId = crypto.randomUUID();
-            console.log('Creating new cart with anonymousId:', newAnonymousId);
+            // console.log('Creating new cart with anonymousId:', newAnonymousId);
             localStorage.setItem('anonymousId', newAnonymousId);
             return anonymousApiRoot
               .carts()
@@ -85,6 +97,7 @@ function App() {
     async function restore() {
       await authService.restoreSession();
     }
+
     restore();
   }, []);
 
@@ -118,12 +131,13 @@ function App() {
     <>
       <Routes>
         <Route path={ROUTES.HOME} element={<Layout />}>
+          <Route index element={<HomePage />} />
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<RegistrationPage />} />
           <Route path={ROUTES.USER} element={<UserPage />} />
           <Route path={`${ROUTES.SHOP}/:categoryName/:productSlug`} element={<ProductPage />} />
-          <Route index element={<HomePage />} />
-
+          <Route path={ROUTES.ABOUT} element={<AboutPage />} />
+          <Route path={ROUTES.CART} element={<BasketPage />} />
           <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
           <Route path={ROUTES.SHOP} element={<CatalogPage />} />
           <Route path={`${ROUTES.SHOP}/:categoryName`} element={<CatalogPage />} />

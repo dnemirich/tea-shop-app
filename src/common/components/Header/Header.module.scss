@@ -254,3 +254,21 @@
     gap: 0.8rem;
   }
 }
+
+.cartLink {
+  position: relative;
+}
+
+.itemsCount {
+  position: absolute;
+  top: -1rem;
+  right: -1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  color: var(--primary-light-color);
+  background-color: var(--error-color);
+  border-radius: 50%;
+}
