@@ -102,7 +102,7 @@ function App() {
     if (error) {
       toast.error(error, {
         className: s.notification,
-        autoClose: false,
+        autoClose: 5000,
         theme: 'colored',
         closeOnClick: true,
         position: 'top-center',
@@ -115,7 +115,7 @@ function App() {
     if (success) {
       toast.success(success, {
         className: s.success,
-        autoClose: false,
+        autoClose: 3000,
         theme: 'colored',
         closeOnClick: true,
         position: 'top-center',
