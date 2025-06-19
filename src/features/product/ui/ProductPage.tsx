@@ -70,7 +70,6 @@ export const ProductPage = () => {
     }
   }, [categoryName, productSlug, discount]);
 
-
   const onVariantChange = (price: number, selectedWeightVariant?: string) => {
     setCalculatedPrice(price);
     if (!selectedWeightVariant) return;
