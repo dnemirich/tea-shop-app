@@ -3,7 +3,7 @@ import { Button } from '@/common/components/Button/Button';
 import { ItemCard } from '../ItemCard/ItemCard';
 import s from './itemsContainer.module.scss';
 import { CostInfo } from '../../CostInfo/CostInfo';
-// import { Line } from '../../Line/Line';
+
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/common/config/routes';
 import { useCartStore } from '@/common/store/cart-store';

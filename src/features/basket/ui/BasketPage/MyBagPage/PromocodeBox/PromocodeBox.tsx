@@ -60,5 +60,3 @@ export const PromocodeBox = ({ onPromoCodeSuccess }: Props) => {
     </div>
   );
 };
-
-// FPbker
