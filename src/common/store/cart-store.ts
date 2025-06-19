@@ -172,48 +172,43 @@ export const useCartStore = create<CartState>((set, get) => ({
       set({ error: e.message || 'Failed to delete cart', isLoading: false });
     }
   },
-    clearCartItems: async () => {
-      set({ isLoading: true, error: null });
-      try {
-        let cart = get().cart;
-        if (!cart) {
-          throw new Error('Cart is not available');
-        }
-
-        const apiRoot = getSafeApiRoot();
-        const updatedCart = await apiRoot
-          .carts()
-          .withId({ ID: cart.id })
-          .get()
-          .execute();
-
-        cart = updatedCart.body;
-
-        const actions = cart.lineItems.map((item) => ({
-          action: 'removeLineItem' as const,
-          lineItemId: item.id,
-          quantity: item.quantity,
-        }));
-
-        const clearedCart = await apiRoot
-          .carts()
-          .withId({ ID: cart.id })
-          .post({
-            body: {
-              version: cart.version, // обновляемая версия
-              actions,
-            },
-          })
-          .execute();
-
-        set({ cart: clearedCart.body, isLoading: false });
-      } catch (error) {
-        set({
-          error: error instanceof Error ? error.message : 'Failed to clear cart items',
-          isLoading: false,
-        });
-        throw error;
+  clearCartItems: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      let cart = get().cart;
+      if (!cart) {
+        throw new Error('Cart is not available');
       }
+
+      const apiRoot = getSafeApiRoot();
+      const updatedCart = await apiRoot.carts().withId({ ID: cart.id }).get().execute();
+
+      cart = updatedCart.body;
+
+      const actions = cart.lineItems.map((item) => ({
+        action: 'removeLineItem' as const,
+        lineItemId: item.id,
+        quantity: item.quantity,
+      }));
+
+      const clearedCart = await apiRoot
+        .carts()
+        .withId({ ID: cart.id })
+        .post({
+          body: {
+            version: cart.version, // обновляемая версия
+            actions,
+          },
+        })
+        .execute();
+
+      set({ cart: clearedCart.body, isLoading: false });
+    } catch (error) {
+      set({
+        error: error instanceof Error ? error.message : 'Failed to clear cart items',
+        isLoading: false,
+      });
+      throw error;
     }
-}
-));
+  },
+}));
